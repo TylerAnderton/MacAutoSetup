@@ -52,6 +52,7 @@ cask "windsurf"
 cask "todoist-app"
 cask "slack"
 cask "kindavim"
+cask "spotify"
 
 # Fonts
 cask "font-jetbrains-mono-nerd-font"
