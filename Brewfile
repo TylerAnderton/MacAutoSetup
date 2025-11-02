@@ -17,14 +17,15 @@ brew "delta"
 brew "tmux"
 brew "stow"
 brew "neovim"
-brew "kubectl"       # Kubernetes CLI
-brew "tailscale"     # Secure mesh VPN for homelab and remote access
+# brew "kubectl"       # Kubernetes CLI
+# brew "tailscale"     # Secure mesh VPN for homelab and remote access
 
 # Languages n stuff
 brew "python"
 brew "pipx"
-brew "node"
-brew "nvm"
+cask "miniconda"
+# brew "node"
+# brew "nvm"
 
 # GNU Utilities
 brew "coreutils"
@@ -33,10 +34,10 @@ brew "findutils"
 brew "gawk"
 
 # GUI Applications
-cask "iterm2"
-cask "visual-studio-code"
+# cask "iterm2"
+# cask "visual-studio-code"
 cask "raycast"
-cask "docker"
+cask "docker-desktop" # renamed from "docker"
 cask "ghostty"
 cask "aerospace"
 cask "caffeine"
@@ -44,7 +45,12 @@ cask "discord"
 cask "chatgpt"
 cask "shottr"
 cask "caffeine" 
-# cash "zoom" - I don't want to install this by default
+# cask "zoom" - I don't want to install this by default
+# My additions
+cask "windsurf"
+cask "todoist-app"
+cask "slack"
+cask "kindavim"
 
 # Fonts
 cask "font-jetbrains-mono-nerd-font"
