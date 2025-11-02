@@ -36,6 +36,7 @@ brew "gawk"
 # GUI Applications
 # cask "iterm2"
 # cask "visual-studio-code"
+cask "google-chome"
 cask "raycast"
 cask "docker-desktop" # renamed from "docker"
 cask "ghostty"
