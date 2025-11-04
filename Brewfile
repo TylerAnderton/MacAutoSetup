@@ -24,6 +24,7 @@ brew "neovim"
 brew "python"
 brew "pipx"
 cask "miniconda"
+brew "pyenv" # python version manager
 # brew "node"
 # brew "nvm"
 
@@ -35,7 +36,7 @@ brew "gawk"
 
 # GUI Applications
 # cask "iterm2"
-# cask "visual-studio-code"
+cask "visual-studio-code"
 cask "google-chome"
 cask "raycast"
 cask "docker-desktop" # renamed from "docker"
@@ -47,13 +48,16 @@ cask "chatgpt"
 cask "shottr"
 cask "caffeine" 
 # cask "zoom" - I don't want to install this by default
+
 # My additions
-cask "windsurf"
+cask "cursor"
+# cask "windsurf"
 cask "todoist-app"
 cask "slack"
 cask "kindavim"
 cask "spotify"
 cask "focusrite-control-2"
+cask "twingate" # Tractian VPN
 
 # Fonts
 cask "font-jetbrains-mono-nerd-font"
