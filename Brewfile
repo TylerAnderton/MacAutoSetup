@@ -26,6 +26,8 @@ brew "python"
 brew "pipx"
 cask "miniconda"
 brew "pyenv" # python version manager
+brew "poetry" # python dependency manager
+brew "uv" # python package & environment manager
 # brew "node"
 # brew "nvm"
 
