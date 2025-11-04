@@ -17,6 +17,7 @@ brew "delta"
 brew "tmux"
 brew "stow"
 brew "neovim"
+brew "bazel" # monorepo management
 # brew "kubectl"       # Kubernetes CLI
 # brew "tailscale"     # Secure mesh VPN for homelab and remote access
 
@@ -57,7 +58,7 @@ cask "slack"
 cask "kindavim"
 cask "spotify"
 cask "focusrite-control-2"
-cask "twingate" # Tractian VPN
+cask "twingate" # VPN
 
 # Fonts
 cask "font-jetbrains-mono-nerd-font"
