@@ -17,7 +17,7 @@ brew "delta"
 brew "tmux"
 brew "stow"
 brew "neovim"
-brew "bazel" # monorepo management
+brew "bazelisk" # monorepo management
 cask "1password-cli"
 # brew "kubectl"       # Kubernetes CLI
 # brew "tailscale"     # Secure mesh VPN for homelab and remote access
