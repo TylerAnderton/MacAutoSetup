@@ -18,6 +18,7 @@ brew "tmux"
 brew "stow"
 brew "neovim"
 brew "bazel" # monorepo management
+cask "1password-cli"
 # brew "kubectl"       # Kubernetes CLI
 # brew "tailscale"     # Secure mesh VPN for homelab and remote access
 
@@ -50,6 +51,7 @@ cask "discord"
 cask "chatgpt"
 cask "shottr"
 cask "caffeine" 
+cask "1password"
 # cask "zoom" - I don't want to install this by default
 
 # My additions
