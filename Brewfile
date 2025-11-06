@@ -4,6 +4,7 @@ tap "jorgerojas26/lazysql"
 # CLI Tools
 brew "git"
 brew "fzf"
+brew "fd"
 brew "ripgrep"
 brew "bat"
 brew "htop"
