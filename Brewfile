@@ -31,8 +31,8 @@ cask "miniconda"
 brew "pyenv" # python version manager
 brew "poetry" # python dependency manager
 brew "uv" # python package & environment manager
-# brew "node"
-# brew "nvm"
+brew "node" # npm necessary for Astronvim LSPs
+brew "nvm"
 
 # GNU Utilities
 brew "coreutils"
