@@ -10,3 +10,6 @@ plug "MichaelAquilina/zsh-you-should-use"
 
 autoload -Uz compinit
 compinit
+
+# uv autocomplete
+eval "$(uv generate-shell-completion zsh)"
