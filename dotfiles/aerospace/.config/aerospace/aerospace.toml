@@ -22,6 +22,9 @@ after-startup-command = [
   # Todoist → R
   'exec-and-forget open -g -a "Todoist"',
 
+  # Todoist → S
+  'exec-and-forget open -g -a "Spotify"',
+
   # Finder → F
   # Finder is special: this guarantees a window
   'exec-and-forget open -g -a "Finder" ~',
@@ -35,12 +38,6 @@ after-startup-command = [
   #
   # # Cursor → V
   # 'exec-and-forget open -g -a "Cursor"',
-  
-  # Ghostty
-  'exec-and-forget /bin/zsh -lc "sleep 2; open -g -b com.mitchellh.ghostty"',
-
-  # # Cursor
-  # 'exec-and-forget /bin/zsh -lc "sleep 3; open -g -b com.todesktop.230313mzl4w4u92"',
 ]
 
 # Start AeroSpace at login
@@ -90,7 +87,10 @@ run = 'move-node-to-workspace B'
 
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
-run = 'move-node-to-workspace T'
+run = [
+    'layout floating',
+    'move-node-to-workspace T'
+]
 
 [[on-window-detected]]
 if.app-id = 'com.apple.Notes'
@@ -101,16 +101,23 @@ if.app-id = 'com.todoist.mac.Todoist'
 run = 'move-node-to-workspace R'
 
 [[on-window-detected]]
+if.app-id = 'com.spotify.client'
+run = 'move-node-to-workspace S'
+
+[[on-window-detected]]
 if.app-id = 'com.apple.finder'
-run = 'move-node-to-workspace F'
+run = [
+    'layout floating',
+    'move-node-to-workspace F'
+]
 
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome.app.chjbbpdidamagiofpdhenaghgkllbfml' # Reclaim
 run = 'move-node-to-workspace R'
 
-# [[on-window-detected]]
-# if.app-id = 'com.todesktop.230313mzl4w4u92' # Cursor
-# run = 'move-node-to-workspace V'
+[[on-window-detected]]
+if.app-id = 'com.todesktop.230313mzl4w4u92' # Cursor
+run = 'move-node-to-workspace V'
 
 # Possible values: (qwerty|dvorak|colemak)
 # See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
@@ -210,7 +217,7 @@ run = 'move-node-to-workspace R'
     # alt-p = 'workspace P'
     # alt-q = 'workspace Q'
     alt-r = 'workspace R' # Reclaim/Calendar
-    # alt-s = 'workspace S'
+    alt-s = 'workspace S' # Spotify
     alt-t = 'workspace T' # Terminal/Ghostty
     # alt-u = 'workspace U'
     alt-v = 'workspace V' # VSCode/Cursor IDE
@@ -243,7 +250,7 @@ run = 'move-node-to-workspace R'
     # alt-shift-p = 'move-node-to-workspace P'
     # alt-shift-q = 'move-node-to-workspace Q'
     alt-shift-r = 'move-node-to-workspace R'
-    # alt-shift-s = 'move-node-to-workspace S'
+    alt-shift-s = 'move-node-to-workspace S'
     alt-shift-t = 'move-node-to-workspace T'
     # alt-shift-u = 'move-node-to-workspace U'
     alt-shift-v = 'move-node-to-workspace V'
