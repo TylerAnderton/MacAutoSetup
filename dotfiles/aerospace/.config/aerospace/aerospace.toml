@@ -93,6 +93,14 @@ run = [
 ]
 
 [[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = 'move-node-to-workspace M'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.mail'
+run = 'move-node-to-workspace M'
+
+[[on-window-detected]]
 if.app-id = 'com.apple.Notes'
 run = 'move-node-to-workspace N'
 
@@ -211,7 +219,7 @@ run = 'move-node-to-workspace V'
     alt-f = 'workspace F' # Finder
     # alt-g = 'workspace G'
     # alt-i = 'workspace I'
-    # alt-m = 'workspace M'
+    alt-m = 'workspace M' # Mail/Slack
     alt-n = 'workspace N' # Notes
     # alt-o = 'workspace O'
     # alt-p = 'workspace P'
@@ -244,7 +252,7 @@ run = 'move-node-to-workspace V'
     alt-shift-f = 'move-node-to-workspace F'
     # alt-shift-g = 'move-node-to-workspace G'
     # alt-shift-i = 'move-node-to-workspace I'
-    # alt-shift-m = 'move-node-to-workspace M'
+    alt-shift-m = 'move-node-to-workspace M'
     alt-shift-n = 'move-node-to-workspace N'
     # alt-shift-o = 'move-node-to-workspace O'
     # alt-shift-p = 'move-node-to-workspace P'
