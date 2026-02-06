@@ -8,7 +8,10 @@
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
   # ChatGPT → C
-  'exec-and-forget open -g -a "ChatGPT"',
+  # 'exec-and-forget open -g -a "ChatGPT"',
+
+  # Claude → C
+  'exec-and-forget open -g -a "Claude"',
 
   # Calendar → R
   'exec-and-forget open -g -a "Calendar"',
@@ -75,6 +78,10 @@ automatically-unhide-macos-hidden-apps = false
 # Application workspace assignments
 [[on-window-detected]]
 if.app-id = 'com.openai.chat'
+run = 'move-node-to-workspace C'
+
+[[on-window-detected]]
+if.app-id = 'com.anthropic.claudefordesktop'
 run = 'move-node-to-workspace C'
 
 [[on-window-detected]]
@@ -213,7 +220,7 @@ run = 'move-node-to-workspace V'
     alt-9 = 'workspace 9'
     # alt-a = 'workspace A' # In your config, you can drop workspace bindings that you don't need
     alt-b = 'workspace B' # Browser
-    alt-c = 'workspace C' # ChatGPT
+    alt-c = 'workspace C' # ChatGPT/Claude
     # alt-d = 'workspace D'
     # alt-e = 'workspace E'
     alt-f = 'workspace F' # Finder
