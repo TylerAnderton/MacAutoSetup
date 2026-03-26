@@ -84,6 +84,43 @@ return {
 
         -- setting a mapping to false will disable it
         -- ["<C-S>"] = false,
+
+        -- Claude Code key mappings
+        -- Set here explicitly, as Astronvim isn't getting them from claudecode.lua
+        ["<leader>a"]  = { desc = "AI/Claude Code" },
+        ["<leader>ac"] = { "<cmd>ClaudeCode<cr>",           desc = "Toggle Claude" },
+        ["<C-'>"] = { "<cmd>ClaudeCode<cr>", desc = "Toggle Claude (bypass <leader> in prompt)" },
+        ["<leader>af"] = { "<cmd>ClaudeCodeFocus<cr>",      desc = "Focus Claude" },
+        ["<leader>ar"] = { "<cmd>ClaudeCode --resume<cr>",  desc = "Resume Claude" },
+        ["<leader>aC"] = { "<cmd>ClaudeCode --continue<cr>",desc = "Continue Claude" },
+        ["<leader>am"] = { "<cmd>ClaudeCodeSelectModel<cr>",desc = "Select model" },
+        ["<leader>ab"] = { "<cmd>ClaudeCodeAdd %<cr>",      desc = "Add buffer" },
+        ["<leader>aa"] = { "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+        ["<leader>ad"] = { "<cmd>ClaudeCodeDiffDeny<cr>",   desc = "Deny diff" },
+      },
+      v = {
+        -- Claude Code key mappings
+        -- Set here explicitly, as Astronvim isn't getting them from claudecode.lua
+        ["<leader>as"] = { "<cmd>ClaudeCodeSend<cr>", desc = "Send to Claude" },
+      },
+      t = {
+        ["<C-'>"] = { "<C-\\><C-n><cmd>ClaudeCode<cr>", desc = "Toggle Claude (bypass <leader> in prompt)" },
+      },
+    },
+    autocmds = {
+      -- Claude Code key mappings
+      -- Set here explicitly, as Astronvim isn't getting them from claudecode.lua
+      -- Need to set an autocmd since Astrocore doesn't track mappings
+      -- in the file explorer
+      claudecode_tree_maps = {
+        {
+          event = "FileType",
+          pattern = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw" },
+          callback = function(args)
+            vim.keymap.set("n", "<leader>as", "<cmd>ClaudeCodeTreeAdd<cr>",
+              { desc = "Add file", buffer = args.buf, silent = true })
+          end,
+        },
       },
     },
   },
