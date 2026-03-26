@@ -3,3 +3,4 @@ return {
   after = "nvim-treesitter",
   config = function () require("headlines").setup() end,
 }
+
