@@ -18,6 +18,9 @@ after-startup-command = [
   # Open WebUI → C
   'exec-and-forget open -g -a "Google Chrome" --args --app-id=bbildfjdmppgpaibcgkgijmdkodmcpcd'
 
+  # Google Gemini → C
+  'exec-and-forget open -g -a "Google Chrome" --args --app-id=gdfaincndogidkdcdkhapmbffkckdkhn'
+
   # Terminal for Claude Code → C
   'exec-and-forget open -g -a "Terminal"',
 
@@ -111,6 +114,10 @@ run = 'move-node-to-workspace B'
 
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome.app.bbildfjdmppgpaibcgkgijmdkodmcpcd' # Open WebUI
+run = 'move-node-to-workspace C'
+
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome.app.gdfaincndogidkdcdkhapmbffkckdkhn' # Google Gemini
 run = 'move-node-to-workspace C'
 
 [[on-window-detected]]
