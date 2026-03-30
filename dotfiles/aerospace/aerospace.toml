@@ -7,11 +7,19 @@
 # You can use it to add commands that run after AeroSpace startup.
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
+  # ChatGPT abandoned
   # ChatGPT → C
   # 'exec-and-forget open -g -a "ChatGPT"',
 
+  # Claude abandoned
   # Claude → C
-  'exec-and-forget open -g -a "Claude"',
+  # 'exec-and-forget open -g -a "Claude"',
+
+  # Open WebUI → C
+  'exec-and-forget open -g -a "Google Chrome" --args --app-id=bbildfjdmppgpaibcgkgijmdkodmcpcd'
+
+  # Terminal for Claude Code → C
+  'exec-and-forget open -g -a "Terminal"',
 
   # Calendar → R
   'exec-and-forget open -g -a "Calendar"',
@@ -22,25 +30,35 @@ after-startup-command = [
   # Notes → N
   'exec-and-forget open -g -a "Notes"',
 
+  # Jira [MLMP-311] → R
+  'exec-and-forget open -g -a "Google Chrome" --args --app-id=gecohhahibbgkajbpdehcckdhalbgbij'
+
   # Todoist → R
   'exec-and-forget open -g -a "Todoist"',
 
-  # Todoist → S
-  'exec-and-forget open -g -a "Spotify"',
+  # Spotify → S
+  # Don't need to open Spotify every time
+  # 'exec-and-forget open -g -a "Spotify"',
 
   # Finder → F
   # Finder is special: this guarantees a window
   'exec-and-forget open -g -a "Finder" ~',
 
   # Reclaim (Chrome app) → R
-  'exec-and-forget open -g -a "Reclaim"',
+  # 'exec-and-forget open -g -a "Reclaim"',
+  'exec-and-forget open -g -a "Google Chrome" --args --app-id=chjbbpdidamagiofpdhenaghgkllbfml'
 
-  # These commands didn't work, probably because of the unique app IDs
-  # # Ghostty → T
-  # 'exec-and-forget open -g -a "Ghostty"',
-  #
+  # These commands didn't work, probably because of the unique app IDs??
+  # Ghostty → T
+  'exec-and-forget open -g -a "Ghostty"',
+  
+  # # Cursor abandoned
   # # Cursor → V
   # 'exec-and-forget open -g -a "Cursor"',
+
+  # VSCode → V
+  'exec-and-forget open -g -a "VSCode"',
+
 ]
 
 # Start AeroSpace at login
@@ -56,7 +74,7 @@ enable-normalization-opposite-orientation-for-nested-containers = true
 accordion-padding = 30
 
 # Possible values: tiles|accordion
-default-root-container-layout = 'tiles'
+default-root-container-layout = 'accordion'
 
 # Possible values: horizontal|vertical|auto
 # 'auto' means: wide monitor (anything wider than high) gets horizontal orientation,
@@ -73,30 +91,37 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
 # Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
 # Also see: https://nikitabobko.github.io/AeroSpace/goodies#disable-hide-app
-automatically-unhide-macos-hidden-apps = false
+automatically-unhide-macos-hidden-apps = true
 
 # Application workspace assignments
-[[on-window-detected]]
-if.app-id = 'com.openai.chat'
-run = 'move-node-to-workspace C'
-
-[[on-window-detected]]
-if.app-id = 'com.anthropic.claudefordesktop'
-run = 'move-node-to-workspace C'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.iCal'
-run = 'move-node-to-workspace R'
 
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
 run = 'move-node-to-workspace B'
 
+# ChatGPT abandoned
+# [[on-window-detected]]
+# if.app-id = 'com.openai.chat'
+# run = 'move-node-to-workspace C'
+
+# Claude Desktop abandoned
+# [[on-window-detected]]
+# if.app-id = 'com.anthropic.claudefordesktop'
+# run = 'move-node-to-workspace C'
+
 [[on-window-detected]]
-if.app-id = 'com.mitchellh.ghostty'
+if.app-id = 'com.google.Chrome.app.bbildfjdmppgpaibcgkgijmdkodmcpcd' # Open WebUI
+run = 'move-node-to-workspace C'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Terminal' # Terminal for Claude Code
+run = 'move-node-to-workspace C'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
 run = [
-    'layout floating',
-    'move-node-to-workspace T'
+    'layout floating', # Attempt to resolve bug with opening new tabs
+    'move-node-to-workspace F'
 ]
 
 [[on-window-detected]]
@@ -112,7 +137,19 @@ if.app-id = 'com.apple.Notes'
 run = 'move-node-to-workspace N'
 
 [[on-window-detected]]
+if.app-id = 'com.google.Chrome.app.gecohhahibbgkajbpdehcckdhalbgbij' # Jira [MLMP-311]
+run = 'move-node-to-workspace R'
+
+[[on-window-detected]]
 if.app-id = 'com.todoist.mac.Todoist'
+run = 'move-node-to-workspace R'
+
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome.app.chjbbpdidamagiofpdhenaghgkllbfml' # Reclaim
+run = 'move-node-to-workspace R'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.iCal'
 run = 'move-node-to-workspace R'
 
 [[on-window-detected]]
@@ -120,18 +157,19 @@ if.app-id = 'com.spotify.client'
 run = 'move-node-to-workspace S'
 
 [[on-window-detected]]
-if.app-id = 'com.apple.finder'
+if.app-id = 'com.mitchellh.ghostty'
 run = [
-    'layout floating',
-    'move-node-to-workspace F'
+    'layout floating', # Attempt to resolve bug with opening new tabs
+    'move-node-to-workspace T'
 ]
 
-[[on-window-detected]]
-if.app-id = 'com.google.Chrome.app.chjbbpdidamagiofpdhenaghgkllbfml' # Reclaim
-run = 'move-node-to-workspace R'
+# Cursor abandoned
+# [[on-window-detected]]
+# if.app-id = 'com.todesktop.230313mzl4w4u92' # Cursor
+# run = 'move-node-to-workspace V'
 
 [[on-window-detected]]
-if.app-id = 'com.todesktop.230313mzl4w4u92' # Cursor
+if.app-id = 'com.microsoft.VSCode'
 run = 'move-node-to-workspace V'
 
 # Possible values: (qwerty|dvorak|colemak)
@@ -220,12 +258,12 @@ run = 'move-node-to-workspace V'
     alt-9 = 'workspace 9'
     # alt-a = 'workspace A' # In your config, you can drop workspace bindings that you don't need
     alt-b = 'workspace B' # Browser
-    alt-c = 'workspace C' # ChatGPT/Claude
+    alt-c = 'workspace C' # AI Assistance (Chat)
     # alt-d = 'workspace D'
     # alt-e = 'workspace E'
     alt-f = 'workspace F' # Finder
     # alt-g = 'workspace G'
-    alt-i = 'workspace I' # Jupyter Lab?
+    # alt-i = 'workspace I'
     alt-m = 'workspace M' # Mail/Slack
     alt-n = 'workspace N' # Notes
     # alt-o = 'workspace O'
@@ -235,7 +273,7 @@ run = 'move-node-to-workspace V'
     alt-s = 'workspace S' # Spotify
     alt-t = 'workspace T' # Terminal/Ghostty
     # alt-u = 'workspace U'
-    alt-v = 'workspace V' # VSCode/Cursor IDE
+    alt-v = 'workspace V' # VSCode/Cursor (IDE)
     # alt-w = 'workspace W'
     # alt-x = 'workspace X'
     # alt-y = 'workspace Y'
@@ -258,7 +296,7 @@ run = 'move-node-to-workspace V'
     # alt-shift-e = 'move-node-to-workspace E'
     alt-shift-f = 'move-node-to-workspace F'
     # alt-shift-g = 'move-node-to-workspace G'
-    alt-shift-i = 'move-node-to-workspace I'
+    # alt-shift-i = 'move-node-to-workspace I'
     alt-shift-m = 'move-node-to-workspace M'
     alt-shift-n = 'move-node-to-workspace N'
     # alt-shift-o = 'move-node-to-workspace O'
