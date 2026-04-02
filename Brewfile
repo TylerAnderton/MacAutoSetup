@@ -1,5 +1,6 @@
 tap "nikitabobko/tap" # Aerospace
 tap "jorgerojas26/lazysql" 
+tap "withgraphite/tap"
 
 # CLI Tools
 brew "git"
@@ -23,6 +24,7 @@ cask "1password-cli"
 brew "huggingface-cli"
 # brew "kubectl"       # Kubernetes CLI
 # brew "tailscale"     # Secure mesh VPN for homelab and remote access
+brew "withgraphite/tap/graphite"
 
 # Languages n stuff
 brew "python"
