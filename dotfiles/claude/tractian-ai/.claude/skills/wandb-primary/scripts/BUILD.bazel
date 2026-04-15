@@ -1,0 +1,11 @@
+load("@aspect_rules_py//py:defs.bzl", "py_library")
+
+py_library(
+    name = "scripts",
+    srcs = [
+        "wandb_helpers.py",
+        "weave_helpers.py",
+    ],
+    visibility = ["//:__subpackages__"],
+    deps = ["@pip//pandas"],
+)
