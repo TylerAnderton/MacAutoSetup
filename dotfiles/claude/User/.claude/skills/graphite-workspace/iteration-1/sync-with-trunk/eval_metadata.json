@@ -1,0 +1,22 @@
+{
+  "eval_id": 2,
+  "eval_name": "sync-with-trunk",
+  "prompt": "The metrics-anomalies/main branch has moved forward. I need to sync my stack with the latest changes.",
+  "assertions": [
+    {
+      "text": "Recommends `gt sync` as the primary command",
+      "passed": null,
+      "evidence": null
+    },
+    {
+      "text": "Does NOT recommend manual `git rebase` or `git pull` as the solution",
+      "passed": null,
+      "evidence": null
+    },
+    {
+      "text": "Explains that `gt sync` handles trunk pull + stack rebase + merged branch cleanup",
+      "passed": null,
+      "evidence": null
+    }
+  ]
+}

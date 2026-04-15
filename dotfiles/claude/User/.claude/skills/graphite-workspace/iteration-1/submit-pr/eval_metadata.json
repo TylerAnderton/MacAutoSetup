@@ -1,0 +1,37 @@
+{
+  "eval_id": 0,
+  "eval_name": "submit-pr",
+  "prompt": "I'm done with my changes on branch metrics-anomalies/add-zscore-filter. Submit a PR for the current branch.",
+  "assertions": [
+    {
+      "text": "Uses `gt submit` rather than `gh pr create` or `git push` to submit the PR",
+      "passed": null,
+      "evidence": null
+    },
+    {
+      "text": "Includes `--draft` flag on the submit command",
+      "passed": null,
+      "evidence": null
+    },
+    {
+      "text": "Includes `--no-edit` flag (or `--no-interactive`) to skip interactive prompts",
+      "passed": null,
+      "evidence": null
+    },
+    {
+      "text": "Uses `gh pr edit` to set the PR title and body after submission",
+      "passed": null,
+      "evidence": null
+    },
+    {
+      "text": "PR body includes the AI signing line (*🤖 Claude Code (claude-sonnet-4-6)*)",
+      "passed": null,
+      "evidence": null
+    },
+    {
+      "text": "Mentions writing or references a handoff note (.notes/handoffs/)",
+      "passed": null,
+      "evidence": null
+    }
+  ]
+}

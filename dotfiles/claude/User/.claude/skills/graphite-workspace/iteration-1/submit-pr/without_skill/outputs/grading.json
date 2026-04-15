@@ -1,0 +1,37 @@
+{
+  "eval_id": 0,
+  "eval_name": "submit-pr",
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "Uses `gt submit` rather than `gh pr create` or `git push` to submit the PR",
+      "passed": false,
+      "evidence": "Uses `git push -u origin <branch>` then `gh pr create --base metrics-anomalies/main --draft ...`"
+    },
+    {
+      "text": "Includes `--draft` flag on the submit command",
+      "passed": true,
+      "evidence": "Passes `--draft` to `gh pr create`"
+    },
+    {
+      "text": "Includes `--no-edit` flag to skip interactive prompts",
+      "passed": false,
+      "evidence": "Not applicable — uses `gh pr create` which accepts body inline; no `--no-edit` needed or used"
+    },
+    {
+      "text": "Uses `gh pr edit` to set the PR title and body after submission",
+      "passed": false,
+      "evidence": "Passes `--title` and `--body` directly to `gh pr create`, not via `gh pr edit`"
+    },
+    {
+      "text": "PR body includes the AI signing line (*🤖 Claude Code (claude-sonnet-4-6)*)",
+      "passed": true,
+      "evidence": "PR body ends with the required signing line"
+    },
+    {
+      "text": "Mentions writing or references a handoff note (.notes/handoffs/)",
+      "passed": true,
+      "evidence": "Step 2 writes the full handoff note to `.notes/handoffs/metrics-anomalies-add-zscore-filter.md`"
+    }
+  ]
+}

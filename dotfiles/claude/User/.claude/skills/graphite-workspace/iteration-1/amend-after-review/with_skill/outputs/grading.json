@@ -1,0 +1,27 @@
+{
+  "eval_id": 1,
+  "eval_name": "amend-after-review",
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "Uses `gt modify` to amend the branch (not `git commit --amend`)",
+      "passed": true,
+      "evidence": "Uses `gt modify -m \"fix: address review feedback\"` explicitly"
+    },
+    {
+      "text": "Does NOT suggest `git push --force` or `git push -f`",
+      "passed": true,
+      "evidence": "No force push mentioned; re-submission handled entirely by `gt submit`"
+    },
+    {
+      "text": "Re-submits using `gt submit` (not `git push`)",
+      "passed": true,
+      "evidence": "Uses `gt submit --draft --no-edit`; also mentions `gt submit --stack --draft --no-edit` for multi-PR stacks"
+    },
+    {
+      "text": "Includes `--draft` flag on the re-submit command",
+      "passed": true,
+      "evidence": "`gt submit --draft --no-edit` used"
+    }
+  ]
+}

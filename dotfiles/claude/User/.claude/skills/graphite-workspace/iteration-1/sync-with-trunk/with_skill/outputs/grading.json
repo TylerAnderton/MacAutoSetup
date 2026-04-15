@@ -1,0 +1,22 @@
+{
+  "eval_id": 2,
+  "eval_name": "sync-with-trunk",
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "Recommends `gt sync` as the primary command",
+      "passed": true,
+      "evidence": "Leads with `gt sync` as the single command to run"
+    },
+    {
+      "text": "Does NOT recommend manual `git rebase` or `git pull` as the solution",
+      "passed": true,
+      "evidence": "No raw git rebase or pull recommended; explains why `gt sync` is preferred over manual rebase"
+    },
+    {
+      "text": "Explains that `gt sync` handles trunk pull + stack rebase + merged branch cleanup",
+      "passed": true,
+      "evidence": "Covers fetch/fast-forward of trunk, per-branch rebase, merged branch deletion prompt, and post-sync `gt submit --stack` to update PRs"
+    }
+  ]
+}

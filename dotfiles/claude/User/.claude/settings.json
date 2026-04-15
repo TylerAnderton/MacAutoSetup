@@ -5,6 +5,7 @@
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
     "EDITOR": "nvim"
   },
+  "effortLevel": "low",
   "permissions": {
     "allow": [
       "Bash(/Users/tyleranderton/.claude/skills/get-open-pr-comments/get_open_pr_comments.sh *)",
@@ -15,6 +16,8 @@
       "Bash(cat *)",
       "Bash(claude --print:*)",
       "Bash(claude mcp:*)",
+      "Bash(claude plugin:*)",
+      "Bash(claude plugins:*)",
       "Bash(cp *)",
       "Bash(curl -s* *graphite.com/docs/*)",
       "Bash(curl -s* *localhost:*)",
@@ -62,6 +65,7 @@
       "Bash(xargs ls:*)",
       "Bash(~/.claude/skills/get-open-pr-comments/get_open_pr_comments.sh *)",
       "Read(//Users/tyleranderton/.claude/**)",
+      "Read(//Users/tyleranderton/Repositories/MacAutoSetup/dotfiles/claude/**)",
       "Skill(ai-review)",
       "Skill(commit-commands:commit-push-pr)",
       "Skill(update-config)",
@@ -119,22 +123,24 @@
     ]
   },
   "enabledPlugins": {
-    "pyright-lsp@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true,
+    "agent-sdk-dev@claude-plugins-official": false,
+    "atlassian@claude-plugins-official": false,
+    "caveman@caveman": true,
     "claude-code-setup@claude-plugins-official": false,
     "claude-md-management@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": false,
-    "context7@claude-plugins-official": true,
-    "feature-dev@claude-plugins-official": true,
     "code-review@claude-plugins-official": false,
-    "code-simplifier@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": false,
     "commit-commands@claude-plugins-official": true,
-    "pr-review-toolkit@claude-plugins-official": true,
-    "atlassian@claude-plugins-official": false,
-    "slack@claude-plugins-official": false,
+    "context7@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": false,
     "lua-lsp@claude-plugins-official": false,
-    "agent-sdk-dev@claude-plugins-official": false,
-    "caveman@caveman": true
+    "pr-review-toolkit@claude-plugins-official": false,
+    "pyright-lsp@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": false,
+    "security-guidance@claude-plugins-official": false,
+    "skill-creator@claude-plugins-official": false,
+    "slack@claude-plugins-official": false,
+    "superpowers@claude-plugins-official": false
   },
   "extraKnownMarketplaces": {
     "caveman": {
@@ -143,6 +149,5 @@
         "repo": "JuliusBrussee/caveman"
       }
     }
-  },
-  "effortLevel": "low"
+  }
 }
