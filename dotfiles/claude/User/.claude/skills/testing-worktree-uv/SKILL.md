@@ -34,10 +34,10 @@ git branch --show-current
 
 ### Step 3 — If in a worktree — check for temp-test branch
 
-Extract ticket from branch name (e.g. `metrics-anomalies/mlmp-491-subtask` → `491`).
+Extract <ticket-number> from branch name (e.g. `metrics-anomalies/mlmp-491-subtask` → `491`).
 
 ```bash
-git -C <main-tree-path> branch --list 'temp-test-491*'
+git -C <main-tree-path> branch --list 'temp-test-<ticket-number>*'
 ```
 
 ### Step 4 — Create or update temp-test branch on main tree
@@ -46,16 +46,16 @@ Temp-test branches disposable, untracked — do NOT register with `gt track`.
 
 **No temp-test branch:**
 ```bash
-git -C <main-tree-path> checkout -b temp-test-491 <worktree-branch>
+git -C <main-tree-path> checkout -b temp-test-<ticket-number> <worktree-branch>
 ```
 
 **Exist:**
 ```bash
-git -C <main-tree-path> checkout temp-test-491
+git -C <main-tree-path> checkout temp-test-<ticket-number>
 git -C <main-tree-path> merge <worktree-branch>
 ```
 
-Follow `temp-test-<TICKET>` naming. Never submit or push.
+Follow `temp-test-<ticket-number>` naming. Never submit or push.
 
 ### Step 5 — Run pytest from main tree
 
@@ -77,4 +77,4 @@ Orchestrator dispatches the `tester` agent — never runs pytest directly. `test
 
 ## Background
 
-`uv` symlink point main tree. Worktree checkout separate branch, symlink unchanged. Test worktree code → test main code instead.
+`uv` symlinks project → `.venv` for editable installs. Worktree checks out a branch, but the symlink still points to main tree source. `uv run pytest` inside worktree tests stale code from the main checkout, not the worktree changes.
