@@ -1,7 +1,7 @@
 ---
 name: type-design-analyzer
 description: Analyze type design for encapsulation quality and invariant strength. Use when introducing new types, before finalizing a PR with new data models, or when refactoring existing types. Provides ratings and actionable recommendations.
-model: inherit
+model: minimax-m2.7
 color: pink
 ---
 

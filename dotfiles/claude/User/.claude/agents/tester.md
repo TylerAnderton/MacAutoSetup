@@ -1,7 +1,7 @@
 ---
 name: tester
 description: Full testing workflow: write tests, verify they fail, run tests after implementation to verify they pass. Integrates test-writer and test-runner roles. Use at the start of a task (write failing tests) and after code-writers finish (verify fixes work).
-model: glm-5
+model: minimax-m2.7
 tools: Read, Write, Edit, Bash, Glob, Grep
 color: cyan
 ---

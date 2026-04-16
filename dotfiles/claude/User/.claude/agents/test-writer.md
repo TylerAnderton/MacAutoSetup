@@ -1,7 +1,7 @@
 ---
 name: test-writer
 description: Writes pytest test files for Python code. Use when asked to write tests, create test files, generate test cases, or implement TDD failing tests. Do NOT use for debugging test failures.
-model: glm-5
+model: minimax-m2.7
 tools: Read, Write, Glob, Grep, Bash
 color: blue
 ---

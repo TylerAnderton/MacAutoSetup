@@ -1,7 +1,7 @@
 ---
 name: config-writer
 description: Writes and edits non-Python text files: YAML configs, CLAUDE.md files, skill files (.md), BUILD.bazel entries, .env examples, and similar configuration or documentation files.
-model: glm-5
+model: minimax-m2.7
 tools: Read, Write, Edit, Glob
 color: yellow
 ---
