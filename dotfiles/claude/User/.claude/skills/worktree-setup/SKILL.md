@@ -1,20 +1,27 @@
 ---
 name: worktree-setup
-description: "Set up a git worktree for isolated development. Use when a subagent needs an isolated workspace. Always use Pattern A: gt create first on the main checkout, then git worktree add to attach. NEVER base worktrees on master/main."
+description: "Set up a git worktree for isolated development. Use when a subagent needs an isolated workspace. Always use Pattern A: gt create first from the repo root, then git worktree add to attach. NEVER base worktrees on master/main or temp-test branches."
 ---
 
 # Worktree Setup
 
+## Critical Context
+
+**The orchestrator session is NOT on the feature branch.** The current checkout in the orchestrator's working directory is typically a `temp-test-*` branch — a throwaway branch, not a development branch. Do NOT base any work on it.
+
+All branch creation must happen explicitly on the correct feature branch, regardless of what is currently checked out.
+
 ## Pattern A — always use this
 
 ```bash
-# Step 1: On the main checkout, ensure you're on the current feature branch
-gt checkout metrics-anomalies/mlmp-491   # the numbered ticket branch, NOT master
+# Step 1: From the repo root (e.g. /Users/tyleranderton/Repositories/tractian-ai),
+#          explicitly switch to the feature branch — do NOT assume current branch is correct
+gt checkout metrics-anomalies/mlmp-491   # the numbered ticket branch, NOT master, NOT temp-test-*
 
-# Step 2: Create and register the branch with gt
+# Step 2: Create and register the sub-branch with gt (stacks on the feature branch above)
 gt create metrics-anomalies/mlmp-491-subtask -am "feat: initial"
 
-# Step 3: Attach a worktree to the already-tracked branch
+# Step 3: Attach a worktree to the already-tracked branch (no -b flag)
 git worktree add .worktrees/mlmp-491-subtask metrics-anomalies/mlmp-491-subtask
 ```
 
@@ -24,21 +31,24 @@ git worktree add .worktrees/mlmp-491-subtask metrics-anomalies/mlmp-491-subtask
 
 | Rule | Detail |
 |------|--------|
-| Base branch | Current numbered feature branch (e.g. `metrics-anomalies/mlmp-491`) |
-| Never base on | `master`, `main`, non-feature branches |
-| Branch creation | `gt create` on main checkout first — never inside worktree |
+| Base branch | Explicitly checked-out feature branch (e.g. `metrics-anomalies/mlmp-491`) |
+| Never base on | `master`, `main`, `temp-test-*`, or whatever is currently checked out by default |
+| Branch creation | `gt checkout <feature-branch>` first, then `gt create` — from repo root, never inside worktree |
 | No `-b` flag | `git worktree add .worktrees/name <branch>` only |
+| Verify before create | Run `git branch --show-current` to confirm you are on the correct base branch |
 
 ## Provide Branch to Subagent
 
 After setup, tell subagent:
 
 ```
-Working directory: /path/to/repo/.worktrees/mlmp-491-subtask
+Repo root: /Users/tyleranderton/Repositories/tractian-ai
+Working directory: /Users/tyleranderton/Repositories/tractian-ai/.worktrees/mlmp-491-subtask
 Branch: metrics-anomalies/mlmp-491-subtask
 Parent branch: metrics-anomalies/mlmp-491
-Main checkout: /path/to/repo
 ```
+
+Do NOT use the term "main checkout" — it is ambiguous. Always refer to the repo root by its absolute path.
 
 Subagent commits with `gt modify` from inside worktree. Branch already registered — no `gt track` needed.
 

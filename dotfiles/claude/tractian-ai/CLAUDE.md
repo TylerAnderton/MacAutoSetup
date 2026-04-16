@@ -31,6 +31,10 @@ MLE monorepo: Python, Go, Rust. Bazel + uv.
 | Python style/types | `python-standards` |
 | Architecture standards | `engineering-standards` |
 
+## Worktree Rule
+
+**Before any code change:** create worktree via `worktree-setup` skill. Never edit files directly on `temp-test-*` or feature branches.
+
 ## Safety Rules
 - **No force push** to main/master
 - **No `git reset --hard`** on main/master

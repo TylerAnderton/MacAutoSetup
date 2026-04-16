@@ -13,17 +13,20 @@ description: "Rules for all branch and commit operations in tractian-ai. Invoke 
 
 ## Creating a Branch
 
-```bash
-# Create branch, stage everything, commit in one step
-gt create metrics-anomalies/my-branch -am "feat: description"
-```
-
-`gt create` stacks on current branch. To stack on specific parent:
+**The orchestrator session is typically checked out on a `temp-test-*` branch — NOT the feature branch.** Always explicitly `gt checkout` the correct parent before creating any branch.
 
 ```bash
-gt checkout metrics-anomalies/mlmp-491   # current feature branch
-gt create metrics-anomalies/mlmp-491-subtask -am "feat: initial"
+# Step 0: Confirm current branch — do NOT assume
+git branch --show-current
+
+# Step 1: Switch to the feature branch (never base on temp-test-* or master)
+gt checkout metrics-anomalies/mlmp-491
+
+# Step 2: Create branch, stage everything, commit in one step
+gt create metrics-anomalies/mlmp-491-subtask -am "feat: description"
 ```
+
+`gt create` stacks on whichever branch is currently checked out — so always verify first.
 
 ## Rescuing Untracked Branch
 

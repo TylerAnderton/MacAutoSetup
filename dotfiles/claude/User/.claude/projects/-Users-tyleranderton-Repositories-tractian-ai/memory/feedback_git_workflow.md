@@ -11,5 +11,7 @@ Create all branches with `gt create`, never `git checkout -b` or `EnterWorktree`
 **How to apply:**
 - Orchestrator: all branches on main + `gt create` before subagent dispatch
 - Subagents: no branch creation. Commit to given branch w/ `gt modify`
-- Worktrees: base on feature branch (e.g. `metrics-anomalies/mlmp-491`), never `master`
+- Worktrees: base on feature branch (e.g. `metrics-anomalies/mlmp-491`), never `master` or `temp-test-*`
+- Orchestrator session is typically on a `temp-test-*` branch — NOT the feature branch. Always `gt checkout <feature-branch>` explicitly before any `gt create`. Never assume current branch is the correct base.
+- Never use term "main checkout" — ambiguous. Use "repo root" + absolute path instead.
 - Use `worktree-setup` for worktrees, `git-branch-management` for branch/commit rules
