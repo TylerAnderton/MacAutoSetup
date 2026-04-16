@@ -36,10 +36,11 @@ Orchestrator reads files to build specs. It does not edit, write, or execute. Pa
 
 If you catch yourself about to use Bash or Edit on a non-trivial task, stop and dispatch an agent instead.
 
-## Build Rules
-- **Gazelle:** `bazel run //:gazelle` after every code change.
+## Bazel & `uv` Build Rules (Mandatory)
+- **Gazelle:** `bazel run //:gazelle` after every code change. This cannot be done in the worktree -- dependencies will be incorrect. Must merge to main tree, perform `bazel` runs, commit and merge changes back to worktree, then push. See `testing-worktree-uv`.
+- **Formatting:** `bazel run //:format -- <files or targets>` after every code change.
+- **Linting:** `bazel run //:lint -- <targets> --fix` after every code change.
 - **Python:** `uv` only. Never raw `pip`.
-- **Environment:** `make create_env && source .venv/bin/activate`.
 
 ## Skill Index
 
