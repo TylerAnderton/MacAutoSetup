@@ -7,6 +7,25 @@ description: "Execute implementation plans by dispatching fresh subagents per ta
 
 Dispatch fresh subagent per task, two-stage review: spec compliance, then code quality.
 
+## MANDATORY DISPATCH CHECKLIST
+
+Every Agent tool call MUST include all of the following in its prompt. Missing any item = invalid dispatch.
+
+```
+Repo root: /Users/tyleranderton/Repositories/tractian-ai
+Working directory: <absolute-path-to-worktree>   ← REQUIRED. Never omit.
+Branch: <branch-name>                             ← REQUIRED. The branch the agent commits to.
+Parent branch: <parent-feature-branch>            ← REQUIRED.
+
+BRANCH RULES (copy verbatim into every prompt):
+- Do NOT create new branches. Your branch is already set up.
+- Commit with `gt modify` (never `git commit` or `git add && git commit`)
+- Do NOT run `uv run pytest` inside the worktree — report tests needed; orchestrator dispatches tester
+- All edits go in the Working directory above. Never edit files in the repo root checkout.
+```
+
+If you do not yet have a worktree path, stop and run `worktree-setup` first.
+
 ## Pre-Flight: Workspace Setup
 
 Before dispatching subagents:
@@ -116,6 +135,8 @@ All branches created up-front (pre-flight). Dispatch parallel implementers simul
 - Never skip spec review — do it before code quality review, always
 - Never let an implementer create branches
 - Never ignore BLOCKED status — something must change before retrying
+- Never dispatch an agent without specifying `Working directory`, `Branch`, and `Parent branch`
+- Never let an agent default to the repo root (`/Users/tyleranderton/Repositories/tractian-ai`) as its working directory — that is the `temp-test-*` checkout and is off-limits for edits
 
 ## Integration
 

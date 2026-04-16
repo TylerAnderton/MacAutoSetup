@@ -52,6 +52,23 @@ Do NOT use the term "main checkout" — it is ambiguous. Always refer to the rep
 
 Subagent commits with `gt modify` from inside worktree. Branch already registered — no `gt track` needed.
 
+## Enforce in Dispatch
+
+The orchestrator MUST copy the following block verbatim into the prompt of every subagent it dispatches. Fill in the bracketed values before sending:
+
+```
+Repo root: /Users/tyleranderton/Repositories/tractian-ai
+Working directory: /Users/tyleranderton/Repositories/tractian-ai/.worktrees/<name>
+Branch: <branch-name>
+Parent branch: <parent-feature-branch>
+
+BRANCH RULES:
+- Do NOT create new branches. Your branch is already set up.
+- Commit with `gt modify` (never `git commit`)
+- Do NOT run `uv run pytest` inside the worktree — report tests needed; orchestrator dispatches tester
+- All edits go in Working directory above. Never edit files in the repo root.
+```
+
 ## Python Testing
 
 Don't run `uv run pytest` inside worktree. Use `testing-worktree-uv` skill to run tests from main checkout against temp branch.

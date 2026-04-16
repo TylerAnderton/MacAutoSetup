@@ -26,7 +26,7 @@ Orchestrator reads files to build specs. It does not edit, write, or execute. Pa
 
 ## Prohibited Direct Tool Use
 
-**NEVER use these tools yourself for implementation tasks — delegate instead:**
+**NEVER use these tools yourself for implementation tasks — delegate instead (see `subagent-dev`):*
 
 - `Bash` — no running pytest, git commands beyond status/log, or any script execution
 - `Edit` / `Write` — no editing or creating source files, tests, or configs
@@ -62,7 +62,7 @@ If you catch yourself about to use Bash or Edit on a non-trivial task, stop and 
 
 ## Worktree Rule
 
-**Before any code change:** create worktree via `worktree-setup` skill. Never edit files directly on `temp-test-*` or feature branches.
+**Before any code change:** create worktree via `worktree-setup` skill. Never edit files directly on `temp-test-*`. Never push code from `temp-test-*` branches.
 
 ## Safety Rules
 - **No force push** to main/master
