@@ -5,7 +5,6 @@
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
     "EDITOR": "nvim"
   },
-  "effortLevel": "low",
   "permissions": {
     "allow": [
       "Bash(/Users/tyleranderton/.claude/skills/get-open-pr-comments/get_open_pr_comments.sh *)",
@@ -149,5 +148,6 @@
         "repo": "JuliusBrussee/caveman"
       }
     }
-  }
+  },
+  "effortLevel": "low"
 }

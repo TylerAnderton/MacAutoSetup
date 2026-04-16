@@ -5,10 +5,11 @@ description: "Core architectural and behavioral standards for the Tractian AI re
 
 # Engineering Standards
 
+## Standards
+
 - **Behavior:** Ask clarifying questions before significant changes.
-- **Logic:** Follow DRY, modularity; prefer reusable abstractions.
-- **TDD:** Write failing tests first via `test-driven-development` skill.
-- **Tooling Constraint:** Never use Bash to edit files. Use Read, Edit, Write tools only.
-- **Testing:** Run relevant tests (`uv run pytest <target>`) before commit/push. Syntax/import errors = failures.
-- **Parallelization:** Dispatch independent tasks as parallel subagents. Use `subagent-dev` skill for plan execution.
-- **Worktrees:** Use `worktree-setup` skill for isolated development. Use `testing-worktree-uv` for running Python tests from worktrees.
+- **Logic:** DRY, modularity, prefer reusable abstractions.
+- **TDD:** `tester` writes failing tests before implementation; verifies after.
+- **Tooling Constraint:** Never use Bash to edit files — Read, Edit, Write tools only.
+- **Parallelization:** Default is parallel. Dispatch independent tasks simultaneously. See `subagent-dev`.
+- **Worktrees:** Use `worktree-setup` for isolated development. Use `tester` (not raw pytest) for running tests.

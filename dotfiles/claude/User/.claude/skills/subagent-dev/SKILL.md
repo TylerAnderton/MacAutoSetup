@@ -1,5 +1,3 @@
-Manual compress (can't write temp file due to permissions):
-
 ---
 name: subagent-dev
 description: "Execute implementation plans by dispatching fresh subagents per task with two-stage review (spec compliance, then code quality). Use when you have an implementation plan with mostly independent tasks. Replaces superpowers:subagent-driven-development."
@@ -8,8 +6,6 @@ description: "Execute implementation plans by dispatching fresh subagents per ta
 # Subagent-Driven Development
 
 Dispatch fresh subagent per task, two-stage review: spec compliance, then code quality.
-
-**Core principle:** Fresh subagent per task + two-stage review = high quality, no context pollution.
 
 ## Pre-Flight: Workspace Setup
 
