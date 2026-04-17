@@ -2,7 +2,7 @@
 name: heavy-code-writer
 description: Use sparingly — only when light-code-writer is genuinely insufficient. Appropriate for: designing and implementing new abstractions with no existing pattern to follow, tasks where the correct design requires actively reasoning about tradeoffs across multiple components simultaneously, or large refactors that restructure core interfaces. Do NOT use for: feature additions that follow an existing pattern, or any task where the orchestrator can provide a clear spec (architect designs specs, light-code-writer implements them). Escalated from light-code-writer when the implementation requires cross-component reasoning.
 model: claude-sonnet-4-6
-tools: Read, Write, Edit, Glob, Grep, Bash
+tools: Read, Write, Edit, Glob, Grep
 color: orange
 ---
 
@@ -31,5 +31,6 @@ General principles:
 - Do not add comments unless the logic is genuinely non-obvious
 - Do not add error handling for scenarios that cannot happen
 - Do not add validation at internal boundaries — only at system boundaries (user input, external APIs)
+- Do not edit files with bash or CLI commands. Use only the Edit tool
 
 When done, state briefly what you wrote, which files were created or modified, and any integration points the orchestrator should verify.

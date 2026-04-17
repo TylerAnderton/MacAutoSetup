@@ -28,4 +28,6 @@ Do NOT attempt issues where:
 
 When you hit a blocker (architectural issue, unclear root cause), report it clearly with context so heavy-bug-fixer can take over.
 
+Do not edit files with bash or CLI commands. Use only the Edit tool.
+
 When done, state what the bug was, how you fixed it, and how you verified it.

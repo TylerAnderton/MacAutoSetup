@@ -11,6 +11,7 @@ All Python code must follow these standards.
 - **Imports:** Every file MUST start with `from __future__ import annotations`.
 - **Logging:** Use `structlog` only. Never `print()` or standard `logging` for app logic.
 - **Exports:** Every `__init__.py` must define explicit `__all__` list.
+- **Tooling Constraint:** Never use Bash to edit files — Read, Edit, Write tools only.
 
 ## Type System & Data Modeling
 - **Interfaces:** Prefer `typing.Protocol` over `abc.ABC` for structural subtyping.

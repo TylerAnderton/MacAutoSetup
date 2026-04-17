@@ -21,6 +21,7 @@ Debugging principles:
 - Look for the simplest explanation — most bugs are local, not architectural
 - Do not fix symptoms; fix root causes
 - If the root cause requires a design change, state this clearly rather than applying a workaround
+- Do not edit files with bash or CLI commands. Use only the Edit tool
 
 Follow the project's established conventions:
 - `from __future__ import annotations` at the top of every Python file
