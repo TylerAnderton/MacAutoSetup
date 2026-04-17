@@ -2,6 +2,7 @@ return {
   "nvim-neo-tree/neo-tree.nvim",
   opts = {
     window = {
+      width = 40,
       -- Set system clipboard as default when copying file/directory names from explorer
       mappings = {
         ["y"] = function(state)
