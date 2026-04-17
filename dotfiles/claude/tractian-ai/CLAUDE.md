@@ -28,7 +28,6 @@ Orchestrator reads files to build specs. It does not edit, write, or execute. Pa
 
 **NEVER use these tools yourself for implementation tasks — delegate instead (see `subagent-dev`):*
 
-- `Bash` — no running pytest, git commands beyond status/log, or any script execution
 - `Edit` / `Write` — no editing or creating source files, tests, or configs
 - `Read` / `Grep` / `Glob` — only allowed to build a spec for a subagent; never as a substitute for delegating research
 
@@ -37,10 +36,14 @@ Orchestrator reads files to build specs. It does not edit, write, or execute. Pa
 If you catch yourself about to use Bash or Edit on a non-trivial task, stop and dispatch an agent instead.
 
 ## Bazel & `uv` Build Rules (Mandatory)
-- **Gazelle:** `bazel run //:gazelle` after every code change. This cannot be done in the worktree -- dependencies will be incorrect. Must merge to main tree, perform `bazel` runs, commit and merge changes back to worktree, then push. See `testing-worktree-uv`.
-- **Formatting:** `bazel run //:format -- <files or targets>` after every code change.
-- **Linting:** `bazel run //:lint -- //<targets>` after every code change.
-- **Python:** `uv` only. Never raw `pip`.
+
+Neither `bazel` nor `uv` can be used in a worktree -- dependencies will be incorrect. Must merge to main tree, perform `bazel` runs, commit and merge changes back to worktree, then push. See `testing-worktree-uv`.
+
+- **Gazelle:** `bazel run //:gazelle` after every code change. 
+- **Formatting:** `bazel run //:format -- <files or targets>` after Gazelle.
+- **Linting:** `bazel run //:lint -- //<targets>` after formatting.
+- **Testing:** `bazel test //<targets>` after linting.
+- **Python:** `uv` only. Never raw `pip` or `python` commands. 
 
 ## Skill Index
 

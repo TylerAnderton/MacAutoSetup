@@ -43,9 +43,9 @@ class ProcessorConfig(BaseModel):
 
 ## Testing
 ```bash
-uv run pytest                              # run all tests (paths from pytest.ini)
-uv run pytest mle/libs/metrics_anomalies/tests                   # run tests for a specific lib
-uv run pytest mle/libs/metrics_anomalies/tests/test_foo.py::test_bar_SomeCase  # single test
+bazel test //mle/libs/metrics_anomalies/...                      # run all tests
+bazel test //mle/libs/metrics_anomalies/...                      # run tests for a specific lib
+bazel test //mle/libs/metrics_anomalies/tests:test_foo           # single test target
 ```
 
 ## Linting

@@ -44,7 +44,7 @@ The subagent commits with `gt modify` from inside the worktree. Branch is alread
 
 ## Python Testing
 
-Do NOT run `uv run pytest` inside the worktree. Use the `testing-worktree-uv` skill to run tests from the main checkout against a temp branch.
+Do NOT run `bazel test` inside the worktree. Use the `testing-worktree-uv` skill to run tests from the main checkout against a temp branch.
 
 ## Cleanup
 

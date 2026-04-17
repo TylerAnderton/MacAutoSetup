@@ -1,15 +1,15 @@
 ---
 name: testing-worktree-uv
-description: "`uv` editable symlink main tree. Worktree pytest test stale code. Run pytest from main on temp branch. Use when testing Python in worktree."
+description: "`uv` editable symlink main tree. Worktree bazel test stale code. Run bazel test from main on temp branch. Use when testing Python in worktree."
 ---
 
 # testing-worktree-uv
 
 ## Overview
 
-`uv` editable symlink project to `.venv`. Worktree check different branch, symlink still point main. `uv run pytest` in worktree test stale code.
+`uv` editable symlink project to `.venv`. Worktree check different branch, symlink still point main. `bazel test` in worktree test stale code.
 
-**Fix:** Run pytest from main checkout on temp branch mirror worktree.
+**Fix:** Run bazel test from main checkout on temp branch mirror worktree.
 
 ---
 
@@ -57,24 +57,24 @@ git -C <main-tree-path> merge <worktree-branch>
 
 Follow `temp-test-<ticket-number>` naming. Never submit or push.
 
-### Step 5 — Run pytest from main tree
+### Step 5 — Run bazel test from main tree
 
 Run from main checkout, never worktree directory:
 
 ```bash
-cd <main-tree-path> && uv run pytest <test-paths>
+cd <main-tree-path> && bazel test //mle/libs/metrics_anomalies/...
 ```
 
 ---
 
 ## Subagent Rule
 
-Subagents in worktree: do NOT run pytest. Instead: 1) commit with `gt modify`, 2) report tests needed to orchestrator.
+Subagents in worktree: do NOT run bazel test. Instead: 1) commit with `gt modify`, 2) report tests needed to orchestrator.
 
-Orchestrator dispatches the `tester` agent — never runs pytest directly. `tester` handles worktree detection automatically.
+Orchestrator dispatches the `tester` agent — never runs bazel test directly. `tester` handles worktree detection automatically.
 
 ---
 
 ## Background
 
-`uv` symlinks project → `.venv` for editable installs. Worktree checks out a branch, but the symlink still points to main tree source. `uv run pytest` inside worktree tests stale code from the main checkout, not the worktree changes.
+`uv` symlinks project → `.venv` for editable installs. Worktree checks out a branch, but the symlink still points to main tree source. `bazel test` inside worktree tests stale code from the main checkout, not the worktree changes.

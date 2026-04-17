@@ -9,7 +9,7 @@ Never use Bash, Edit, Write, Read, Grep, or Glob to implement, fix, or test code
 **Why:** The user has been explicit and repeated this correction multiple times. Direct tool use for implementation tasks bypasses the subagent system, wastes the user's money, and produces worse results than specialized agents. This is a hard rule, not a preference.
 
 **How to apply:**
-- Running pytest → `tester` agent
+- Running bazel test → `tester` agent
 - Fixing a bug → `light-bug-fixer` or `heavy-bug-fixer`
 - Writing/editing code → `light-code-writer` or `heavy-code-writer`
 - Reading large files or logs → `research` agent

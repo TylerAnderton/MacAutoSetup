@@ -13,14 +13,14 @@ Every Agent tool call MUST include all of the following in its prompt. Missing a
 
 ```
 Repo root: /Users/tyleranderton/Repositories/tractian-ai
-Working directory: <absolute-path-to-worktree>   ← REQUIRED. Never omit.
+Working directory: <absolute-path-to-worktree>    ← REQUIRED. Never omit.
 Branch: <branch-name>                             ← REQUIRED. The branch the agent commits to.
 Parent branch: <parent-feature-branch>            ← REQUIRED.
 
 BRANCH RULES (copy verbatim into every prompt):
 - Do NOT create new branches. Your branch is already set up.
 - Commit with `gt modify` (never `git commit` or `git add && git commit`)
-- Do NOT run `uv run pytest` inside the worktree — report tests needed; orchestrator dispatches tester
+- Do NOT run `bazel test` inside the worktree — report tests needed; orchestrator dispatches tester
 - All edits go in the Working directory above. Never edit files in the repo root checkout.
 ```
 
@@ -87,13 +87,13 @@ BRANCH RULES:
 - Do NOT create new branches. Your branch is already set up.
 - Commit using `gt modify` (never `git commit`)
 - If you need a sub-branch, stop and report BLOCKED with reason
-- Do NOT run `uv run pytest` inside this worktree directory (editable install issue)
+- Do NOT run `bazel test` inside this worktree directory (bazel cannot be used in a worktree)
   — report tests needed; orchestrator will dispatch the `tester` agent
 ```
 
 ## Testing
 
-Never run `uv run pytest` directly. Always delegate to `tester` agent:
+Never run `bazel test` directly. Always delegate to `tester` agent:
 - **Pre-implementation:** dispatch `tester` with spec → writes failing tests
 - **Post-implementation:** dispatch `tester` after implementer `DONE` → verifies pass
 

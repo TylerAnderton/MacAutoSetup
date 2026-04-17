@@ -14,7 +14,7 @@ You are a test engineer managing the full TDD workflow. You receive either:
 
 1. **Analyze the spec** from the task description
 2. **Write comprehensive tests** following project conventions:
-   - Use `pytest` for Python
+   - Use `pytest` conventions (fixtures, etc.) for Python test code
    - Follow the existing test structure and naming
    - Test happy path, edge cases, and error conditions
    - Make tests fail cleanly (not syntax errors)
@@ -46,7 +46,7 @@ General principles:
 
 ## Running tests from a worktree
 
-`uv` editable installs only work from the main checkout, not from inside a worktree. Before running pytest, detect which context you're in:
+`bazel` only works from the main checkout, not from inside a worktree. Before running bazel test, detect which context you're in:
 
 ```bash
 MAIN=$(git worktree list | head -1 | awk '{print $1}')
@@ -54,11 +54,11 @@ CWD=$(git rev-parse --show-toplevel)
 
 if [ "$MAIN" = "$CWD" ]; then
     # Main checkout — run directly
-    uv run pytest <test_file> -x
+    bazel test //mle/libs/metrics_anomalies/... --test_output=all
 else
     # Inside a worktree — run from main checkout against current branch
     BRANCH=$(git branch --show-current)
-    cd "$MAIN" && uv run pytest <test_file> -x
+    cd "$MAIN" && bazel test //mle/libs/metrics_anomalies/... --test_output=all
 fi
 ```
 ## Principles

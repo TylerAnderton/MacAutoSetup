@@ -70,13 +70,13 @@ BRANCH RULES:
 - Do NOT create new branches. Your branch is already set up.
 - Commit using `gt modify` (never `git commit`)
 - If you need a sub-branch, stop and report BLOCKED with reason
-- Do NOT run `uv run pytest` inside this worktree directory (editable install issue)
+- Do NOT run `bazel test` inside this worktree directory (bazel cannot be used in a worktree)
   — report tests needed; orchestrator will dispatch the `tester` agent
 ```
 
 ## Testing
 
-Never run `uv run pytest` directly as orchestrator. Always delegate to the `tester` agent:
+Never run `bazel test` directly as orchestrator. Always delegate to the `tester` agent:
 - **Pre-implementation:** dispatch `tester` with task spec → writes failing tests
 - **Post-implementation:** dispatch `tester` after implementer reports `DONE` → verifies tests pass
 

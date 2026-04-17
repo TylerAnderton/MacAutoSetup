@@ -65,13 +65,13 @@ Parent branch: <parent-feature-branch>
 BRANCH RULES:
 - Do NOT create new branches. Your branch is already set up.
 - Commit with `gt modify` (never `git commit`)
-- Do NOT run `uv run pytest` inside the worktree — report tests needed; orchestrator dispatches tester
+- Do NOT run `bazel test` inside the worktree — report tests needed; orchestrator dispatches tester
 - All edits go in Working directory above. Never edit files in the repo root.
 ```
 
 ## Python Testing
 
-Don't run `uv run pytest` inside worktree. Use `testing-worktree-uv` skill to run tests from main checkout against temp branch.
+Don't run `bazel test` inside worktree. Use `testing-worktree-uv` skill to run tests from main checkout against temp branch.
 
 ## Cleanup
 

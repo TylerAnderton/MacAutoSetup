@@ -61,6 +61,6 @@ For conversational tasks where spawning a subagent would be wasteful, switch the
 # light-code-writer → single-file or mechanical multi-file Python changes
 # heavy-code-writer → new multi-component logic
 # heavy-bug-fixer   → hard bugs after 3+ failed attempts (pass full context)
-# test-writer       → pytest test files
+# test-writer       → bazel test files
 # config-writer     → YAML / CLAUDE.md / skill files
 ```

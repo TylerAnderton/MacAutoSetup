@@ -25,7 +25,7 @@ Cheap subagents output code/config. Sonnet plans, routes, reviews.
 | `light-code-writer` | `minimax-m2.7` | Single-file or mechanical multi-file changes (rename, move, edit, simple fix) |
 | `heavy-code-writer` | `claude-sonnet-4.6` | New multi-component logic needing coherent integration |
 | `heavy-bug-fixer` | `claude-opus-4.6` | Complex bugs after 3+ attempts (pass errors, attempts, files) |
-| `test-writer` | `minimax-m2.7` | Pytest files; verify fail before handoff |
+| `test-writer` | `minimax-m2.7` | Test files; verify fail before handoff |
 | `config-writer` | `minimax-m2.7` | YAML, CLAUDE.md, skills, BUILD.bazel |
 
 Use agents not direct. Skip if: iterative refinement needed from tests, or overhead > savings.
@@ -59,6 +59,6 @@ Back to Sonnet before: planning, multi-file reasoning, subagent dispatch.
 # light-code-writer → single-file or mechanical multi-file Python changes
 # heavy-code-writer → new multi-component logic
 # heavy-bug-fixer   → hard bugs after 3+ failed attempts (pass full context)
-# test-writer       → pytest test files
+# test-writer       → test files
 # config-writer     → YAML / CLAUDE.md / skill files
 ```

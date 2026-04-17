@@ -19,7 +19,7 @@ MLE monorepo (Python, Go, Rust). Uses Bazel + uv.
 - **PRs/Review:** Use `/pr-base-convention`.
 - **Standards:** Use `/engineering-standards` for TDD, Bash constraints, and testing rules.
 - **Python:** Use `/python-standards` for types/style.
-- **Testing/Worktree:** Use `/testing-worktree-uv` for pytest in worktrees.
+- **Testing/Worktree:** Use `/testing-worktree-uv` for testing with worktrees.
 
 ## Communication
 - **Signature:** End GitHub/PR comments with: `--- *🤖 Claude Code (<current_model>)*`

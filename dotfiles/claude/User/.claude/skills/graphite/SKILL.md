@@ -119,7 +119,7 @@ gt create metrics-anomalies/mlmp-490-clean -am "feat: initial"
 git checkout $TIP -- mle/libs/metrics_anomalies/
 
 # 5. Verify
-uv run pytest mle/libs/metrics_anomalies/tests/ -q
+bazel test //mle/libs/metrics_anomalies/tests/<targets>
 
 # 6. Commit
 git add mle/libs/metrics_anomalies/

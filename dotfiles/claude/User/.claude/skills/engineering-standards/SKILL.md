@@ -12,4 +12,4 @@ description: "Core architectural and behavioral standards for the Tractian AI re
 - **TDD:** `tester` writes failing tests before implementation; verifies after.
 - **Tooling Constraint:** Never use Bash to edit files — Read, Edit, Write tools only.
 - **Parallelization:** Default is parallel. Dispatch independent tasks simultaneously. See `subagent-dev`.
-- **Worktrees:** Use `worktree-setup` for isolated development. Use `tester` (not raw pytest) for running tests.
+- **Worktrees:** Use `worktree-setup` for isolated development. Use `tester` (not raw bazel test) for running tests.
