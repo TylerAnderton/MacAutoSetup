@@ -86,7 +86,7 @@
     ],
     "defaultMode": "default"
   },
-  "model": "sonnet",
+  "model": "sonnet[1m]",
   "hooks": {
     "SessionStart": [
       {
