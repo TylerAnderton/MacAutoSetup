@@ -32,6 +32,7 @@ brew "pipx"
 cask "miniconda"
 brew "pyenv" # python version manager
 brew "poetry" # python dependency manager
+brew "pyright"
 brew "uv" # python package & environment manager
 brew "node" # npm necessary for Astronvim LSPs
 brew "nvm"
