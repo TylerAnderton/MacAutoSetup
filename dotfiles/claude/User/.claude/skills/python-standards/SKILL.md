@@ -51,5 +51,5 @@ bazel test //mle/libs/metrics_anomalies/tests:test_foo           # single test t
 ## Linting
 ```bash
 uv run ruff check .    # lint
-uv run black .         # format (line-length 88, black profile)
+uv run ruff format .         # format (line-length 88, black profile)
 ```

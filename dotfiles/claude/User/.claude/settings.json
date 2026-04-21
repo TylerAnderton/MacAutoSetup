@@ -94,20 +94,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo '/caveman full'",
+            "command": "echo '/caveman ultra'",
             "statusMessage": "Activating Caveman Token Optimization..."
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "jq -r '.tool_input.file_path' | { read -r f; echo \"$f\" | grep -q '\\.py$' && /opt/homebrew/bin/uv run black \"$f\" 2>/dev/null || true; }",
-            "statusMessage": "Formatting with black..."
           }
         ]
       }
@@ -119,6 +107,18 @@
           {
             "type": "command",
             "command": "cmd=$(jq -r '.tool_input.command')\nif echo \"$cmd\" | grep -qE '\\bsed\\b'; then\n  if echo \"$cmd\" | grep -qE '(\\s-([a-zA-Z]*i|i\\b)|--in-place|w\\s+\\S+)'; then\n    echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Write operations forbidden\"}}'\n    exit 0\n  fi\nfi"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path' | { read -r f; echo \"$f\" | grep -q '\\.py$' && /opt/homebrew/bin/uv run ruff \"$f\" 2>/dev/null || true; }",
+            "statusMessage": "Formatting with ruff..."
           }
         ]
       }
