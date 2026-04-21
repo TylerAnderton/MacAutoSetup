@@ -3,17 +3,12 @@ name: verification-before-completion
 description: Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always
 ---
 
-# Verification Before Completion
+<objective>
+Evidence before claims. Always.
+</objective>
 
-## Overview
-
-Complete without verify = dishonest, not efficient.
-
-**Core principle:** Evidence before claims, always.
-
-**Letter ≠ spirit. Both matter.**
-
-## The Iron Law
+<essential_principles>
+**IRON LAW:**
 
 ```
 NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE
@@ -21,7 +16,7 @@ NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE
 
 No verify run = no pass claim.
 
-## The Gate Function
+**Gate Function:**
 
 ```
 BEFORE claiming any status or expressing satisfaction:
@@ -36,8 +31,10 @@ BEFORE claiming any status or expressing satisfaction:
 
 Skip any step = lying, not verifying
 ```
+</essential_principles>
 
-## Common Failures
+<common_failures>
+**The Claims Table:**
 
 | Claim | Requires | Not Sufficient |
 |-------|----------|----------------|
@@ -48,9 +45,10 @@ Skip any step = lying, not verifying
 | Regression test works | Red-green cycle verified | Test passes once |
 | Agent completed | VCS diff shows changes | Agent reports "success" |
 | Requirements met | Line-by-line checklist | Tests passing |
+</common_failures>
 
-## Red Flags - STOP
-
+<red_flags>
+**STOP when you see:**
 - Using "should", "probably", "seems to"
 - Satisfaction before verify ("Great!", "Done!", etc.)
 - About to commit/push/PR without verification
@@ -59,9 +57,9 @@ Skip any step = lying, not verifying
 - Thinking "just this once"
 - Tired, want done
 - **ANY wording implying success without having run verification**
+</red_flags>
 
-## Rationalization Prevention
-
+<rationalizations>
 | Excuse | Reality |
 |--------|---------|
 | "Should work now" | RUN the verification |
@@ -72,68 +70,4 @@ Skip any step = lying, not verifying
 | "I'm tired" | Exhaustion ≠ excuse |
 | "Partial check is enough" | Partial proves nothing |
 | "Different words so rule doesn't apply" | Spirit over letter |
-
-## Key Patterns
-
-**Tests:**
-```
-✅ [Run test command] [See: 34/34 pass] "All tests pass"
-❌ "Should pass now" / "Looks correct"
-```
-
-**Regression tests (TDD Red-Green):**
-```
-✅ Write → Run (pass) → Revert fix → Run (MUST FAIL) → Restore → Run (pass)
-❌ "I've written a regression test" (without red-green verification)
-```
-
-**Build:**
-```
-✅ [Run build] [See: exit 0] "Build passes"
-❌ "Linter passed" (linter doesn't check compilation)
-```
-
-**Requirements:**
-```
-✅ Re-read plan → Create checklist → Verify each → Report gaps or completion
-❌ "Tests pass, phase complete"
-```
-
-**Agent delegation:**
-```
-✅ Agent reports success → Check VCS diff → Verify changes → Report actual state
-❌ Trust agent report
-```
-
-## Why This Matters
-
-From 24 failure memories:
-- Partner: "Don't believe you" → trust broken
-- Undefined functions shipped → crash
-- Requirements missing → incomplete
-- False completion → wasted time → redirect → rework
-- Violates: "Honesty is a core value. If you lie, you'll be replaced."
-
-## When To Apply
-
-**ALWAYS before:**
-- ANY variation of success/completion claims
-- ANY expression of satisfaction
-- ANY positive statement about work state
-- Committing, PR creation, task completion
-- Moving to next task
-- Delegating to agents
-
-**Rule applies to:**
-- Exact phrases
-- Paraphrases and synonyms
-- Implications of success
-- ANY communication suggesting completion/correctness
-
-## The Bottom Line
-
-**No shortcuts for verification.**
-
-Run the command. Read the output. THEN claim the result.
-
-This is non-negotiable.
+</rationalizations>

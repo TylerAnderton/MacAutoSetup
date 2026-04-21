@@ -142,13 +142,20 @@
     "security-guidance@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": false,
     "slack@claude-plugins-official": false,
-    "superpowers@claude-plugins-official": false
+    "superpowers@claude-plugins-official": false,
+    "taches-cc-resources@taches-cc-resources": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
       "source": {
         "source": "github",
         "repo": "JuliusBrussee/caveman"
+      }
+    },
+    "taches-cc-resources": {
+      "source": {
+        "source": "github",
+        "repo": "glittercowboy/taches-cc-resources"
       }
     }
   },

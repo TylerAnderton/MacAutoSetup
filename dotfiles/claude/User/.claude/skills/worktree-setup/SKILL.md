@@ -1,86 +1,69 @@
 ---
 name: worktree-setup
-description: "Set up a git worktree for isolated development. Use when a subagent needs an isolated workspace. Always use Pattern A: gt create first from the repo root, then git worktree add to attach. NEVER base worktrees on master/main or temp-test branches."
+description: "Set up isolated git worktrees for subagents using Graphite branch tracking. Use when dispatching work that needs isolated development environment."
 ---
 
-# Worktree Setup
+<objective>Enable subagents to work in isolated git worktrees while maintaining Graphite stack tracking and preventing branch conflicts.</objective>
 
-## Critical Context
+<essential_principles>
 
-**The orchestrator session is NOT on the feature branch.** The current checkout in the orchestrator's working directory is typically a `temp-test-*` branch — a throwaway branch, not a development branch. Do NOT base any work on it.
+**Never base worktrees on master/main or temp-test-* branches.** The orchestrator session uses throwaway branches — they are not development branches.
 
-All branch creation must happen explicitly on the correct feature branch, regardless of what is currently checked out.
+**Pattern A is mandatory:** `gt create` (from repo root) → `git worktree add` (no `-b` flag). This registers the branch in Graphite's stack, which is required for `gt modify` commits from the worktree.
 
-## Pattern A — always use this
+**Branch creation is orchestrator responsibility.** Subagent receives an already-set-up worktree. Do not tell subagent to create branches.
 
+**Explicit parent branch.** Always specify `-o <parent-branch>` in `gt create`. Never assume current branch is correct. Verify with `git branch --show-current` before creating.
+
+**Subagent dispatch block is enforced.** Copy the block from workflows/dispatch-to-subagent.md verbatim into every subagent prompt. Fill in bracketed values. This prevents subagents from creating conflicting branches or running tests inside worktrees.
+
+</essential_principles>
+
+<intake>
+What do you need help with?
+
+1. **Create a new worktree** — set up isolated workspace for a subagent
+2. **Dispatch to subagent** — brief subagent on worktree constraints
+3. **Clean up worktree** — remove completed worktree
+4. **Understand the approach** — learn why Pattern A works
+</intake>
+
+<routing>
+
+| Intent | Workflow |
+|--------|----------|
+| "create", "set up", "new worktree", "isolated" | workflows/setup-worktree.md |
+| "dispatch", "brief subagent", "send to subagent" | workflows/dispatch-to-subagent.md |
+| "clean", "remove", "delete", "cleanup" | workflows/cleanup-worktree.md |
+| "why", "understand", "explain", "rationale", "how does this work" | references/pattern-a-rationale.md |
+
+**After reading your workflow, follow it exactly.**
+
+</routing>
+
+<quick_reference>
+
+**Pattern A (always use):**
 ```bash
-# Step 1: From the repo root (e.g. /Users/tyleranderton/Repositories/tractian-ai),
-#         Create and register the sub-branch with gt
-#          explicitly define the parent branch — do NOT assume current branch is correct
-gt create mlmp-<feature_number>-<feature_name> -o <parent-feature-branch>   # the numbered ticket branch, NOT master, NOT temp-test-*
+# Step 1: From repo root
+gt create <branch-name> -o <parent-branch>
 
-# Step 2: Attach a worktree to the already-tracked branch (no -b flag)
-git worktree add .worktrees/mlmp-<feature_number> mlmp-<feature_number>-<feature_name>
+# Step 2: Attach to branch
+git worktree add .worktrees/<name> <branch-name>
 ```
 
-**Why:** `gt create` registers branch in Graphite's stack. `git worktree add` (no `-b`) attaches to registered branch. Using `git worktree add -b` creates branch but skips registration — breaks stack tracking.
+**Critical:** Never use `git worktree add -b` — that skips Graphite registration.
 
-## Critical Rules
+**Subagent constraints (copy to dispatch prompt):**
+- Don't create branches
+- Commit with `gt modify` only
+- Don't run `bazel test` in worktree
+- Edit in worktree only
 
-| Rule | Detail |
-|------|--------|
-| Base branch | Explicitly checked-out feature branch (e.g. `metrics-anomalies/mlmp-491`) |
-| Never base on | `master`, `main`, `temp-test-*`, or whatever is currently checked out by default |
-| Branch creation | `gt checkout <feature-branch>` first, then `gt create` — from repo root, never inside worktree |
-| No `-b` flag | `git worktree add .worktrees/name <branch>` only |
-| Verify before create | Run `git branch --show-current` to confirm you are on the correct base branch |
-
-## Provide Branch to Subagent
-
-After setup, tell subagent:
-
-```
-Repo root: /Users/tyleranderton/Repositories/tractian-ai
-Working directory: /Users/tyleranderton/Repositories/tractian-ai/.worktrees/mlmp-491-subtask
-Branch: metrics-anomalies/mlmp-491-subtask
-Parent branch: metrics-anomalies/mlmp-491
-```
-
-Do NOT use the term "main checkout" — it is ambiguous. Always refer to the repo root by its absolute path.
-
-Subagent commits with `gt modify` from inside worktree. Branch already registered — no `gt track` needed.
-
-## Enforce in Dispatch
-
-The orchestrator MUST copy the following block verbatim into the prompt of every subagent it dispatches. Fill in the bracketed values before sending:
-
-```
-Repo root: /Users/tyleranderton/Repositories/tractian-ai
-Working directory: /Users/tyleranderton/Repositories/tractian-ai/.worktrees/<name>
-Branch: <branch-name>
-Parent branch: <parent-feature-branch>
-
-BRANCH RULES:
-- Do NOT create new branches. Your branch is already set up.
-- Commit with `gt modify` (never `git commit`)
-- Do NOT run `bazel test` inside the worktree — report tests needed; orchestrator dispatches tester
-- All edits go in Working directory above. Never edit files in the repo root.
-```
-
-## Python Testing
-
-Don't run `bazel test` inside worktree. Use `testing-worktree-uv` skill to transfer changes via patches, run bazel on main checkout.
-
-## Cleanup
-
+**Cleanup:**
 ```bash
 git worktree remove .worktrees/<name>
-# Optionally delete the branch after merging:
-# gt branch delete metrics-anomalies/mlmp-491-subtask
 ```
 
-## Verify Worktree List
+</quick_reference>
 
-```bash
-git worktree list
-```

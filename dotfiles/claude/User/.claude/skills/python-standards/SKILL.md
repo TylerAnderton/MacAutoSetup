@@ -1,26 +1,42 @@
 ---
 name: python-standards
-description: "Authoritative standards for Python development in the Tractian AI monorepo. Use this when writing, refactoring, or reviewing Python code. Trigger on: 'new python file', 'refactor python', 'python style', 'fix linting', or 'how to write python here'."
+description: "Authoritative standards for Python development. Use when writing, refactoring, or reviewing Python code. Trigger on: 'new python file', 'refactor python', 'python style', 'fix linting', or 'how to write python here'."
 ---
 
-# Python Standards & Patterns
+<objective>
+Ensure all Python code follows consistent patterns: imports, logging, type system, data modeling, testing, and linting.
+</objective>
 
-All Python code must follow these standards.
+<essential_principles>
+- **Imports:** Every file MUST start with `from __future__ import annotations`
+- **Logging:** Use `structlog` only. Never `print()` or standard `logging` for app logic
+- **Exports:** Every `__init__.py` must define explicit `__all__` list
+- **Tooling Constraint:** Never use Bash to edit files — Read, Edit, Write tools only
+- **Execution:** Use `uv run` for scripts and tools
+</essential_principles>
 
-## Core Directives
-- **Imports:** Every file MUST start with `from __future__ import annotations`.
-- **Logging:** Use `structlog` only. Never `print()` or standard `logging` for app logic.
-- **Exports:** Every `__init__.py` must define explicit `__all__` list.
-- **Tooling Constraint:** Never use Bash to edit files — Read, Edit, Write tools only.
+<type_system>
+- **Interfaces:** Prefer `typing.Protocol` over `abc.ABC` for structural subtyping
+- **Models:** Use Pydantic v2 for system boundaries (APIs, Configs). Always include `model_config = ConfigDict(use_attribute_docstrings=True)`
+- **Internal Data:** Use standard `@dataclass` for internal, non-serializable data structures
+</type_system>
 
-## Type System & Data Modeling
-- **Interfaces:** Prefer `typing.Protocol` over `abc.ABC` for structural subtyping.
-- **Models:** Use **Pydantic v2** for system boundaries (APIs, Configs). Always include `model_config = ConfigDict(use_attribute_docstrings=True)`.
-- **Internal Data:** Use standard `@dataclass` for internal, non-serializable data structures.
+<testing>
+```bash
+bazel test //mle/libs/metrics_anomalies/...           # run all tests
+bazel test //mle/libs/metrics_anomalies/tests:test_foo # single target
+```
+</testing>
 
+<linting>
+```bash
+uv run ruff check .    # lint
+uv run ruff format .   # format (line-length 88, black profile)
+```
+</linting>
 
+<example>
 ```python
-# Example Pattern
 from __future__ import annotations
 import structlog
 from typing import Protocol
@@ -34,22 +50,19 @@ class MetricProcessor(Protocol):
 
 class ProcessorConfig(BaseModel):
     model_config = ConfigDict(use_attribute_docstrings=True)
-    
+
     threshold: float
     """The sensitivity threshold for anomaly detection."""
 ```
-## Execution 
-Use `uv run` for scripts/tools.
 
-## Testing
-```bash
-bazel test //mle/libs/metrics_anomalies/...                      # run all tests
-bazel test //mle/libs/metrics_anomalies/...                      # run tests for a specific lib
-bazel test //mle/libs/metrics_anomalies/tests:test_foo           # single test target
-```
+```python
+# Internal data uses dataclass
+from dataclasses import dataclass
 
-## Linting
-```bash
-uv run ruff check .    # lint
-uv run ruff format .         # format (line-length 88, black profile)
+@dataclass
+class ProcessingResult:
+    success: bool
+    records_processed: int
+    errors: list[str]
 ```
+</example>
