@@ -13,7 +13,7 @@ description: "Rules for all branch and commit operations in tractian-ai. Invoke 
 
 ## Creating a Branch
 
-**The orchestrator session is typically checked out on a `temp-test-*` branch — NOT the feature branch.** Always explicitly `gt checkout` the correct parent before creating any branch.
+**The orchestrator session is NOT on the feature branch. When using `testing-worktree-uv` patch workflow, changes transfer via patches, no temp-test branches created.**
 
 ```bash
 # Step 0: Confirm current branch — do NOT assume

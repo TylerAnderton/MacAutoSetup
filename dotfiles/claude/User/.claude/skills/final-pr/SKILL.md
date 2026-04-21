@@ -22,21 +22,29 @@ Never merge WIP PR. Close it:
 ```bash
 gh pr close <number>
 ```
-
-## Step 2 — Sync
+## Step 2 — Sync Parent Branches to Remote
 
 ```bash
 gt sync
 ```
+After `gt sync`, verify all parent branches in the Graphite stack are pushed to remote. GitHub's PR diff is computed against remote merge-base — stale parent remotes cause inflated diffs with unrelated files.
+
+`gt sync` does NOT push rebased commits upstream. Submit each parent:
+```bash
+gt submit --branch <parent-branch>
+```
+
+Or use `gt submit --branch <parent-branch>` if the parent is ready.
 
 ## Step 3 — Write Handoff Note
 
 Write `.notes/handoffs/<branch>.md` using `.notes/handoffs/TEMPLATE.md`.
 
 ## Step 4 — Submit
+**Always** specify the feature branch with `--branch`. Do **not** include `--stack`, as this would attempt to submit descendants that are likely WIPs.
 
 ```bash
-gt submit --stack --draft --no-edit
+gt submit --draft --no-edit --restack --branch <feature_branch>
 ```
 
 ## Step 5 — Set PR Title and Body

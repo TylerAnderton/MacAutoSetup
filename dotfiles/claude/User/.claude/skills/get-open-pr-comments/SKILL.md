@@ -1,6 +1,6 @@
 ---
 name: get-open-pr-comments
-description: "Fetch non-resolved PR review comments from GitHub. Use when user asks about PR feedback/comments. Trigger: 'code review', 'unresolved', 'non-resolved', 'open comments', 'feedback', PR review comment mentions."
+description: "Fetch non-resolved PR review comments from GitHub. Use when user asks about PR feedback/comments. Trigger: 'code review', 'unresolved', 'non-resolved', 'open comments', 'feedback', 'address comments', PR review comment mentions."
 ---
 ## Fetch Only OPEN PR Review Comments
 - **Primary Source:** Use `~/.claude/skills/get-open-pr-comments/get_open_pr_comments.sh <PR_NUMBER>` to retrieve non-resolved comments.

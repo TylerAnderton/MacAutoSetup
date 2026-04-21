@@ -5,6 +5,7 @@ MLE monorepo: Python, Go, Rust. Bazel + uv.
 - Primary workspace: `mle/libs/metrics_anomalies/`
 - Handoffs/plans: `.notes/`
 - **Caveman:** Always use `/caveman ultra`
+- **Worktrees:** Always use `pwd` before bash commands
 
 ## Orchestrator Law
 
@@ -52,12 +53,11 @@ If you catch yourself about to use Bash or Edit on a non-trivial task, stop and 
 
 ## Bazel & `uv` Build Rules (Mandatory)
 
-Neither `bazel` nor `uv` can be used in a worktree -- dependencies will be incorrect. Must merge to main tree, perform `bazel` runs, commit and merge changes back to worktree, then push. See `testing-worktree-uv`.
+Neither `bazel` nor `uv` can be used in a worktree -- dependencies will be incorrect. Use patches to transfer changes to main tree, run `bazel`, transfer fixes back. See `testing-worktree-uv`.
 
 - **Gazelle:** `bazel run //:gazelle` after every code change. 
 - **Formatting:** `bazel run //:format -- <files or targets>` after Gazelle.
-- **Linting:** `bazel run //:lint -- //<targets>` after formatting.
-- **Testing:** `bazel test //<targets>` after linting.
+- **Testing:** `bazel test //<targets>` after formatting.
 - **Python:** `uv` only. Never raw `pip` or `python` commands. 
 
 ## Skill Index

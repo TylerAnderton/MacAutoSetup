@@ -15,14 +15,12 @@ All branch creation must happen explicitly on the correct feature branch, regard
 
 ```bash
 # Step 1: From the repo root (e.g. /Users/tyleranderton/Repositories/tractian-ai),
-#          explicitly switch to the feature branch — do NOT assume current branch is correct
-gt checkout metrics-anomalies/mlmp-491   # the numbered ticket branch, NOT master, NOT temp-test-*
+#         Create and register the sub-branch with gt
+#          explicitly define the parent branch — do NOT assume current branch is correct
+gt create mlmp-<feature_number>-<feature_name> -o <parent-feature-branch>   # the numbered ticket branch, NOT master, NOT temp-test-*
 
-# Step 2: Create and register the sub-branch with gt (stacks on the feature branch above)
-gt create metrics-anomalies/mlmp-491-subtask -am "feat: initial"
-
-# Step 3: Attach a worktree to the already-tracked branch (no -b flag)
-git worktree add .worktrees/mlmp-491-subtask metrics-anomalies/mlmp-491-subtask
+# Step 2: Attach a worktree to the already-tracked branch (no -b flag)
+git worktree add .worktrees/mlmp-<feature_number> mlmp-<feature_number>-<feature_name>
 ```
 
 **Why:** `gt create` registers branch in Graphite's stack. `git worktree add` (no `-b`) attaches to registered branch. Using `git worktree add -b` creates branch but skips registration — breaks stack tracking.
@@ -71,7 +69,7 @@ BRANCH RULES:
 
 ## Python Testing
 
-Don't run `bazel test` inside worktree. Use `testing-worktree-uv` skill to run tests from main checkout against temp branch.
+Don't run `bazel test` inside worktree. Use `testing-worktree-uv` skill to transfer changes via patches, run bazel on main checkout.
 
 ## Cleanup
 

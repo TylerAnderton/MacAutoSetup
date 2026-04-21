@@ -1,6 +1,6 @@
 ---
 name: testing-worktree-uv
-description: "`uv` editable symlink main tree. Worktree bazel test stale code. Run bazel test from main on temp branch. Use when testing Python in worktree."
+description: "Worktree code untestable by bazel (`uv` symlinks stale). Use patches to transfer changes to main temp test branch, run bazel, transfer fixes back. Use when testing Python worktree."
 ---
 
 # testing-worktree-uv
@@ -11,58 +11,58 @@ description: "`uv` editable symlink main tree. Worktree bazel test stale code. R
 
 **Fix:** Run bazel test from main checkout on temp branch mirror worktree.
 
----
 
+## The Patch Pattern (Worktree-to-Main Sync)
+Because `uv` and `bazel` require the main checkout environment, we migrate changes without using `git merge` to protect Graphite stacks.
+
+To prevent Graphite metadata corruption and handle Bazel requirements:
+1. **Never** merge temp branches into feature branches.
+2. **Never** use `gt create` for transient test branches.
+3. **Always** use patches to move code between the Worktree and Main Checkout.
+
+### Sync Workflow:
+1. **Export:** `git diff $(gt branch info --json | jq -r '.parent') > /tmp/sync.patch`
+2. **Apply (Main):** `git apply /tmp/sync.patch` on a transient `git checkout -b temp-sync`.
+3. **Execute:** Run `bazel run //:gazelle`, `bazel run //:format -- <files or targets>`, and `bazel test //<targets>`, 
+4. **Capture:** `git diff > /tmp/fixed.patch`.
+5. **Restore (Worktree):** `git apply /tmp/fixed.patch`.
+
+---
+## The Master Patch Protocol
+Use this protocol to move work between the **Worktree** (coding) and **Main Checkout** (testing/formatting) to avoid Graphite metadata corruption.
+
+1. **Export (Worktree):** `git diff $(gt branch info --json | jq -r '.parent') > /tmp/sync.patch`
+2. **Apply changes (Main):** `git apply /tmp/sync.patch`
+3. **Execute (Main):** Run `bazel run //:gazelle`, `bazel run //:format`, and `bazel test`.
+4. **Capture (Main):** `git add -A && git diff HEAD > /tmp/fixed.patch`
+5. **Apply (Worktree):** `git apply /tmp/fixed.patch`
 ## Procedure
 
-### Step 1 — Determine location
-
+### Step 1a — Create test branch (if doesn't exist)
+From the repo root (e.g. /Users/tyleranderton/Repositories/tractian-ai), create temp-test branch based on worktree feature branch. Explicitly define the parent branch — do NOT assume current branch is correct
 ```bash
-git rev-parse --show-toplevel
-git worktree list
+git checkout -b temp-test-<feature_number> mlmp-<feature_number>-<feature_name>   # the numbered ticket branch, NOT master, NOT temp-test-*
 ```
 
-toplevel = main repo → on main tree. worktree path → in worktree.
+### Step 1a — Patch changes to test branch (if exists)
+Identify if currently in a worktree or main. If in worktree, initiate **Master Patch Protocol**.
+### Step 2 — Validation Loop
+In the Main Checkout (on `temp-test-<feature>` branch):
+1. Run `bazel run //:gazelle`
+2. Run `bazel run //:format -- <targets>`
+3. Run `bazel test <targets>`
 
-### Step 2 — If on main tree with valid feature branch
+### Step 3 — Sync Back
+If tests pass and formatting changed:
+1. Export `git diff` from Main.
+2. Apply to Worktree using `git apply`.
 
-Skip to Step 5.
+### Step 6 — Commit in worktree (single commit, clean history)
 
-```bash
-git branch --show-current
-```
-
-### Step 3 — If in a worktree — check for temp-test branch
-
-Extract <ticket-number> from branch name (e.g. `metrics-anomalies/mlmp-491-subtask` → `491`).
-
-```bash
-git -C <main-tree-path> branch --list 'temp-test-<ticket-number>*'
-```
-
-### Step 4 — Create or update temp-test branch on main tree
-
-Temp-test branches disposable, untracked — do NOT register with `gt track`.
-
-**No temp-test branch:**
-```bash
-git -C <main-tree-path> checkout -b temp-test-<ticket-number> <worktree-branch>
-```
-
-**Exist:**
-```bash
-git -C <main-tree-path> checkout temp-test-<ticket-number>
-git -C <main-tree-path> merge <worktree-branch>
-```
-
-Follow `temp-test-<ticket-number>` naming. Never submit or push.
-
-### Step 5 — Run bazel test from main tree
-
-Run from main checkout, never worktree directory:
+Worktree: stage and commit. Single commit keeps history linear and Graphite-friendly.
 
 ```bash
-cd <main-tree-path> && bazel test //mle/libs/metrics_anomalies/...
+git add -A && git commit -m "<message>"
 ```
 
 ---

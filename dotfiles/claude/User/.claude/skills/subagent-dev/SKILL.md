@@ -157,7 +157,7 @@ All branches created up-front (pre-flight). Dispatch parallel implementers simul
 - Never let an implementer create branches
 - Never ignore BLOCKED status — something must change before retrying
 - Never dispatch an agent without specifying `Working directory`, `Branch`, and `Parent branch`
-- Never let an agent default to the repo root (`/Users/tyleranderton/Repositories/tractian-ai`) as its working directory — that is the `temp-test-*` checkout and is off-limits for edits
+- Never let an agent default to the repo root (`/Users/tyleranderton/Repositories/tractian-ai`) as its working directory — that is the main checkout and is off-limits for edits. Use `testing-worktree-uv` patch workflow for bazel operations.
 
 ## Integration
 
