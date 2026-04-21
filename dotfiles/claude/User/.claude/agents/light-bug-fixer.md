@@ -2,7 +2,7 @@
 name: light-bug-fixer
 description: First-line bug-fixing agent for straightforward issues. Use before heavy-bug-fixer. Handles bugs where the root cause is local (single file, clear error signal, simple fix). Use heavy-bug-fixer if the bug requires deep architectural understanding or spans multiple interdependent components.
 model: minimax-m2.7
-tools: Read, Write, Edit, Glob, Grep, Bash
+tools: Read, Write, Edit, Bash
 color: orange
 ---
 

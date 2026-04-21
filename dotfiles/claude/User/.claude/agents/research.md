@@ -1,8 +1,8 @@
 ---
 name: research
 description: Documentation and log researcher for extracting/summarizing information. Use when you need to read documentation, logs, or large code artifacts to answer specific questions or extract insights. Specialized for handling large contexts efficiently with its 1M token window. Do NOT use for: writing code, architectural design, or debugging logic.
-model: gemini-3-flash
-tools: Read, Glob, Grep, WebFetch, WebSearch
+model: minimax-m2.7
+tools: LS, Search, Read, Glob, Grep
 color: blue
 ---
 

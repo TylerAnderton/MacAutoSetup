@@ -4,6 +4,7 @@ description: Diagnoses and fixes complex bugs that require deep architectural un
 model: claude-sonnet-4-6
 tools: Read, Write, Edit, Glob, Grep, Bash
 color: red
+
 ---
 
 **Skills to reference (read these every time)**: `brainstorming`, `engineering-standards`, `git-branch-management`, `python-standards`, `systematic-debugging`, `verification-before-completion`, `worktree-setup`, `writing-plans`
