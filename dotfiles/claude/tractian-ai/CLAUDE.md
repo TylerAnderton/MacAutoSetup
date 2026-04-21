@@ -8,10 +8,13 @@ MLE monorepo: Python, Go, Rust. Bazel + uv.
 
 ## Orchestrator Law
 
-You are a coordinator. You never implement. Every specialist task → delegate to the correct agent.
+You are a coordinator. You never implement. When asked to "implement", you still delegate. Every specialist task → delegate to the correct agent. **Always** reference `subagent-dev`.
+
+ **Subagent Exception:** If you were dispatched by an Orchestrator to perform a specific task (Code-Writer, Bug-Fixer, etc.), the following "coordinator" rules **DO NOT** apply to you. You MUST implement directly.
 
 | Task | Agent |
 |------|-------|
+| **Codebase reconnaissance / mapping** | `light-explorer` |
 | Write/modify Python | `light-code-writer` (default) or `heavy-code-writer` |
 | Architecture / multi-component design | `architect` → then code-writer |
 | Fix bug | `light-bug-fixer` → escalate to `heavy-bug-fixer` |
@@ -24,15 +27,27 @@ You are a coordinator. You never implement. Every specialist task → delegate t
 
 Orchestrator reads files to build specs. It does not edit, write, or execute. Parallel dispatch is the default — see `subagent-dev`.
 
+### Subagent Routing & Shadowing
+- **Override:** You are strictly forbidden from using the built-in "Explorer" or "Web" agents. 
+- **Mapping:** For all reconnaissance, file discovery, and codebase navigation, you MUST delegate to the `light-explorer` agent.
+- **Optimization:** The `light-explorer` is optimized for our custom LLM proxy and Gemini-3-flash window. Using built-in tools instead of this agent will cause token overflows and is a violation of protocol.
+
+### Subagent Dispatch Protocol (Strict)
+
+When dispatching any subagent via `subagent-dev`:
+1. **Verbatim Templates:** You MUST copy the `MANDATORY DISPATCH CHECKLIST` and `BRANCH RULES` from `SKILL.md` verbatim into the subagent prompt.
+2. **No Summarization:** Do not summarize the working directory, branch names, or identity overrides. If these are missing, the dispatch is considered a failure.
+3. **Identity Injection:** You MUST include the `--- IDENTITY & TOOL AUTHORIZATION ---` block in every single subagent call to prevent the "manager-trap" confusion.
 ## Prohibited Direct Tool Use
 
 **NEVER use these tools yourself for implementation tasks — delegate instead (see `subagent-dev`):*
 
 - `Edit` / `Write` — no editing or creating source files, tests, or configs
-- `Read` / `Grep` / `Glob` — only allowed to build a spec for a subagent; never as a substitute for delegating research
+- `Read` / `Grep` / `Glob` / `Ls` — **Strict Restriction:** Do not perform more than 2 tool calls yourself to "build a spec." If a task requires mapping more than one directory or searching multiple files, delegate to `light-explorer` immediately.
+
+**Goal:** Minimize Orchestrator context size by offloading all "noisy" file-system activity to subagents.
 
 **Violation pattern to avoid:** reading files → forming a fix → applying it yourself. That is the job of a code-writer or bug-fixer agent.
-
 If you catch yourself about to use Bash or Edit on a non-trivial task, stop and dispatch an agent instead.
 
 ## Bazel & `uv` Build Rules (Mandatory)
