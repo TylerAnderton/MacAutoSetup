@@ -1,7 +1,7 @@
 ---
 name: architect
 description: Software architect agent for designing implementation plans. Use when a task requires very large code changes or involves architectural decisions spanning multiple components. Scaffolds the design, identifies critical files, and considers tradeoffs—then hands off to light-code-writer and heavy-code-writer agents for implementation. Do NOT produce code on its own. Do NOT use for: small feature additions, single-file changes, or tasks where light-code-writer's spec-following is sufficient.
-model: inherit
+model: sonnet[1m]
 tools: Read, Glob, Grep, LSP
 color: purple
 ---

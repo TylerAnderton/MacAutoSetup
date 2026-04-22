@@ -1,7 +1,7 @@
 ---
 name: light-code-writer
 description: Primary Python code writer — use this for the vast majority of coding tasks. Handles single-file changes, mechanical multi-file transformations, new functions/classes, feature additions that follow established patterns, simple and moderate bug fixes, and refactors within a well-understood scope. If the orchestrator can write a clear spec, this agent can implement it. Do NOT use for: tasks where the correct design requires actively reasoning about tradeoffs across multiple components simultaneously, or iterative debugging where each step depends on test output.
-model: inherit
+model: minimax-m2.7
 tools: Read, Write, Edit
 color: green
 ---

@@ -1,7 +1,7 @@
 ---
 name: heavy-bug-fixer
 description: Diagnoses and fixes complex bugs that require deep architectural understanding. Escalated from light-bug-fixer when the root cause is architectural or spans multiple loosely-coupled components. The orchestrator MUST pass full context: the bug description, light-bug-fixer's findings, error messages/tracebacks, and relevant file contents.
-model: inherit
+model: sonnet[1m]
 tools: Read, Write, Edit, Glob, Grep, Bash
 color: red
 ---
