@@ -1,3 +1,5 @@
+if true then return {} end -- Disable this file
+
 return {
   "Saghen/blink.cmp",
   opts_extend = { "sources.default" },
