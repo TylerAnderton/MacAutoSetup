@@ -149,15 +149,15 @@ Serialize when:
 
 All branches created up-front (pre-flight). Dispatch parallel implementers simultaneously, each to own worktree.
 
-**CRITICAL — tester global serialization:**
+**CRITICAL — temp-test branch serialization:**
 
-Only one `tester` agent may be active at a time, across ALL tasks and ALL feature branches. The main checkout is a shared resource — any tester agent must check out a temp-test branch there to run tests, and concurrent testers will collide and corrupt checkout state.
+Only one agent may hold a temp-test branch at a time, across ALL tasks and ALL feature branches. This applies to `tester`, `light-bug-fixer`, and `heavy-bug-fixer` — all three create temp-test branches on the main checkout to run bazel tests. Concurrent agents will collide and corrupt checkout state.
 
 Rules:
-- Never dispatch a tester while any other tester is running, regardless of which feature branch it targets
-- Orchestrator maintains a single "tester slot": occupied while any tester is in Phase 1 (RED) or Phase 3 (GREEN verify); free when it returns DONE or BLOCKED
-- When multiple tasks are ready for tester dispatch simultaneously: queue them and dispatch one at a time
-- If a tester returns BLOCKED (temp-test branch already exists): a previous tester did not clean up; orchestrator must manually delete the stale branch before re-dispatching
+- The orchestrator maintains a single "temp-test slot": occupied while any tester or bug-fixer is actively running bazel tests; free when it returns DONE or BLOCKED
+- Never dispatch a tester or bug-fixer while any other tester or bug-fixer is running, regardless of which feature branch it targets
+- When multiple tasks are ready for tester/bug-fixer dispatch simultaneously: queue them and dispatch one at a time
+- If an agent returns BLOCKED (temp-test branch already exists): a previous agent did not clean up; orchestrator must manually delete the stale branch before re-dispatching
 </parallelization>
 
 <red_flags>

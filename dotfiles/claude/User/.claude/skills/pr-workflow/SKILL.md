@@ -30,7 +30,7 @@ What type of PR workflow are you working on?
 - Test branch workflow reference → workflows/test-branch-workflow.md
 </routing>
 
-<quick_reference>
+<quick_start>
 | Scenario | Command |
 |----------|---------|
 | Create WIP PR | `gh pr create --base <stack-base> --head <branch> --draft` |
@@ -39,4 +39,4 @@ What type of PR workflow are you working on?
 | Close WIP PR | `gh pr close <number>` |
 | Final submit | `gt submit --draft --no-edit --restack --branch <feature_branch>` |
 | Sync parents | `gt sync` then `gt submit --branch <parent>` |
-</quick_reference>
+</quick_start>

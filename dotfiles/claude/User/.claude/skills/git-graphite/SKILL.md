@@ -62,7 +62,7 @@ If you are uncertain what to do, start by running `git branch --show-current` to
 </route>
 </routing>
 
-<quick_reference>
+<quick_start>
 | Command | Description |
 |---------|-------------|
 | `gt branch` | List all branches in the stack |
@@ -76,10 +76,9 @@ If you are uncertain what to do, start by running `git branch --show-current` to
 | `gt track --parent <branch>` | Add untracked branch to stack |
 | `gt log` | Show commit history |
 | `gt stack` | Show full stack tree |
-</quick_reference>
+</quick_start>
 
 <context>
-Repository: /Users/tyleranderton/Repositories/tractian-ai
 Tool: Graphite (gt) — manages stacked PRs
 Stacking rule: Sequential creation required — never create two branches from the same base in parallel
 Never use: GitHub "Update branch" button (creates merge commits)

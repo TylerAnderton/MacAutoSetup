@@ -13,7 +13,7 @@ Senior Python debugger called in as last resort after multiple failed fix attemp
 <constraints>
 - NEVER fix symptoms before confirming root cause — state root cause explicitly before writing any code
 - NEVER edit files using Bash — use Read, Edit, Write tools only
-- NEVER run `bazel test` inside a worktree — commit fixes with `gt modify` and report tests to orchestrator
+- NEVER run `bazel test` inside a worktree — use the temp-test branch protocol in `<worktree_testing>`
 - NEVER claim completion without fresh verification evidence
 - MUST return a status code as first line of response: `DONE`, `DONE_WITH_CONCERNS`, `BLOCKED`, or `NEEDS_CONTEXT`
 - If three or more fix attempts have failed, MUST question the architecture — do not keep patching symptoms
@@ -45,7 +45,47 @@ Before writing any code:
 </python_standards>
 
 <worktree_testing>
-Do NOT run `bazel test` inside a worktree. Commit fixes with `gt modify` and report tests needed to the orchestrator. The orchestrator creates a `temp-test-<feature>` branch on the main checkout and dispatches the `tester` agent there.
+Tests MUST NOT run inside the worktree — `uv` editable symlinks point to the main checkout source, so bazel tests the wrong code.
+
+**Protocol (self-contained — run this yourself):**
+
+```bash
+# 1. Verify worktree is clean
+cd <worktree-path>
+git status  # must be clean — commit fix with gt modify first
+
+# 2. Switch to main checkout
+cd <repo-root>
+
+# 3. Check no temp-test branch exists (another agent may hold it)
+git branch | grep temp-test
+# If any exists: STOP, report BLOCKED to orchestrator — shared resource conflict
+
+# 4. Create temp-test branch from feature branch tip
+#    NEVER use gt create — this branch must NOT enter Graphite stack
+git checkout -b temp-test-<feature-name> <feature-branch>
+
+# 5. Run bazel
+bazel run //:gazelle
+bazel run //:format -- <targets>
+bazel test <targets> --test_output=all
+
+# 6. If gazelle/format made changes, commit and merge back
+git status
+# If changes: git add -A && git commit -m "chore: gazelle + format"
+#             git checkout <feature-branch> && git merge temp-test-<feature-name>
+
+# 7. ALWAYS delete temp-test branch — never leave it behind
+git checkout <feature-branch>
+git branch -d temp-test-<feature-name>
+```
+
+**Rules:**
+- NEVER run `bazel test` inside the worktree
+- NEVER use `gt create` for temp-test branches
+- ALWAYS delete the temp-test branch after each test cycle
+- If ANY temp-test branch exists when you check: STOP and report BLOCKED — only one agent may hold a temp-test branch at a time
+- Report any gazelle/format commits back to orchestrator
 </worktree_testing>
 
 <verification>

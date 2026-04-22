@@ -27,7 +27,7 @@ Ask what the user wants to design or build. Explore purpose, constraints, and su
 Route to workflows/design-process.md for the full design checklist and process flow.
 </routing>
 
-<quick_reference>
+<quick_start>
 - Explore project context first
 - Ask clarifying questions one at a time
 - Propose 2-3 approaches with trade-offs
@@ -36,4 +36,4 @@ Route to workflows/design-process.md for the full design checklist and process f
 - Self-review spec for placeholders, consistency, scope, ambiguity
 - User reviews and approves spec
 - Invoke writing-plans skill for implementation
-</quick_reference>
+</quick_start>

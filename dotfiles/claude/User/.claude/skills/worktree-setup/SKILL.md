@@ -41,7 +41,7 @@ What do you need help with?
 
 </routing>
 
-<quick_reference>
+<quick_start>
 
 **Pattern A (always use):**
 ```bash
@@ -65,5 +65,5 @@ git worktree add .worktrees/<name> <branch-name>
 git worktree remove .worktrees/<name>
 ```
 
-</quick_reference>
+</quick_start>
 

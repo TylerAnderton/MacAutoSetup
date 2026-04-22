@@ -74,7 +74,7 @@ When TDD runs inside `subagent-dev`, the RED-GREEN-REFACTOR cycle maps to agent 
    - Tester creates fresh `temp-test-<feature>`, confirms PASS, deletes branch
    - If FAIL: tester reports failures → implementer fixes → tester re-runs (repeat until PASS)
 
-**Serialization rule:** only one `tester` agent per feature branch at a time. Orchestrator must not dispatch a second tester while a temp-test branch exists for that feature.
+**Serialization rule:** only one temp-test branch may exist at a time across ALL feature branches. `tester`, `light-bug-fixer`, and `heavy-bug-fixer` all create temp-test branches on the main checkout. Never dispatch any of these while a temp-test branch exists, regardless of which feature or agent type.
 
 **Test files belong in the worktree** alongside production code. Commit them with `gt modify` before the first temp-test run, so they appear on the feature branch tip when temp-test is created.
 </subagent_orchestration>

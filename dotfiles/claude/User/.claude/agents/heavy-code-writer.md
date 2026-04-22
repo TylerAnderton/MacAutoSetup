@@ -50,12 +50,11 @@ Do NOT run `bazel test` inside a worktree. Commit fixes with `gt modify` and rep
 IRON LAW: No completion claims without fresh verification evidence.
 
 Before claiming done:
-1. Identify the verification command (linter, tests, build)
-2. Run it fresh and complete
-3. Read full output, check exit code
-4. Only then claim success with evidence
+1. Read back every file you wrote — confirm contents match spec
+2. Check imports, types, and public interfaces are consistent across all modified files
+3. Report any integration points the orchestrator must verify via tester dispatch
 
-No verify run = no done claim. "Should work" is not evidence.
+Note: This agent has no Bash tool. Do not attempt to run tests or linters. Commit with `gt modify` and report tests needed to the orchestrator — it dispatches `tester` via `testing-worktree-uv`.
 </verification>
 
 <success_criteria>
