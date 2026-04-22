@@ -27,37 +27,8 @@ gt submit --draft --no-edit --restack --branch <parent-branch>
 ```
 </step>
 
-<step name='Export worktree changes via patch protocol'>
-Because `uv` and `bazel` require the main checkout environment:
-
-1. Export patch from worktree:
-```bash
-git diff $(gt branch info --json | jq -r '.parent') > /tmp/sync.patch
-```
-
-2. Apply to main checkout:
-```bash
-cd /Users/tyleranderton/Repositories/tractian-ai
-git checkout -b temp-test-<feature>
-git apply /tmp/sync.patch
-```
-
-3. Execute validation:
-```bash
-bazel run //:gazelle
-bazel run //:format
-bazel test
-```
-
-4. Capture fixed patch:
-```bash
-git add -A && git diff HEAD > /tmp/fixed.patch
-```
-
-5. Apply back to worktree:
-```bash
-git apply /tmp/fixed.patch
-```
+<step name='Run bazel via test branch'>
+Follow `workflows/test-branch-workflow.md` in full. NEVER use patch files (`git diff > /tmp/*.patch` / `git apply`) — use the temp-test branch and merge procedure exclusively.
 </step>
 
 <step name='Commit in worktree'>

@@ -12,18 +12,23 @@ description: Runs bazel tests against Python code in a git worktree where uv edi
 # 1. Confirm worktree is clean (all changes committed with gt modify)
 git status  # from worktree
 
-# 2. On main checkout: record current branch, then create temp-test
+# 2. Restack downstack (find worktree paths: git worktree list --porcelain | grep -E '^(worktree|branch)')
+gt restack || { echo "CONFLICT on main checkout — STOP"; exit 1; }  # non-worktree branches
+(cd /path/to/ancestor-worktree && gt restack) || { echo "CONFLICT — STOP"; exit 1; }  # worktree branches
+(cd /path/to/feature-worktree && gt restack) || { echo "CONFLICT — STOP"; exit 1; }
+
+# 3. On main checkout: record current branch, then create temp-test
 PREV_BRANCH=$(git branch --show-current)
 git checkout -b temp-test-<feature> <feature_branch>
 
-# 3. Run bazel
+# 4. Run bazel
 bazel run //:gazelle && bazel run //:format -- <targets> && bazel test <targets> --test_output=all
 
-# 4. If changes: commit on temp-test, merge into feature branch via worktree
+# 5. If changes: commit on temp-test, merge into feature branch via worktree
 git add -A && git commit -m "chore: gazelle + format"
 cd <worktree-path> && git merge temp-test-<feature> && cd <repo-root>
 
-# 5. Return to youngest free ancestor, then delete temp-test
+# 6. Return to youngest free ancestor, then delete temp-test
 WORKTREE_BRANCHES=$(git worktree list --porcelain | grep '^branch' | sed 's|branch refs/heads/||')
 BRANCH="$PREV_BRANCH"
 while echo "$WORKTREE_BRANCHES" | grep -qx "$BRANCH"; do
@@ -31,7 +36,7 @@ while echo "$WORKTREE_BRANCHES" | grep -qx "$BRANCH"; do
     BRANCH=$(gt branch info --json | jq -r '.parent')
 done
 gt checkout "$BRANCH"
-git branch -d temp-test-<feature>
+git branch -D temp-test-<feature>
 ```
 </quick_start>
 
@@ -44,7 +49,8 @@ Rules:
 1. NEVER create temp-test branches using `gt create` — use plain `git checkout -b`
 2. NEVER run bazel test inside the worktree
 3. ALWAYS delete the temp-test branch after each test cycle
-4. On the next test cycle, recreate temp-test fresh from the feature branch
+4. ALWAYS restack the downstack (Step 2) before recreating temp-test on a new test cycle
+5. On the next test cycle, restack downstack first (Step 2), then recreate temp-test fresh from the feature branch (Step 3)
 </essential_principles>
 
 <process>
@@ -58,7 +64,26 @@ git status  # Should be clean
 ```
 </step>
 
-<step id="2" name="create-temp-test">
+<step id="2" name="restack-downstack">
+Before creating the test branch, restack every branch in the downstack (current feature branch and all its ancestors, NOT upstack children). Parallel agent edits on parent branches must be rebased before running Gazelle and tests.
+
+Run `gt restack` from the main checkout and from every worktree belonging to the current feature's downstack:
+
+```bash
+# From main checkout (repo root): restacks all branches NOT isolated in a worktree.
+# gt restack does not traverse into worktrees — the explicit cd subshells below cover those.
+gt restack || { echo "CONFLICT on main checkout — STOP"; exit 1; }
+
+# Then for each worktree in the downstack (oldest ancestor to current feature branch).
+# Discover paths via: git worktree list --porcelain | grep -E '^(worktree|branch)'
+(cd /path/to/worktree-parent && gt restack) || { echo "CONFLICT in parent worktree — STOP"; exit 1; }
+(cd /path/to/worktree-current && gt restack) || { echo "CONFLICT in current worktree — STOP"; exit 1; }
+```
+
+On conflict anywhere: **STOP**. Surface to orchestrator. Resolve before proceeding.
+</step>
+
+<step id="3" name="create-temp-test-branch">
 From the main checkout (repo root), record the current branch then create the test branch:
 
 ```bash
@@ -76,7 +101,7 @@ git checkout -b temp-test-mlmp-491 mlmp-491
 NEVER use `gt create` — this is a transient test branch that must not be registered in Graphite's stack.
 </step>
 
-<step id="3" name="run-bazel">
+<step id="4" name="run-bazel">
 ```bash
 bazel run //:gazelle
 bazel run //:format -- <targets>
@@ -84,7 +109,7 @@ bazel test <targets> --test_output=all
 ```
 </step>
 
-<step id="4" name="merge-fixes">
+<step id="5" name="merge-fixes">
 Check if gazelle/format made changes:
 
 ```bash
@@ -104,7 +129,7 @@ If no changes: nothing to merge. Proceed to step 5.
 The worktree tracking `<feature_branch>` automatically picks up any new commits (worktrees share branch refs with the main checkout).
 </step>
 
-<step id="5" name="delete-temp-test">
+<step id="6" name="delete-temp-test">
 Cannot delete temp-test while checked out on it. Return to youngest free ancestor first:
 
 ```bash
@@ -116,19 +141,19 @@ while echo "$WORKTREE_BRANCHES" | grep -qx "$BRANCH"; do
     BRANCH=$(gt branch info --json | jq -r '.parent')
 done
 gt checkout "$BRANCH"
-git branch -d temp-test-<feature_name>
+git branch -D temp-test-<feature_name>
 ```
 
-Next test cycle: recreate temp-test fresh from the feature branch (Step 2).
+Next test cycle: restack downstack (Step 2), then recreate temp-test fresh from the feature branch (Step 3).
 </step>
 </process>
 
 <post_submit_cleanup>
-After `gt submit --draft --no-edit --restack --branch <feature_branch>` (final PR), the feature branch is under review and no longer active development. Clean up:
+Before submitting, run the downstack restack (Step 2 of the main process) — `--restack` on `gt submit` handles the submission rebase but does not pre-align worktrees. After `gt submit --draft --no-edit --restack --branch <feature_branch>` (final PR), the feature branch is under review and no longer active development. Clean up:
 
 <step id="1" name="delete-temp-test">
 ```bash
-git branch -d temp-test-<feature_name>
+git branch -D temp-test-<feature_name>
 ```
 </step>
 

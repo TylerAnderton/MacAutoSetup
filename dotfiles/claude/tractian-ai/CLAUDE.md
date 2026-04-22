@@ -39,6 +39,8 @@ You are a coordinator. Never implement. When asked to "implement", delegate. Eve
 
 Never run `bazel` or `uv` in a worktree. Use `testing-worktree-uv` skill for all test runs.
 
+**Before every test run and before every PR submission:** run `gt restack` on the main checkout (handles non-worktree branches), then `gt restack` in each downstack worktree oldest-first. `gt restack` does not traverse worktrees automatically. On conflict: STOP, surface to orchestrator. Never use patch files (`git diff > /tmp/*.patch` / `git apply`) — use `test-branch-workflow.md` exclusively.
+
 - `bazel run //:gazelle` — after every code change
 - `bazel run //:format -- <files or targets>` — after Gazelle
 - `bazel test //<targets>` — after format

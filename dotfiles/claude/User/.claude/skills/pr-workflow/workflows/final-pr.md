@@ -35,6 +35,22 @@ Ensure all parent branches are pushed to remote before proceeding.
 Create `.notes/handoffs/<branch>.md` using `.notes/handoffs/TEMPLATE.md` as reference.
 </step>
 
+<step name='Restack downstack'>
+Before submitting, restack every branch in the downstack (current feature and all ancestors, NOT upstack children). `gt restack` on the main checkout handles non-worktree branches; explicit `cd` subshells cover worktrees. Run oldest ancestor first.
+
+```bash
+# From main checkout: restacks all non-worktree branches
+gt restack || { echo "CONFLICT on main checkout — STOP"; exit 1; }
+
+# For each downstack worktree, oldest ancestor first.
+# Discover paths: git worktree list --porcelain | grep -E '^(worktree|branch)'
+(cd /path/to/ancestor-worktree && gt restack) || { echo "CONFLICT — STOP"; exit 1; }
+(cd /path/to/feature-worktree && gt restack) || { echo "CONFLICT — STOP"; exit 1; }
+```
+
+On conflict: STOP. Resolve before proceeding.
+</step>
+
 <step name='Submit to Graphite'>
 Always specify `--branch`, never `--stack`:
 

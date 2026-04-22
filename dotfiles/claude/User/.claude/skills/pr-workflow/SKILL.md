@@ -30,6 +30,14 @@ What type of PR workflow are you working on?
 - Test branch workflow reference → workflows/test-branch-workflow.md
 </routing>
 
+<success_criteria>
+- Correct workflow identified and followed based on intent
+- WIP PRs created as `--draft` and NOT submitted to Graphite
+- Final PRs submitted via `gt submit --draft --no-edit --restack --branch <feature>`
+- Downstack restacked before any test run or submission
+- Patch files (`/tmp/*.patch`) never used — temp-test branch and merge exclusively
+</success_criteria>
+
 <quick_start>
 | Scenario | Command |
 |----------|---------|

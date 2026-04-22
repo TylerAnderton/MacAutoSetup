@@ -19,7 +19,7 @@ cd <worktree-path> && git merge temp-test-<feature> && cd <repo-root>
 WORKTREE_BRANCHES=$(git worktree list --porcelain | grep '^branch' | sed 's|branch refs/heads/||')
 BRANCH="$PREV_BRANCH"
 while echo "$WORKTREE_BRANCHES" | grep -qx "$BRANCH"; do gt checkout "$BRANCH" && BRANCH=$(gt branch info --json | jq -r '.parent'); done
-gt checkout "$BRANCH" && git branch -d temp-test-<feature>
+gt checkout "$BRANCH" && git branch -D temp-test-<feature>
 ```
 </quick_start>
 
@@ -32,7 +32,25 @@ Worktrees have stale `uv` symlinks — bazel sees old source. Fix: create a temp
 All work must be committed in the worktree with `gt modify` before creating the test branch.
 </step>
 
-<step id="2" name="create-temp-test">
+<step id="2" name="restack-downstack">
+Restack every branch in the downstack (current feature and all its ancestors, NOT upstack children) before creating the test branch.
+
+`gt restack` on the main checkout covers all branches NOT in a worktree. It does not traverse worktrees — the explicit `cd` subshells below cover those gaps. Run oldest ancestor first.
+
+```bash
+# From main checkout: restacks all non-worktree branches in the downstack
+gt restack || { echo "CONFLICT on main checkout — STOP"; exit 1; }
+
+# For each downstack worktree, oldest ancestor first.
+# Discover paths: git worktree list --porcelain | grep -E '^(worktree|branch)'
+(cd /path/to/ancestor-worktree && gt restack) || { echo "CONFLICT in ancestor worktree — STOP"; exit 1; }
+(cd /path/to/feature-worktree && gt restack) || { echo "CONFLICT in feature worktree — STOP"; exit 1; }
+```
+
+On conflict anywhere: **STOP**. Surface to orchestrator. Resolve before proceeding.
+</step>
+
+<step id="3" name="create-temp-test">
 ```bash
 cd /path/to/repo  # Main checkout (NOT the worktree)
 PREV_BRANCH=$(git branch --show-current)
@@ -42,7 +60,7 @@ git checkout -b temp-test-<feature> <feature_branch>
 NEVER use `gt create` — this branch must not enter the Graphite stack.
 </step>
 
-<step id="3" name="run-bazel">
+<step id="4" name="run-bazel">
 ```bash
 bazel run //:gazelle
 bazel run //:format -- <targets>
@@ -50,7 +68,7 @@ bazel test <targets> --test_output=all
 ```
 </step>
 
-<step id="4" name="merge-fixes">
+<step id="5" name="merge-fixes">
 ```bash
 git status  # Check for gazelle/format changes
 # If changes: commit on temp-test, merge into feature branch via worktree
@@ -58,11 +76,11 @@ git add -A && git commit -m "chore: gazelle + format"
 cd <worktree-path>
 git merge temp-test-<feature>  # Fast-forward
 cd <repo-root>
-# If no changes: nothing to merge, proceed to step 5
+# If no changes: nothing to merge, proceed to step 6
 ```
 </step>
 
-<step id="5" name="delete-branch">
+<step id="6" name="delete-branch">
 Return to youngest free ancestor first (can't delete a branch while checked out on it; parallel worktrees may lock immediate parents):
 
 ```bash
@@ -73,7 +91,7 @@ while echo "$WORKTREE_BRANCHES" | grep -qx "$BRANCH"; do
     BRANCH=$(gt branch info --json | jq -r '.parent')
 done
 gt checkout "$BRANCH"
-git branch -d temp-test-<feature>
+git branch -D temp-test-<feature>
 ```
 
 Recreate from the feature branch tip on the next test cycle.
