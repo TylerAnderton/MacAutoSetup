@@ -124,7 +124,7 @@ Next test cycle: recreate temp-test fresh from the feature branch (Step 2).
 </process>
 
 <post_submit_cleanup>
-After `gt submit` (final PR), the feature branch is under review and no longer active development. Clean up:
+After `gt submit --draft --no-edit --restack --branch <feature_branch>` (final PR), the feature branch is under review and no longer active development. Clean up:
 
 <step id="1" name="delete-temp-test">
 ```bash

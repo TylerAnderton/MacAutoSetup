@@ -25,7 +25,7 @@ gh pr close <number>
 gt sync
 
 # Verify and push each parent branch
-gt submit --branch <parent-branch>
+gt submit --draft --no-edit --restack --branch <parent-branch>
 ```
 
 Ensure all parent branches are pushed to remote before proceeding.
@@ -57,9 +57,9 @@ After successful submit, run `/compact` to clean context.
 <responding_to_review>
 If review feedback arrives after submission:
 
-1. Checkout the branch: `gt checkout <branch>`
+1. Checkout the branch: `cd <feature_worktree>`
 2. Make fixes and amend: `gt modify -am 'fix: feedback'`
-3. Resubmit: `gt submit --stack --draft --no-edit`
+3. Resubmit: `gt submit --draft --no-edit --restack --branch <feature_branch>`
 </responding_to_review>
 
 <unresolved_comments>

@@ -88,5 +88,5 @@ Recreate from the feature branch tip on the next test cycle.
 </success_criteria>
 
 <cleanup_after_submit>
-After `gt submit`: delete temp-test branch, then checkout the youngest ancestor branch that (a) has been gt-submitted and (b) is not checked out in a worktree. See `skills/testing-worktree-uv/SKILL.md` for the full cleanup procedure.
+After `gt submit --draft --no-edit --restack --branch <feature_branch>`: checkout the youngest ancestor branch that (a) has been gt-submitted and (b) is not checked out in a worktree, then delete temp-test branch. See `skills/testing-worktree-uv/SKILL.md` for the full cleanup procedure.
 </cleanup_after_submit>

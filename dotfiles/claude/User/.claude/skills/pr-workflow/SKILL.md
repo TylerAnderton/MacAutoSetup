@@ -38,5 +38,5 @@ What type of PR workflow are you working on?
 | Mark WIP ready | `gh pr ready <PR-number-or-URL>` |
 | Close WIP PR | `gh pr close <number>` |
 | Final submit | `gt submit --draft --no-edit --restack --branch <feature_branch>` |
-| Sync parents | `gt sync` then `gt submit --branch <parent>` |
+| Sync parents | `gt sync` then `gt submit --draft --no-edit --restack --branch <parent>` |
 </quick_start>

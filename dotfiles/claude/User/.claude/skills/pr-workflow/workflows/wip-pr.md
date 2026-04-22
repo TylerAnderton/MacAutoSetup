@@ -23,7 +23,7 @@ GitHub uses 3-dot merge-base against remote. Sync all parent branches:
 
 ```bash
 gt sync
-gt submit --branch <parent-branch>
+gt submit --draft --no-edit --restack --branch <parent-branch>
 ```
 </step>
 
