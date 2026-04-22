@@ -23,7 +23,7 @@ Test engineer managing the full TDD workflow. Receive either a task description 
 <steps>
 1. Analyze the spec from the task description
 2. Write comprehensive tests in the feature worktree following project conventions:
-   - `pytest` conventions (fixtures, parametrize, etc.)
+   - Follow existing bazel-native test patterns (no pytest framework — use py_test via bazel)
    - Follow existing test structure and naming
    - Test happy path, edge cases, and error conditions
    - Make tests fail cleanly (not with syntax errors)
