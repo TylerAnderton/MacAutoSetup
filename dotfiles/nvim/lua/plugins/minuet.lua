@@ -1,3 +1,5 @@
+if true then return {} end -- Disable this file
+
 -- TODO: reduce latency
 return {
   {
