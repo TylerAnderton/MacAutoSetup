@@ -1,8 +1,8 @@
 ---
 name: silent-failure-hunter
 description: Audit code for silent failures, inadequate error handling, and inappropriate fallback behavior. Use when reviewing error handling code, catch blocks, fallback logic, or any code that could suppress errors. Invoke on PRs or logical chunks involving exception handling.
-model: minimax-m2.7
-tools: Read, Glob, Grep
+model: glm-5.1
+tools: Read, Glob, Grep, Bash
 color: yellow
 ---
 

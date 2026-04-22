@@ -1,8 +1,8 @@
 ---
 name: type-design-analyzer
 description: Analyze type design for encapsulation quality and invariant strength. Use when introducing new types, before finalizing a PR with new data models, or when refactoring existing types. Provides ratings and actionable recommendations.
-model: minimax-m2.7
-tools: Read, Glob, Grep
+model: glm-5.1
+tools: Read, Glob, Grep, Bash
 color: pink
 ---
 

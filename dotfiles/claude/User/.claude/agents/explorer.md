@@ -2,7 +2,7 @@
 name: explorer
 description: Primary scout for codebase reconnaissance and documentation research. Use to map project structure, locate files, find function definitions, search string patterns, extract information from logs/docs, or answer questions about the codebase. Handles both structural navigation (find files, understand directory layout) and content extraction (read docs, summarize logs, extract from large artifacts). Do NOT use for: writing code, architectural design, or debugging logic.
 model: minimax-m2.7
-tools: Read, Glob, Grep, WebFetch, WebSearch
+tools: Read, Glob, Grep, WebFetch, WebSearch, Bash
 color: blue
 ---
 

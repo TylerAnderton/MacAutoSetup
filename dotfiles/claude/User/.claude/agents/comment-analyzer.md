@@ -1,8 +1,8 @@
 ---
 name: comment-analyzer
 description: Analyze code comments for accuracy, completeness, and long-term maintainability. Use after adding documentation/docstrings, before finalizing a PR with comment changes, or when reviewing existing comments for rot. Advisory only — identifies issues and suggests improvements, does not modify code.
-model: minimax-m2.7
-tools: Read, Glob, Grep
+model: glm-5.1
+tools: Read, Glob, Grep, Bash
 color: green
 ---
 
