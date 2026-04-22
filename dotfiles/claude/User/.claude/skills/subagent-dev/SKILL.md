@@ -1,6 +1,6 @@
 ---
 name: subagent-dev
-description: "Execute implementation plans by dispatching fresh subagents per task with two-stage review (spec compliance, then code quality). Use when you have an implementation plan with mostly independent tasks. Replaces superpowers:subagent-driven-development."
+description: Orchestrates implementation of a feature plan by dispatching specialized subagents per task with two-stage review (spec compliance, then code quality). Use when an implementation plan with mostly independent tasks exists. Replaces superpowers:subagent-driven-development.
 ---
 
 <objective>
@@ -25,12 +25,12 @@ Orchestrate implementation of a feature plan by dispatching specialized subagent
 </success_criteria>
 
 <pre_flight>
-**Before dispatching subagents:**
+Before dispatching subagents:
 
-1. **Create all worktree branches on main checkout** using `worktree-setup` skill
+1. Create all worktree branches on main checkout using `worktree-setup` skill
    - Branch from current numbered feature branch, never master
    - `gt create` first, `git worktree add` second
-2. **Record each worktree path + branch** — pass to subagents
+2. Record each worktree path + branch — pass to subagents
 
 Subagents never create branches. Orchestrator creates all before dispatching.
 </pre_flight>
@@ -48,68 +48,74 @@ Key points:
 <per_task_loop>
 For each task:
 
-1. **Dispatch implementer** with:
+1. Dispatch implementer with:
    - Full task text from plan
    - Working directory (worktree or main path)
    - Branch name
    - Parent feature branch
    - Context (files, interfaces, constraints)
 
-2. **Answer questions** if implementer asks
+2. Answer questions if implementer asks
 
-3. **Implementer returns:**
+3. Implementer returns:
    - `DONE` — proceed to spec review
    - `DONE_WITH_CONCERNS` — read concerns; address if correctness; proceed otherwise
    - `NEEDS_CONTEXT` — provide context, re-dispatch
-   - `BLOCKED` — assess: provide context, upgrade model, or break down
+   - `BLOCKED` — assess: provide context, upgrade agent, or break down task
 
-4. **Dispatch spec compliance reviewer** with task spec + git diff/changed files
+4. Dispatch spec compliance reviewer with task spec + git diff/changed files
 
 5. Spec issues found → implementer fixes → re-review (repeat until ✅)
 
-6. **Dispatch code quality reviewer** (only after spec ✅)
+6. Dispatch code quality reviewer (only after spec ✅)
 
 7. Quality issues found → implementer fixes → re-review (repeat until ✅)
 
 8. Mark task complete
 </per_task_loop>
 
-<model_selection>
-Route tasks to appropriate models based on complexity:
+<agent_roster>
+All available agents and when to dispatch them. All agents use `model: inherit` — they run at the orchestrator's model tier unless you explicitly override in the dispatch prompt.
 
-| Task type | Model |
-|-----------|-------|
-| Isolated function, 1-2 files, complete spec | Haiku (cheap/fast) |
-| Multi-file, integration concerns | Sonnet |
-| Architecture, design judgment, broad codebase | Opus |
+Implementation agents — ordered by escalation path:
 
-**Fallback rule:** If Haiku returns BLOCKED twice, escalate to Sonnet. If Sonnet returns BLOCKED, escalate to Opus or split the task.
-</model_selection>
+| Agent | Dispatch when | Tools |
+|-------|--------------|-------|
+| `light-code-writer` | Default Python implementer — single-file or multi-file with a clear spec, feature additions following existing patterns, simple/moderate bug fixes | Read, Write, Edit |
+| `heavy-code-writer` | Escalated from light-code-writer — new abstractions with no existing pattern, cross-component reasoning, large refactors that restructure core interfaces | Read, Write, Edit, Glob, Grep |
+| `light-bug-fixer` | First-line bug fixing — clear error signal, single-file scope, fix does not require redesigning interfaces | Read, Write, Edit, Bash |
+| `heavy-bug-fixer` | Escalated from light-bug-fixer — architectural root cause, multi-component bug, requires redesigning interfaces. Pass full context: bug description, light-bug-fixer findings, error messages, relevant files | Read, Write, Edit, Glob, Grep, Bash |
+| `config-writer` | Non-Python text files — YAML configs, CLAUDE.md, BUILD.bazel entries, skill files (.md), .env examples | Read, Write, Edit, Glob |
 
-<testing>
-Never run `bazel test` directly. Always delegate to `tester` agent:
-- **Pre-implementation:** dispatch `tester` with spec → writes failing tests
-- **Post-implementation:** dispatch `tester` after implementer `DONE` → verifies pass
+Planning and research agents — dispatch before implementation:
 
-`tester` detects worktree automatically (runs from main checkout when needed).
-</testing>
+| Agent | Dispatch when | Tools |
+|-------|--------------|-------|
+| `architect` | Large features requiring architectural decisions across multiple components. Does NOT produce code — hands off plan to code-writers | Read, Glob, Grep, LSP |
+| `explorer` | Codebase reconnaissance — find files, locate functions, map structure, extract from docs/logs. Do NOT use for writing code | Read, Glob, Grep, WebFetch, WebSearch |
 
-<specialized_review_agents>
-Dispatch after code quality review stage when applicable:
+Testing:
 
-| Agent | When to use |
-|-------|-------------|
-| `silent-failure-hunter` | Any task with error handling, catch blocks, fallback logic |
-| `comment-analyzer` | Any task that adds or modifies docstrings/comments |
-| `type-design-analyzer` | Any task that introduces new types or data models |
-</specialized_review_agents>
+| Agent | Dispatch when | Notes |
+|-------|--------------|-------|
+| `tester` | Pre-implementation: dispatch with spec to write failing tests. Post-implementation: dispatch after implementer DONE to verify pass. | NEVER dispatch to a worktree for bazel. Orchestrator must first create `temp-test-<feature>` branch from feature branch tip on main checkout, then dispatch tester there. See `testing-worktree-uv` skill. |
 
-<final_review>
-After all tasks complete, dispatch final code reviewer across entire implementation.
-</final_review>
+Specialized review agents — dispatch after code quality review stage:
+
+| Agent | Dispatch when | Tools |
+|-------|--------------|-------|
+| `silent-failure-hunter` | Any task with error handling, catch blocks, or fallback logic | Read, Glob, Grep |
+| `comment-analyzer` | Any task that adds or modifies docstrings/comments | Read, Glob, Grep |
+| `type-design-analyzer` | Any task that introduces new types or data models | Read, Glob, Grep |
+
+Escalation rules:
+- `light-code-writer` returns BLOCKED twice → dispatch `heavy-code-writer`
+- `light-bug-fixer` escalates → dispatch `heavy-bug-fixer` with full context from light-bug-fixer's findings
+- Any agent returns BLOCKED with no resolution path → requires user judgment or external dependency
+</agent_roster>
 
 <parallelization>
-**Default: dispatch independent tasks in parallel.** Worktrees isolate — parallel implementers safe if different files.
+Default: dispatch independent tasks in parallel. Worktrees isolate — parallel implementers safe if different files.
 
 Parallelize when:
 - Tasks touch different files/modules
@@ -130,20 +136,20 @@ All branches created up-front (pre-flight). Dispatch parallel implementers simul
 - Never let an implementer create branches
 - Never ignore BLOCKED status — something must change before retrying
 - Never dispatch an agent without specifying `Working directory`, `Branch`, and `Parent branch`
-- Never let an agent default to the repo root as its working directory — that is the main checkout and is off-limits for edits. Use `testing-worktree-uv` patch workflow for bazel operations.
+- Never let an agent default to the repo root as its working directory — that is the main checkout and is off-limits for edits. Use `testing-worktree-uv` temp-test branch workflow for bazel operations.
 </red_flags>
 
 <error_handling>
-**Infinite spec-review loop:** If spec reviewer finds issues on 3+ consecutive passes, stop and reassess:
+Infinite spec-review loop: If spec reviewer finds issues on 3+ consecutive passes, stop and reassess:
 - Task spec was incomplete (get clarification from user before re-dispatch)
-- Implementer model is underpowered (escalate to next tier)
+- Implementer agent is underpowered (escalate: light → heavy)
 - Task should be split into smaller subtasks
 
-**Subagent returns BLOCKED with no resolution path:**
-- Review the blocking issue — determine if additional context, user input, or model upgrade would help
+Subagent returns BLOCKED with no resolution path:
+- Review the blocking issue — determine if additional context, user input, or agent upgrade would help
 - If none of those apply, the task requires human judgment or depends on external work — escalate
 
-**Worktree state corruption (branch conflicts, missing files, uncommitted changes):**
+Worktree state corruption (branch conflicts, missing files, uncommitted changes):
 - Stop all dispatches to that worktree
 - Diagnose via `git status` and `git log` from main checkout
 - If unrecoverable, remove the worktree and create a fresh one with `worktree-setup`
@@ -152,16 +158,13 @@ All branches created up-front (pre-flight). Dispatch parallel implementers simul
 <integration>
 Mandatory dependencies (skills that orchestrator must invoke):
 
-- **worktree-setup** — invoked first to create isolated workspaces; all subsequent dispatches depend on output
-- **test-driven-development** — subagents follow TDD pattern for each task (write failing tests first)
-- **verification-before-completion** — subagents verify work before claiming DONE
+- `worktree-setup` — invoked first to create isolated workspaces; all subsequent dispatches depend on output
+- `test-driven-development` — subagents follow TDD pattern for each task (write failing tests first)
+- `verification-before-completion` — subagents verify work before claiming DONE
 
 Optional integrations (invoke when applicable):
 
-- **testing-worktree-uv** — run Python tests from main checkout if bazel cannot be used in worktree
-- **silent-failure-hunter** — dispatch for error handling tasks after code quality review
-- **comment-analyzer** — dispatch for documentation/comment tasks after code quality review
-- **type-design-analyzer** — dispatch for new type/model tasks after code quality review
-- **wip-pr** — open work-in-progress PR after implementation stage complete
-- **final-pr** — submit to Graphite when entire feature is done
+- `testing-worktree-uv` — run Python tests from main checkout via temp-test branch; merge any gazelle/format fixes back to feature branch
+- `wip-pr` — open work-in-progress PR after implementation stage complete
+- `final-pr` — submit to Graphite when entire feature is done
 </integration>

@@ -74,5 +74,5 @@ For unresolved PR comments, use the `get-open-pr-comments` skill.
 </important_constraints>
 
 <references>
-- Patch Protocol (if rebasing needed): `../references/patch-protocol.md`
+- Test Branch Workflow: `test-branch-workflow.md`
 </references>

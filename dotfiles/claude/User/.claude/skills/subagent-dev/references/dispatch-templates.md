@@ -1,9 +1,7 @@
-# Dispatch Templates for subagent-dev
-
+<dispatch_templates>
 Use these verbatim templates when invoking subagents in the subagent-dev workflow.
 
-## Mandatory Dispatch Checklist Template
-
+<mandatory_checklist_template>
 Include this in every Agent tool call prompt. Replace angle-bracket placeholders with actual values.
 
 ```
@@ -24,9 +22,9 @@ BRANCH RULES (copy verbatim into every prompt):
 - Do NOT run `bazel test` inside the worktree — report tests needed; orchestrator dispatches tester
 - All edits go in the Working directory above. Never edit files in the repo root checkout.
 ```
+</mandatory_checklist_template>
 
-## Subagent Instructions Template
-
+<subagent_instructions_template>
 Include this in every implementer prompt. Replace angle-bracket placeholders with actual values.
 
 ```
@@ -38,10 +36,6 @@ ROLE OVERRIDE:
 - You are a specialized IMPLEMENTER (e.g., light-code-writer).
 - You are NOT a coordinator. Do NOT build specs for others.
 - Your ONLY task is to apply changes to the code using the `Edit` or `Write` tools.
-
-SKILLS:
-- You **must** read and reference the skills in your **Skills to reference** section.
-- Adding these skills to your context is not optional. These skills are **mandatory**.
 
 PERMISSIONS:
 - Full Edit/Write permissions are granted for <worktree-path>.
@@ -55,3 +49,6 @@ BRANCH RULES:
 - Do NOT run `bazel test` inside this worktree directory (bazel cannot be used in a worktree)
   — report tests needed; orchestrator will dispatch the `tester` agent
 ```
+</subagent_instructions_template>
+
+</dispatch_templates>

@@ -27,7 +27,7 @@ What type of PR workflow are you working on?
 <routing>
 - WIP PR intent → workflows/wip-pr.md
 - Final PR / Graphite submission intent → workflows/final-pr.md
-- Patch protocol reference → references/patch-protocol.md
+- Test branch workflow reference → workflows/test-branch-workflow.md
 </routing>
 
 <quick_reference>

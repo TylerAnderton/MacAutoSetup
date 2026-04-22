@@ -104,5 +104,5 @@ When WIP iteration is complete and ready for Graphite submission:
 </closing_wip_pr>
 
 <references>
-- Patch Protocol: `../references/patch-protocol.md`
+- Test Branch Workflow: `test-branch-workflow.md`
 </references>
