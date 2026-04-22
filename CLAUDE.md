@@ -1,146 +1,79 @@
-# CLAUDE.md
+# MacAutoSetup — Dotfiles & Terminal Configuration
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+macOS dotfiles repo: Stow-based config management for Neovim, Zsh, Aerospace, Ghostty, and CLI tools. Terminal-first, modular, portable.
 
-## Project Overview
+## Overview
 
-MacAutoSetup is a macOS dotfiles management system that sets up a terminal-first development environment with tiling window management, a minimal modular Neovim IDE config, and essential CLI tools. The project emphasizes portability and low configuration overhead.
+`dotfiles/<tool>/` subdirectories symlink to `$HOME` via GNU Stow. Terminal-first, modular, portable.
 
-## Core Architecture
+**Key dirs**: `nvim/` (AstroNvim + Lua), `zsh/.zsh.d/` (modular shell scripts), `aerospace/`, `ghostty/`, `claude/` (skills/agents).
 
-### Dotfiles Management with GNU Stow
+**Setup**: `./bootstrap.sh` installs tools and stows all dotfiles. Incremental: `stow --target="$HOME" --dir=./dotfiles <tool>`.
 
-- Configuration files are organized in `dotfiles/` subdirectories (one per tool/app)
-- GNU Stow symlinks each subdirectory to `$HOME`, creating the final config structure
-- Example: `dotfiles/nvim/` → symlinks to `~/.config/nvim`
-- This allows multiple independent configs to coexist without conflicts
+## Orchestrator Law
 
-### Zsh Configuration Structure
+You are a coordinator. Never implement. When asked to "modify", "add", "fix" — delegate. Every specialist task → correct agent. Always reference `subagent-dev`.
 
-The zsh config uses a modular plugin-based architecture:
+**TDD mandatory for every change.** Order: `tester` (write failing tests, confirm RED) → implementer → `tester` (confirm GREEN). No implementation until tester confirms RED. See `test-driven-development` and `testing-worktree-uv`. **Only one `tester` active at a time** — main checkout shared; queue testers, never run two simultaneously.
 
-- **`.zshrc`**: Single entry point that sources all scripts from `.zsh.d/*.sh`
-- **`.zsh.d/`**: Modular shell scripts for different concerns:
-  - `env.sh` — environment variables (PATH, editors)
-  - `plugins.sh` — Zap plugin manager declarations
-  - `aliases.sh` — command aliases
-  - `commands.sh` — custom shell functions/utilities
-  - `prompt.sh` — prompt configuration
-  - `completions.sh` — shell completion setup
-  - `widgets.sh` — keybindings and widgets
-  - `ld_path_pyo3.sh` — Python-specific lib path configuration
-  - `secrets.sh` — secrets/credentials (not committed)
+**Subagent Exception:** If dispatched by Orchestrator as specialist (Code-Writer, Bug-Fixer, etc.), coordinator rules do NOT apply. Implement directly.
 
-### Nvim Configuration
+| Task | Agent |
+|------|-------|
+| Codebase reconnaissance / mapping | `explorer` |
+| Write/modify Python, Bash, Lua | `light-code-writer` (default) → `heavy-code-writer` |
+| Architecture / multi-component design | `architect` → then code-writer |
+| Fix bug | `light-bug-fixer` → `heavy-bug-fixer` |
+| Write or run tests | `tester` |
+| Research docs/logs/large files | `explorer` |
+| Review error handling / catch blocks | `silent-failure-hunter` |
+| Review comments / docstrings | `comment-analyzer` |
+| Review new types / data models | `type-design-analyzer` |
+| Write configs, YAML, Markdown, skill files | `config-writer` |
 
-- Uses **AstroNvim v5+** (community-maintained distribution, not custom config)
-- Located in `dotfiles/nvim/` with Lua-based configuration
-- Minimal modifications over AstroNvim defaults to maintain maintainability
-- Uses Lazy.nvim for plugin management (lazy-lock.json tracks versions)
+**Override:** Never use built-in Explorer or Web agents — use the `explorer` agent for all codebase navigation and documentation research.
 
-### Tool-Specific Configs
+**Dispatch Protocol (strict):** When dispatching via `subagent-dev`, copy MANDATORY DISPATCH CHECKLIST and BRANCH RULES verbatim from `references/dispatch-templates.md`. Include `IDENTITY & TOOL AUTHORIZATION` block in every subagent call.
 
-- **Aerospace** (`dotfiles/aerospace/`): Tiling window manager configuration (aerospace.toml)
-- **Vim** (`dotfiles/vim/`): Minimal standalone Vim config (optional, light alternative)
-- **Ghostty** (`dotfiles/ghostty/`): Terminal emulator config
-- **Claude** (`dotfiles/claude/`): Claude Code settings and skills
+**Prohibited direct tool use (orchestrator):**
+- `Edit` / `Write` — never edit or create source files directly
+- `Read` / `Grep` / `Glob` — max 2 calls to build a spec; delegate to `explorer` if more needed
 
-## Setup & Deployment Commands
+## Configuration Management Rules
 
-### Full System Setup
+Never run package managers or Stow inside a worktree — changes may not be visible to main checkout.
 
-```bash
-./bootstrap.sh
-```
+- `stow --target="$HOME" --dir=./dotfiles <tool>` — after modifying dotfiles, symlink to activate
+- `nvim :Lazy update` — update Neovim plugins (review lazy-lock.json diffs before commit)
+- Shell config: changes to `.zsh.d/*.sh` take effect next shell session (`exec zsh -l` to reload)
+- Python in dotfiles: never modify `uv` or `pyenv` configs directly — test in worktree, verify on main checkout
 
-Performs the complete setup sequence:
-1. Installs Xcode Command Line Tools
-2. Installs Homebrew
-3. Installs applications/tools from Brewfile
-4. Installs Zap (zsh plugin manager)
-5. Uses Stow to symlink all dotfiles
+## Skill Index
 
-### One-off Stow Operations
+| Task | Skill |
+|------|-------|
+| Design before implementation | `brainstorming` |
+| Branch creation, commits, Graphite stack | `git-graphite` |
+| Worktree setup | `worktree-setup` |
+| Execute implementation plan | `subagent-dev` |
+| PR workflow (WIP and final) | `pr-workflow` |
+| Python tests in worktrees | `testing-worktree-uv` |
+| TDD | `test-driven-development` |
+| Debugging | `systematic-debugging` |
+| Verify before claiming done | `verification-before-completion` |
+| Planning | `writing-plans` |
+| Python style/types | `python-standards` |
+| PR review comments | `get-open-pr-comments` |
+| Jira tickets | `write-jira-tickets` |
 
-For incremental updates or after modifying specific dotfile directories:
+## Worktree Rule
 
-```bash
-# Symlink specific tools to $HOME
-stow --target="$HOME" --dir=./dotfiles zsh nvim aerospace
+Before any code change: create worktree via `worktree-setup`. Never edit files on `temp-test-*` branches. Never push from `temp-test-*`.
 
-# Symlink all dotfiles
-stow --target="$HOME" --dir=./dotfiles *
+## Safety Rules
 
-# Unstow (remove symlinks) if you need to clean up
-stow --target="$HOME" --dir=./dotfiles --delete zsh
-```
-
-### Bootstrap Variations
-
-```bash
-# From curl (fresh macOS, no git yet)
-bash <(curl -fsSL https://raw.githubusercontent.com/NLaundry/MacAutoSetup/main/bootstrap-nogit.sh)
-
-# From git clone
-git clone https://github.com/NLaundry/MacAutoSetup.git ~/Projects/MacAutoSetup
-cd ~/Projects/MacAutoSetup
-./bootstrap.sh
-```
-
-## Key Dependencies & Tools
-
-From Brewfile:
-
-### CLI Essentials
-- **git, gh** — version control & GitHub CLI
-- **fzf, ripgrep, bat, fd** — modern CLI utilities
-- **stow** — symlink management for dotfiles
-- **lazygit, lazysql, delta** — enhanced git/sql interfaces
-
-### Development Tools
-- **neovim** — editor (with AstroNvim config)
-- **tmux** — terminal multiplexer (0 config, used frequently)
-- **python, uv, poetry, pyenv, pyright** — Python development stack
-- **node, nvm** — Node.js development
-- **bazelisk** — monorepo build management
-
-### Environment & Automation
-- **Raycast** — launcher and automation
-- **Aerospace** — tiling window manager
-- **Ghostty, VSCode** — terminal & editor
-- **GNU coreutils, gnu-sed, findutils, gawk** — POSIX utilities for portability
-
-## Development Philosophy
-
-1. **Terminal-first**: All workflows designed around keyboard-driven terminal usage
-2. **Minimal configuration**: Leverage defaults and community standards (Astronvim, Zap) rather than custom config
-3. **Modular structure**: Each tool's dotfiles are independent and can be updated/removed without affecting others
-4. **Portability**: Low config overhead means knowledge transfers across machines and environments
-
-## Modifying Configurations
-
-### Adding/Updating Tool Configs
-
-1. Create or modify files in `dotfiles/<tool>/` (preserving the `$HOME` directory structure)
-2. Run `stow --target="$HOME" --dir=./dotfiles <tool>` to symlink
-3. Commit the changes
-
-### Adding New Zsh Behavior
-
-Add new shell script to `dotfiles/zsh/.zsh.d/<function>.sh`:
-- Follow existing patterns (sourced alphabetically by .zshrc)
-- Keep concerns separated (aliases ≠ env vars ≠ functions)
-- Secrets go in `secrets.sh` (in .gitignore)
-
-### Nvim Plugin Management
-
-- Modify `dotfiles/nvim/lua/` for configuration
-- Lazy.nvim auto-updates `lazy-lock.json`
-- Keep plugin additions minimal — leverage AstroNvim's curated defaults
-
-## Common Gotchas
-
-- **Stow overwrites symlinks**: If a file already exists and is a symlink, stow will overwrite it. Back up custom configs before stowing if unsure.
-- **PATH ordering matters**: GNU utils symlinks come before native macOS tools so `sed`, `find`, etc. behave like Linux versions
-- **Zsh config reload**: Changes to `.zsh.d/*.sh` take effect on next shell session (`exec zsh -l` to reload)
-- **AstroNvim updates**: Running `:Lazy update` in Nvim updates plugins but may introduce breaking changes — review lazy-lock.json diffs before committing
+- No force push to main/master
+- No `git reset --hard` on main/master
+- No `rm -rf` on root or `dotfiles/`
+- No stow operations on main checkout during active edits
+- Test dotfile changes in worktree before stowing to home
