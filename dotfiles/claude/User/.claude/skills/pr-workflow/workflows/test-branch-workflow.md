@@ -11,7 +11,7 @@ Test changes from a feature worktree using main checkout, where `uv` and `bazel`
 ```bash
 git checkout -b temp-test-<feature> <feature_branch>
 bazel run //:gazelle && bazel run //:format -- <targets> && bazel test <targets>
-# If changes: git add -A && git commit -m "chore: gazelle + format"
+# If changes: git add -A && git commit -m "chore: gazelle + format" ## git commit here only because temp branch not gt-tracked -- otherwise gt modify
 git checkout <feature_branch> && git merge temp-test-<feature>
 git branch -d temp-test-<feature>
 ```

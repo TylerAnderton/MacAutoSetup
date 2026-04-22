@@ -57,7 +57,7 @@ Expected: PASS
 
 ```bash
 git add tests/path/test.py src/path/file.py
-git commit -m "feat: add specific feature"
+gt modify -m "feat: add specific feature"
 ```
 
 ---

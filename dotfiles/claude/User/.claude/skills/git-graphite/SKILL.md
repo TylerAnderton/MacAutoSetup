@@ -68,7 +68,7 @@ If you are uncertain what to do, start by running `git branch --show-current` to
 | `gt branch` | List all branches in the stack |
 | `gt create <name> -am "msg"` | Create branch with initial commit |
 | `gt checkout <branch>` | Switch to existing branch |
-| `gt modify -a -m "msg"` | Amend last commit (preferred over git commit) |
+| `gt modify -a -m "msg"` | Amend last commit (use `git commit` **only** in temp-test branches) |
 | `gt sync` | Sync current branch with remote |
 | `gt sync --all` | Sync entire stack |
 | `gt continue` | Resume after resolving conflicts |
