@@ -43,8 +43,9 @@ git branch --show-current
 
 Step 2: Run Bazel to update dependencies
 ```bash
-cd /Users/tyleranderton/Repositories/tractian-ai
+cd <repo-root>
 bazel run //:gazelle
+bazel run //:format -- <files or targets>
 ```
 
 Step 3: Check what changed

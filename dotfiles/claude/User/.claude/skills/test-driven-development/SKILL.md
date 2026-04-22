@@ -57,24 +57,24 @@ The user wants you to implement a feature or bugfix.
 </routing>
 
 <subagent_orchestration>
-When TDD runs inside `subagent-dev`, the RED-GREEN-REFACTOR cycle maps to agent dispatches. The orchestrator does NOT run tests. The `tester` agent owns all test execution via the `testing-worktree-uv` protocol.
+When TDD runs inside `subagent-dev`, the RED-GREEN-REFACTOR cycle maps to agent dispatches. The orchestrator owns all test execution via `testing-worktree-uv`. Subagents (tester, code-writers, bug-fixers) NEVER run tests themselves.
 
 **Dispatch order per task (mandatory):**
 
 1. **RED** → dispatch `tester` to feature worktree
    - Tester writes test files, commits with `gt modify`
-   - Tester creates `temp-test-<feature>` on main checkout, confirms FAIL, deletes branch
-   - No implementer dispatched until tester confirms RED
+   - Tester reports: files written, bazel targets, expected failure description
+   - Orchestrator runs `testing-worktree-uv` to confirm FAIL
+   - No implementer dispatched until orchestrator confirms RED
 
 2. **GREEN** → dispatch implementer (`light-code-writer` or `heavy-code-writer`) to feature worktree
-   - Implementer writes minimal code to pass the tests
-   - Implementer does NOT run tests — reports DONE when code is written
+   - Implementer writes minimal code to pass the tests, commits with `gt modify`
+   - Implementer reports DONE with bazel targets + worktree path
 
-3. **GREEN verify** → dispatch `tester` again to same worktree
-   - Tester creates fresh `temp-test-<feature>`, confirms PASS, deletes branch
-   - If FAIL: tester reports failures → implementer fixes → tester re-runs (repeat until PASS)
+3. **GREEN verify** → orchestrator runs `testing-worktree-uv` to confirm PASS
+   - If FAIL: orchestrator dispatches `light-bug-fixer` with failure output → fixer commits fix → orchestrator re-runs `testing-worktree-uv` (repeat until PASS)
 
-**Serialization rule:** only one temp-test branch may exist at a time across ALL feature branches. `tester`, `light-bug-fixer`, and `heavy-bug-fixer` all create temp-test branches on the main checkout. Never dispatch any of these while a temp-test branch exists, regardless of which feature or agent type.
+**Serialization rule:** only one temp-test branch may exist at a time across ALL feature branches. `testing-worktree-uv` creates temp-test branches on the main checkout. Never invoke `testing-worktree-uv` while a temp-test branch exists.
 
 **Test files belong in the worktree** alongside production code. Commit them with `gt modify` before the first temp-test run, so they appear on the feature branch tip when temp-test is created.
 </subagent_orchestration>

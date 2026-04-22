@@ -12,17 +12,25 @@ description: Runs bazel tests against Python code in a git worktree where uv edi
 # 1. Confirm worktree is clean (all changes committed with gt modify)
 git status  # from worktree
 
-# 2. On main checkout: create temp-test branch from feature branch tip
+# 2. On main checkout: record current branch, then create temp-test
+PREV_BRANCH=$(git branch --show-current)
 git checkout -b temp-test-<feature> <feature_branch>
 
 # 3. Run bazel
 bazel run //:gazelle && bazel run //:format -- <targets> && bazel test <targets> --test_output=all
 
-# 4. If changes: commit + merge back; otherwise just checkout feature branch
+# 4. If changes: commit on temp-test, merge into feature branch via worktree
 git add -A && git commit -m "chore: gazelle + format"
-git checkout <feature_branch> && git merge temp-test-<feature>
+cd <worktree-path> && git merge temp-test-<feature> && cd <repo-root>
 
-# 5. Delete temp-test branch
+# 5. Return to youngest free ancestor, then delete temp-test
+WORKTREE_BRANCHES=$(git worktree list --porcelain | grep '^branch' | sed 's|branch refs/heads/||')
+BRANCH="$PREV_BRANCH"
+while echo "$WORKTREE_BRANCHES" | grep -qx "$BRANCH"; do
+    gt checkout "$BRANCH"
+    BRANCH=$(gt branch info --json | jq -r '.parent')
+done
+gt checkout "$BRANCH"
 git branch -d temp-test-<feature>
 ```
 </quick_start>
@@ -51,15 +59,17 @@ git status  # Should be clean
 </step>
 
 <step id="2" name="create-temp-test">
-From the main checkout (repo root), create a test branch at the same tip as the feature branch:
+From the main checkout (repo root), record the current branch then create the test branch:
 
 ```bash
 cd /path/to/repo  # Main checkout, NOT the worktree
+PREV_BRANCH=$(git branch --show-current)
 git checkout -b temp-test-<feature_name> <feature_branch>
 ```
 
 Example:
 ```bash
+PREV_BRANCH=$(git branch --show-current)
 git checkout -b temp-test-mlmp-491 mlmp-491
 ```
 
@@ -81,23 +91,31 @@ Check if gazelle/format made changes:
 git status
 ```
 
-If changes exist:
+If changes exist, commit on temp-test then merge into the feature branch via its worktree:
 ```bash
 git add -A && git commit -m "chore: gazelle + format"
-git checkout <feature_branch>
-git merge temp-test-<feature_name>  # Fast-forward: test branch is a direct ancestor
+cd <worktree-path>
+git merge temp-test-<feature_name>  # Fast-forward: temp-test is a direct ancestor
+cd <repo-root>
 ```
 
-If no changes:
-```bash
-git checkout <feature_branch>
-```
+If no changes: nothing to merge. Proceed to step 5.
 
 The worktree tracking `<feature_branch>` automatically picks up any new commits (worktrees share branch refs with the main checkout).
 </step>
 
 <step id="5" name="delete-temp-test">
+Cannot delete temp-test while checked out on it. Return to youngest free ancestor first:
+
 ```bash
+# Walk up Graphite stack from PREV_BRANCH; skip any branch locked in a worktree
+WORKTREE_BRANCHES=$(git worktree list --porcelain | grep '^branch' | sed 's|branch refs/heads/||')
+BRANCH="$PREV_BRANCH"
+while echo "$WORKTREE_BRANCHES" | grep -qx "$BRANCH"; do
+    gt checkout "$BRANCH"
+    BRANCH=$(gt branch info --json | jq -r '.parent')
+done
+gt checkout "$BRANCH"
 git branch -d temp-test-<feature_name>
 ```
 
@@ -147,10 +165,9 @@ In a serialized workflow (no parallel worktrees), this is just `gt checkout <par
 </success_criteria>
 
 <subagent_rules>
-Subagents in worktrees:
-- NEVER run bazel test
-- Commit with `gt modify`
-- Report tests needed to orchestrator
+Subagents (tester, code-writers, bug-fixers) in worktrees:
+- NEVER run bazel test — commit work with `gt modify` and report to orchestrator
+- Report: bazel targets to test + worktree path
 
-Orchestrator creates temp-test branch and dispatches `tester` agent to main checkout — never runs bazel test directly in the worktree.
+Orchestrator runs this skill directly on the main checkout. No subagent handles the temp-test lifecycle.
 </subagent_rules>

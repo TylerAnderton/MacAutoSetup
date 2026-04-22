@@ -9,11 +9,17 @@ Test changes from a feature worktree using main checkout, where `uv` and `bazel`
 
 <quick_start>
 ```bash
+PREV_BRANCH=$(git branch --show-current)
 git checkout -b temp-test-<feature> <feature_branch>
 bazel run //:gazelle && bazel run //:format -- <targets> && bazel test <targets>
-# If changes: git add -A && git commit -m "chore: gazelle + format" ## git commit here only because temp branch not gt-tracked -- otherwise gt modify
-git checkout <feature_branch> && git merge temp-test-<feature>
-git branch -d temp-test-<feature>
+# If changes: commit on temp-test, then merge via worktree
+git add -A && git commit -m "chore: gazelle + format"
+cd <worktree-path> && git merge temp-test-<feature> && cd <repo-root>
+# Return to youngest free ancestor, then delete
+WORKTREE_BRANCHES=$(git worktree list --porcelain | grep '^branch' | sed 's|branch refs/heads/||')
+BRANCH="$PREV_BRANCH"
+while echo "$WORKTREE_BRANCHES" | grep -qx "$BRANCH"; do gt checkout "$BRANCH" && BRANCH=$(gt branch info --json | jq -r '.parent'); done
+gt checkout "$BRANCH" && git branch -d temp-test-<feature>
 ```
 </quick_start>
 
@@ -29,6 +35,7 @@ All work must be committed in the worktree with `gt modify` before creating the 
 <step id="2" name="create-temp-test">
 ```bash
 cd /path/to/repo  # Main checkout (NOT the worktree)
+PREV_BRANCH=$(git branch --show-current)
 git checkout -b temp-test-<feature> <feature_branch>
 ```
 
@@ -46,17 +53,26 @@ bazel test <targets> --test_output=all
 <step id="4" name="merge-fixes">
 ```bash
 git status  # Check for gazelle/format changes
-# If changes:
+# If changes: commit on temp-test, merge into feature branch via worktree
 git add -A && git commit -m "chore: gazelle + format"
-git checkout <feature_branch>
+cd <worktree-path>
 git merge temp-test-<feature>  # Fast-forward
-# If no changes:
-git checkout <feature_branch>
+cd <repo-root>
+# If no changes: nothing to merge, proceed to step 5
 ```
 </step>
 
 <step id="5" name="delete-branch">
+Return to youngest free ancestor first (can't delete a branch while checked out on it; parallel worktrees may lock immediate parents):
+
 ```bash
+WORKTREE_BRANCHES=$(git worktree list --porcelain | grep '^branch' | sed 's|branch refs/heads/||')
+BRANCH="$PREV_BRANCH"
+while echo "$WORKTREE_BRANCHES" | grep -qx "$BRANCH"; do
+    gt checkout "$BRANCH"
+    BRANCH=$(gt branch info --json | jq -r '.parent')
+done
+gt checkout "$BRANCH"
 git branch -d temp-test-<feature>
 ```
 
@@ -68,7 +84,7 @@ Recreate from the feature branch tip on the next test cycle.
 - `bazel test` exits 0
 - Any gazelle/format changes committed and merged into feature branch
 - temp-test branch deleted
-- Main checkout back on feature branch
+- Main checkout on youngest free ancestor (feature branch remains in worktree)
 </success_criteria>
 
 <cleanup_after_submit>

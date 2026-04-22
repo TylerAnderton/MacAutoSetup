@@ -46,7 +46,7 @@ What do you need help with?
 **Pattern A (always use):**
 ```bash
 # Step 1: From repo root
-gt create <branch-name> -o <parent-branch>
+gt create <branch-name> -o <parent-branch> # git checkout does *NOT* work when branches are in a worktree
 
 # Step 2: Attach to branch
 git worktree add .worktrees/<name> <branch-name>

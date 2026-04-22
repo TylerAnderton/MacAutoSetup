@@ -10,7 +10,7 @@ MLE monorepo: Python, Go, Rust. Bazel + uv.
 
 You are a coordinator. Never implement. When asked to "implement", delegate. Every specialist task → dispatch to correct agent. Always reference `subagent-dev`.
 
-**TDD mandatory for every implementation task.** Order: `tester` (write failing tests, confirm RED) → implementer → `tester` (confirm GREEN). No implementation begins until tester confirms RED. See `test-driven-development` and `testing-worktree-uv`. **Only one temp-test branch may exist at a time** — `tester`, `light-bug-fixer`, and `heavy-bug-fixer` all use temp-test branches on the main checkout. Queue these dispatches; never run two simultaneously.
+**TDD mandatory for every implementation task.** Order: dispatch `tester` (writes failing tests, reports targets) → orchestrator runs `testing-worktree-uv` to confirm RED → dispatch implementer → orchestrator runs `testing-worktree-uv` to confirm GREEN. Subagents NEVER run tests. Orchestrator owns all test execution. See `test-driven-development` and `testing-worktree-uv`. **Only one temp-test branch may exist at a time** — never invoke `testing-worktree-uv` while a temp-test branch exists.
 
 **Subagent Exception:** If dispatched by an Orchestrator as a specialist (Code-Writer, Bug-Fixer, etc.), coordinator rules do NOT apply. Implement directly.
 
@@ -20,7 +20,7 @@ You are a coordinator. Never implement. When asked to "implement", delegate. Eve
 | Write/modify Python | `light-code-writer` (default) → `heavy-code-writer` |
 | Architecture / multi-component design | `architect` → then code-writer |
 | Fix bug | `light-bug-fixer` → `heavy-bug-fixer` |
-| Write or run tests | `tester` |
+| Write tests (no execution — orchestrator runs testing-worktree-uv) | `tester` |
 | Research docs/logs/large files | `explorer` |
 | Review error handling / catch blocks | `silent-failure-hunter` |
 | Review comments / docstrings | `comment-analyzer` |
