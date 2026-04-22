@@ -48,30 +48,50 @@ Key points:
 <per_task_loop>
 For each task:
 
-1. Dispatch implementer with:
+**Phase 1 — RED (write failing tests)**
+
+1. Dispatch `tester` with task spec and worktree path
+   - Tester writes test files in the worktree, commits with `gt modify`
+   - Tester creates temp-test branch from main checkout, confirms tests FAIL, deletes temp-test branch
+   - Tester reports: files created, bazel targets, failure output snippet
+2. Tester returns `DONE` (tests confirmed failing) before any implementation begins
+   - If tester returns `BLOCKED`: another temp-test branch exists for this feature — wait for it to be deleted, then re-dispatch
+   - If tests pass immediately: tester must fix tests; re-dispatch
+
+**Phase 2 — GREEN (implement)**
+
+3. Dispatch implementer with:
    - Full task text from plan
-   - Working directory (worktree or main path)
-   - Branch name
-   - Parent feature branch
+   - Working directory (worktree path)
+   - Branch name, parent feature branch
    - Context (files, interfaces, constraints)
+   - Bazel targets from tester report (so implementer knows what passes/fails)
 
-2. Answer questions if implementer asks
+4. Answer questions if implementer asks
 
-3. Implementer returns:
-   - `DONE` — proceed to spec review
-   - `DONE_WITH_CONCERNS` — read concerns; address if correctness; proceed otherwise
+5. Implementer returns:
+   - `DONE` — proceed to tester verification
+   - `DONE_WITH_CONCERNS` — read concerns; address if correctness; proceed to tester otherwise
    - `NEEDS_CONTEXT` — provide context, re-dispatch
    - `BLOCKED` — assess: provide context, upgrade agent, or break down task
 
-4. Dispatch spec compliance reviewer with task spec + git diff/changed files
+**Phase 3 — verify GREEN**
 
-5. Spec issues found → implementer fixes → re-review (repeat until ✅)
+6. Dispatch `tester` again with same worktree path and bazel targets
+   - Tester creates temp-test branch, confirms tests PASS, deletes temp-test branch
+   - If tests fail: tester reports failures → dispatch implementer to fix → re-dispatch tester (repeat until GREEN)
 
-6. Dispatch code quality reviewer (only after spec ✅)
+**Phase 4 — review**
 
-7. Quality issues found → implementer fixes → re-review (repeat until ✅)
+7. Dispatch spec compliance reviewer with task spec + git diff/changed files
 
-8. Mark task complete
+8. Spec issues found → implementer fixes → re-review (repeat until ✅)
+
+9. Dispatch code quality reviewer (only after spec ✅)
+
+10. Quality issues found → implementer fixes → re-review (repeat until ✅)
+
+11. Mark task complete
 </per_task_loop>
 
 <agent_roster>
@@ -128,6 +148,16 @@ Serialize when:
 - Dependency chain in plan
 
 All branches created up-front (pre-flight). Dispatch parallel implementers simultaneously, each to own worktree.
+
+**CRITICAL — tester global serialization:**
+
+Only one `tester` agent may be active at a time, across ALL tasks and ALL feature branches. The main checkout is a shared resource — any tester agent must check out a temp-test branch there to run tests, and concurrent testers will collide and corrupt checkout state.
+
+Rules:
+- Never dispatch a tester while any other tester is running, regardless of which feature branch it targets
+- Orchestrator maintains a single "tester slot": occupied while any tester is in Phase 1 (RED) or Phase 3 (GREEN verify); free when it returns DONE or BLOCKED
+- When multiple tasks are ready for tester dispatch simultaneously: queue them and dispatch one at a time
+- If a tester returns BLOCKED (temp-test branch already exists): a previous tester did not clean up; orchestrator must manually delete the stale branch before re-dispatching
 </parallelization>
 
 <red_flags>

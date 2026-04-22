@@ -1,28 +1,29 @@
+# Cleanup Worktree
+
 <objective>Remove a completed worktree and its branch. After final `gt submit`, return main checkout to the youngest free ancestor branch.</objective>
 
-<quick_start>
-```bash
-git worktree remove .worktrees/<name>
-gt branch delete <branch-name>
-git branch -d temp-test-<feature>   # if exists
-```
-</quick_start>
-
 <process>
-<step id="1" name="remove-worktree">
+
+**Step 1: Remove the worktree**
+
 From the repo root:
 
 ```bash
 git worktree remove .worktrees/<name>
 ```
 
-Verify:
+Example:
+```bash
+git worktree remove .worktrees/mlmp-491-subtask
+```
+
+Verify removal:
 ```bash
 git worktree list  # Should no longer show the worktree
 ```
-</step>
 
-<step id="2" name="delete-feature-branch">
+**Step 2: Delete the feature branch**
+
 If the branch has been merged or submitted and is no longer needed:
 
 ```bash
@@ -34,23 +35,28 @@ Or if already gone on remote (merged via PR):
 ```bash
 git branch -d <branch-name>  # Safe delete (requires merged)
 ```
-</step>
 
-<step id="3" name="delete-temp-test">
+**Step 3: Delete the temp-test branch (if it exists)**
+
 ```bash
 git branch -d temp-test-<feature>
 ```
 
-If it exists but hasn't been merged (early cleanup), force delete:
+If it exists but hasn't been merged (e.g., you're doing early cleanup), force delete:
 
 ```bash
 git branch -D temp-test-<feature>
 ```
-</step>
+
 </process>
 
 <post_submit_checkout>
-After `gt submit`, the submitted feature is under review. Main checkout should move to the youngest ancestor in the Graphite stack that has been `gt submit`-ted AND is NOT currently checked out in a worktree.
+
+## After `gt submit` — Find the Youngest Free Ancestor
+
+After final `gt submit`, the submitted feature is under review. Main checkout should move to the youngest ancestor in the Graphite stack that:
+- Has already been submitted via `gt submit`
+- Is NOT currently checked out in a worktree (locked)
 
 ```bash
 # Get all branches currently locked in worktrees
@@ -64,46 +70,53 @@ while [ -n "$BRANCH" ] && [ "$BRANCH" != "master" ] && [ "$BRANCH" != "main" ]; 
         gt checkout "$BRANCH"
         break
     fi
+    # Branch is locked in a worktree — step up one more generation
     gt checkout "$BRANCH"
     BRANCH=$(gt branch info --json | jq -r '.parent')
 done
 ```
 
-In a serialized workflow (no parallel worktrees), this is simply `gt checkout <parent-branch>`.
+In a serialized workflow (no parallel worktrees), this is simply:
+```bash
+gt checkout <parent-branch>
+```
+
+After checking out the free ancestor, the submitted feature branch's worktree (if any) can be safely removed and the temp-test branch deleted.
+
 </post_submit_checkout>
 
 <success_criteria>
-- Worktree removed (not in `git worktree list`)
-- Feature branch deleted (if merged/submitted)
-- temp-test branch deleted
-- Main checkout on youngest free ancestor
+
+✓ Worktree removed (not in `git worktree list`)
+✓ Feature branch deleted (if merged/submitted)
+✓ temp-test branch deleted
+✓ Main checkout on youngest free ancestor
+
 </success_criteria>
 
 <troubleshooting>
-<error case="locked-worktree">
-Subagent didn't commit changes. Commit with `gt modify`, or discard:
 
+**"Can't remove worktree — it has changes"**
+→ Subagent didn't commit changes. Commit with `gt modify`, or discard:
 ```bash
 cd .worktrees/<name>
 git stash
 cd ../..
 git worktree remove .worktrees/<name>
 ```
-</error>
 
-<error case="branch-not-merged">
-If intentional, force delete:
-
+**"Can't delete branch — not fully merged"**
+→ If intentional, force delete:
 ```bash
 git branch -D <branch-name>
 ```
-</error>
 
-<error case="all-ancestors-locked">
-Rare under parallel development. Checkout master/main as fallback:
-
+**"All ancestor branches are locked in worktrees"**
+→ Rare under parallel development. Checkout master/main as fallback:
 ```bash
 git checkout master
 ```
-</error>
+
 </troubleshooting>
+
+

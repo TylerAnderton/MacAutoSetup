@@ -55,3 +55,26 @@ The user wants you to implement a feature or bugfix.
 - If intake is "implement feature" or "implement bugfix": Route to workflows/red-green-refactor.md
 - If intake is "write test for existing code": Standard TDD not required — verify tests exist and pass
 </routing>
+
+<subagent_orchestration>
+When TDD runs inside `subagent-dev`, the RED-GREEN-REFACTOR cycle maps to agent dispatches. The orchestrator does NOT run tests. The `tester` agent owns all test execution via the `testing-worktree-uv` protocol.
+
+**Dispatch order per task (mandatory):**
+
+1. **RED** → dispatch `tester` to feature worktree
+   - Tester writes test files, commits with `gt modify`
+   - Tester creates `temp-test-<feature>` on main checkout, confirms FAIL, deletes branch
+   - No implementer dispatched until tester confirms RED
+
+2. **GREEN** → dispatch implementer (`light-code-writer` or `heavy-code-writer`) to feature worktree
+   - Implementer writes minimal code to pass the tests
+   - Implementer does NOT run tests — reports DONE when code is written
+
+3. **GREEN verify** → dispatch `tester` again to same worktree
+   - Tester creates fresh `temp-test-<feature>`, confirms PASS, deletes branch
+   - If FAIL: tester reports failures → implementer fixes → tester re-runs (repeat until PASS)
+
+**Serialization rule:** only one `tester` agent per feature branch at a time. Orchestrator must not dispatch a second tester while a temp-test branch exists for that feature.
+
+**Test files belong in the worktree** alongside production code. Commit them with `gt modify` before the first temp-test run, so they appear on the feature branch tip when temp-test is created.
+</subagent_orchestration>

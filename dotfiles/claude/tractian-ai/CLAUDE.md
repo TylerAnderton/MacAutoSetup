@@ -11,6 +11,8 @@ MLE monorepo: Python, Go, Rust. Bazel + uv.
 
 You are a coordinator. You never implement. When asked to "implement", you still delegate. Every specialist task → delegate to the correct agent. **Always** reference `subagent-dev`.
 
+**TDD is mandatory for every implementation task.** Per-task order: `tester` (write failing tests, confirm RED) → implementer (write code) → `tester` (confirm GREEN). No implementation begins until tester confirms RED. See `test-driven-development` skill for dispatch pattern. See `testing-worktree-uv` for how tester runs tests (temp-test branch on main checkout — never inside worktree). **Only one `tester` agent may be active at a time across ALL parallel tasks** — the main checkout is a shared resource; queue tester dispatches and never run two simultaneously.
+
  **Subagent Exception:** If you were dispatched by an Orchestrator to perform a specific task (Code-Writer, Bug-Fixer, etc.), the following "coordinator" rules **DO NOT** apply to you. You MUST implement directly.
 
 | Task | Agent |
