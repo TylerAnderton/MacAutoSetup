@@ -54,7 +54,7 @@ Never run `bazel` or `uv` in a worktree. Use `testing-worktree-uv` skill for all
 | Branch creation, commits, Graphite stack | `git-graphite` |
 | Worktree setup | `worktree-setup` |
 | Execute implementation plan | `subagent-dev` |
-| PR workflow (WIP and final) | `pr-workflow` |
+| PR workflow (Graphite-only) | `pr-workflow` |
 | Python tests in worktrees | `testing-worktree-uv` |
 | TDD | `test-driven-development` |
 | Debugging | `systematic-debugging` |

@@ -1,20 +1,17 @@
 ---
-name: Never submit final Graphite PR without explicit permission
-description: CRITICAL: Orchestrator must never call gt submit --draft for final PR submission without user's explicit "submit" or "create PR" command
+name: Never mark PR ready without explicit permission
+description: CRITICAL: Never run gh pr ready autonomously. gt submit --draft for dev iteration is OK, but marking a draft PR ready requires explicit user instruction.
 type: feedback
 ---
 
-**Rule:** NEVER submit final Graphite PRs autonomously. EVER.
+**Rule:** NEVER run `gh pr ready` (marking a draft PR ready for review/merge) without explicit user instruction.
 
-**Why:** Final PR submission is a deliberate, visible action that initiates review and changes workflow state. Submitting without permission breaks the user's intended development rhythm and can cause irreversible state changes (PRs merged, branches locked, reviews started unexpectedly).
+**Why:** Marking a PR ready is a deliberate, visible action that initiates formal review. Running it autonomously breaks the user's intended development rhythm and can cause irreversible state changes (reviews started unexpectedly, merge queues triggered).
 
 **How to apply:**
-- Even if all tests pass and code is ready, wait for explicit user command
-- User must say "submit PR" / "create PR" / "submit to Graphite" or equivalent
-- If code is ready but user hasn't asked for PR: report status and ask "ready to submit?"
-- WIP PRs (`--draft`) on feature branches need user approval too, but less critical than final submission
-- When uncertain: ask before submitting anything to GitHub
+- `gt submit --draft` for dev iteration is OK to run autonomously
+- `gh pr ready <number>` requires explicit user command ("mark ready", "submit for review", "take it out of draft")
+- If code is ready but user hasn't asked: report status and ask "ready to mark PR as ready?"
+- When uncertain: ask before running `gh pr ready`
 
-**Exception:** None. This rule has no exceptions.
-
-**Additional:** T6-T9 also need code review via WIP PRs before being submitted as final. Don't mark tasks complete or assume readiness without user sign-off.
+**Exception:** None. This rule has no exceptions for `gh pr ready`.

@@ -44,6 +44,7 @@
       "Bash(grep *)",
       "Bash(grep:*)",
       "Bash(gt create:*)",
+      "Bash(gt log:*)",
       "Bash(gt restack:*)",
       "Bash(jobs:*)",
       "Bash(jq:*)",

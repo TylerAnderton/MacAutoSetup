@@ -13,7 +13,7 @@ Orchestrate implementation of a feature plan by dispatching specialized subagent
 3. Route implementer output through spec review, then code quality review
 4. Use specialized reviewers (silent-failure-hunter, comment-analyzer, type-design-analyzer) when applicable
 5. Mark task complete only after both review stages pass
-6. Open WIP PR via `wip-pr` skill, final PR via `final-pr` when all tasks done
+6. Submit PR via `pr-workflow` skill when all tasks done
 </quick_start>
 
 <success_criteria>
@@ -21,7 +21,7 @@ Orchestrate implementation of a feature plan by dispatching specialized subagent
 - Each task has passed both spec compliance and code quality review stages
 - No BLOCKED status remains unresolved; any concerns explicitly documented
 - All commits on task branches created via `gt modify`
-- WIP and final PRs created via their respective skills
+- PR submitted via `pr-workflow` skill
 </success_criteria>
 
 <pre_flight>
@@ -195,6 +195,5 @@ Mandatory dependencies (skills that orchestrator must invoke):
 Optional integrations (invoke when applicable):
 
 - `testing-worktree-uv` — run Python tests from main checkout via temp-test branch; merge any gazelle/format fixes back to feature branch
-- `wip-pr` — open work-in-progress PR after implementation stage complete
-- `final-pr` — submit to Graphite when entire feature is done
+- `pr-workflow` — submit draft PR to Graphite when implementation stage complete
 </integration>
