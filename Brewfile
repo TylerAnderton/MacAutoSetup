@@ -53,13 +53,13 @@ cask "ghostty"
 cask "caffeine"
 cask "discord"
 # cask "chatgpt" 
+cask "google-gemini"
 cask "claude-code"
 cask "shottr"
 cask "caffeine" 
 cask "1password"
 # cask "zoom" - I don't want to install this by default
 
-# My additions
 # cask "cursor"
 # cask "windsurf"
 cask "todoist-app"
@@ -67,6 +67,7 @@ cask "slack"
 cask "kindavim"
 cask "spotify"
 cask "focusrite-control-2"
+cask "protonvpn"
 
 # Fonts
 cask "font-jetbrains-mono-nerd-font"
