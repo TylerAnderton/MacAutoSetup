@@ -55,9 +55,8 @@ after-startup-command = [
   # Ghostty → T
   'exec-and-forget open -g -a "Ghostty"',
   
-  # # Cursor abandoned
-  # # Cursor → V
-  # 'exec-and-forget open -g -a "Cursor"',
+  # Cursor → V
+  'exec-and-forget open -g -a "Cursor"',
 
   # VSCode → V
   'exec-and-forget open -g -a "VSCode"',
@@ -170,10 +169,9 @@ run = [
     'move-node-to-workspace T'
 ]
 
-# Cursor abandoned
-# [[on-window-detected]]
-# if.app-id = 'com.todesktop.230313mzl4w4u92' # Cursor
-# run = 'move-node-to-workspace V'
+[[on-window-detected]]
+if.app-id = 'com.todesktop.230313mzl4w4u92' # Cursor
+run = 'move-node-to-workspace V'
 
 [[on-window-detected]]
 if.app-id = 'com.microsoft.VSCode'

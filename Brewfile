@@ -60,7 +60,7 @@ cask "caffeine"
 cask "1password"
 # cask "zoom" - I don't want to install this by default
 
-# cask "cursor"
+cask "cursor"
 # cask "windsurf"
 cask "todoist-app"
 cask "slack"
