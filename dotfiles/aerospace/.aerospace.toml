@@ -254,6 +254,15 @@ run = 'move-node-to-workspace V'
     alt-equal = 'resize smart +50'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
+
+    # NOTE: The following workspaces are specifically disabled
+    # and reserved for accent key modifiers with ukelele:
+    # alt-e -> Acute ´ (State 1)
+    # alt-` -> Grave ` (State 2)
+    # alt-z -> Circumflex ˆ (State 3)
+    # alt-x -> Cedilla ç
+    # alt-~ -> Tilde ~ (State 5)
+
     alt-1 = 'workspace 1'
     alt-2 = 'workspace 2'
     alt-3 = 'workspace 3'
@@ -267,7 +276,7 @@ run = 'move-node-to-workspace V'
     alt-b = 'workspace B' # Browser
     alt-c = 'workspace C' # AI Assistance (Chat)
     # alt-d = 'workspace D'
-    # alt-e = 'workspace E'
+    # alt-e = 'workspace E' # Disabled for accent key modifier
     alt-f = 'workspace F' # Finder
     # alt-g = 'workspace G'
     # alt-i = 'workspace I'
@@ -282,9 +291,9 @@ run = 'move-node-to-workspace V'
     # alt-u = 'workspace U'
     alt-v = 'workspace V' # VSCode/Cursor (IDE)
     # alt-w = 'workspace W'
-    # alt-x = 'workspace X'
+    # alt-x = 'workspace X' # Disabled for accent key modifier
     # alt-y = 'workspace Y'
-    # alt-z = 'workspace Z'
+    # alt-z = 'workspace Z' # Disabled for accent key modifier
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
     alt-shift-1 = 'move-node-to-workspace 1'

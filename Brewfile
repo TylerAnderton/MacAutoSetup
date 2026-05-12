@@ -69,6 +69,13 @@ cask "spotify"
 cask "focusrite-control-2"
 cask "protonvpn"
 
+cask "stats"
+
+# custom keyboard layout for typing with accents
+# with "Option" shortcuts
+# without interfering with aerospace window switching
+cask "ukelele" 
+
 # Fonts
 cask "font-jetbrains-mono-nerd-font"
 
