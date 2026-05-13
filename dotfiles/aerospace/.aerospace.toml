@@ -18,33 +18,29 @@ after-startup-command = [
   # Claude → C
   # 'exec-and-forget open -g -a "Claude"',
 
-  # Open WebUI → C
-  'exec-and-forget open -g -a "Google Chrome" --args --app-id=bbildfjdmppgpaibcgkgijmdkodmcpcd',
-
   # Google Gemini → C
-  'exec-and-forget open -g -a "Gemini"',
-
-  # Terminal for Claude Code → C
-  'exec-and-forget open -g -a "Terminal"',
+  # Using Chrome app instead of Desktop to use Gems and Notebooks
+  # 'exec-and-forget open -g -a "Gemini"',
+  'exec-and-forget open -g -a "Google Chrome" --args --app-id=caidcmannjgahlnbpmidmiecjcoiiigg',
 
   # Finder → F
   # Finder is special: this guarantees a window
   'exec-and-forget open -g -a "Finder" ~',
 
   # Notes → N
-  'exec-and-forget open -g -a "Notes"',
+  # 'exec-and-forget open -g -a "Notes"',
 
   # Calendar → R
   'exec-and-forget open -g -a "Calendar"',
 
-  # Jira [MLMP-311] → R
-  'exec-and-forget open -g -a "Google Chrome" --args --app-id=gecohhahibbgkajbpdehcckdhalbgbij',
+  # Jira → R
+  # 'exec-and-forget open -g -a "Google Chrome" --args --app-id=gecohhahibbgkajbpdehcckdhalbgbij',
 
   # Todoist → R
   'exec-and-forget open -g -a "Todoist"',
 
   # Reminders → R
-  'exec-and-forget open -g -a "Reminders"',
+  # 'exec-and-forget open -g -a "Reminders"',
 
   # Reclaim (Chrome app) → R
   # 'exec-and-forget open -g -a "Reclaim"',
@@ -59,10 +55,10 @@ after-startup-command = [
   'exec-and-forget open -g -a "Ghostty"',
   
   # Cursor → V
-  'exec-and-forget open -g -a "Cursor"',
+  # 'exec-and-forget open -g -a "Cursor"',
 
   # VSCode → V
-  'exec-and-forget open -g -a "VSCode"',
+  # 'exec-and-forget open -g -a "VSCode"',
 
 ]
 
@@ -115,15 +111,8 @@ run = 'move-node-to-workspace B'
 # run = 'move-node-to-workspace C'
 
 [[on-window-detected]]
-if.app-id = 'com.google.Chrome.app.bbildfjdmppgpaibcgkgijmdkodmcpcd' # Open WebUI
-run = 'move-node-to-workspace C'
-
-[[on-window-detected]]
-if.app-id = 'com.google. eminiMacOS'
-run = 'move-node-to-workspace C'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.Terminal' # Terminal for Claude Code
+# if.app-id = 'com.google.GeminiMacOS'
+if.app-id = 'com.google.Chrome.app.caidcmannjgahlnbpmidmiecjcoiiigg' # Gemini web app
 run = 'move-node-to-workspace C'
 
 [[on-window-detected]]
@@ -153,9 +142,9 @@ run = 'move-node-to-workspace M'
 if.app-id = 'com.apple.Notes'
 run = 'move-node-to-workspace N'
 
-[[on-window-detected]]
-if.app-id = 'com.google.Chrome.app.gecohhahibbgkajbpdehcckdhalbgbij' # Jira [MLMP-311]
-run = 'move-node-to-workspace R'
+# [[on-window-detected]]
+# if.app-id = 'com.google.Chrome.app.gecohhahibbgkajbpdehcckdhalbgbij' # Jira
+# run = 'move-node-to-workspace R'
 
 [[on-window-detected]]
 if.app-id = 'com.todoist.mac.Todoist'
@@ -179,6 +168,13 @@ run = 'move-node-to-workspace S'
 
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
+run = [
+    'layout floating', # Attempt to resolve bug with opening new tabs
+    'move-node-to-workspace T'
+]
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Terminal'
 run = [
     'layout floating', # Attempt to resolve bug with opening new tabs
     'move-node-to-workspace T'
