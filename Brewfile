@@ -70,7 +70,9 @@ cask "spotify"
 cask "focusrite-control-2"
 cask "protonvpn"
 
-cask "stats"
+# Mac apps
+cask "stats" # Memory, CPU, etc stats
+cask "jordanbaird-ice" # Menu bar manager
 
 # custom keyboard layout for typing with accents
 # with "Option" shortcuts
