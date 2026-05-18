@@ -1,14 +1,17 @@
 {
   "env": {
-    "ANTHROPIC_MODEL": "haiku",
+    "ANTHROPIC_MODEL": "claude-haiku-4.5",
     "CLAUDE_CODE_ATTRIBUTION_HEADER": "0",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
     "EDITOR": "nvim"
   },
   "permissions": {
     "allow": [
+      "Bash(/Users/tyleranderton/.claude/skills/get-open-pr-comments/get_open_pr_comments.sh *)",
       "Bash(/tmp/*)",
       "Bash(bash -n *)",
+      "Bash(bash /Users/tyleranderton/.claude/skills/get-open-pr-comments/get_open_pr_comments.sh *)",
+      "Bash(bash ~/.claude/skills/get-open-pr-comments/get_open_pr_comments.sh *)",
       "Bash(bazel query:*)",
       "Bash(bazel run:*)",
       "Bash(bazel test:*)",
@@ -63,16 +66,41 @@
       "Bash(while read:*)",
       "Bash(xargs cat:*)",
       "Bash(xargs ls:*)",
+      "Bash(~/.claude/skills/get-open-pr-comments/get_open_pr_comments.sh *)",
       "Read(//Users/tyleranderton/.claude/**)",
       "Read(//Users/tyleranderton/Repositories/MacAutoSetup/dotfiles/claude/**)",
       "Read(//tmp/**)",
+      "Skill(brainstorming)",
+      "Skill(get-open-pr-comments)",
+      "Skill(git-graphite)",
+      "Skill(pr-workflow)",
+      "Skill(python-standards)",
+      "Skill(subagent-dev)",
+      "Skill(systematic-debugging)",
+      "Skill(test-driven-development)",
+      "Skill(testing-worktree-uv)",
+      "Skill(verification-before-completion)",
+      "Skill(worktree-setup)",
+      "Skill(write-jira-tickets)",
+      "Skill(writing-plans)",
+      "WebFetch(domain:gear.tractian.com)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:graphite.com)",
-      "WebFetch(domain:graphite.dev)"
+      "WebFetch(domain:graphite.dev)",
+      "WebFetch(domain:tractian.atlassian.net)",
+      "mcp__plugin_atlassian_atlassian__createJiraIssue",
+      "mcp__plugin_atlassian_atlassian__fetch",
+      "mcp__plugin_atlassian_atlassian__getAccessibleAtlassianResources",
+      "mcp__plugin_atlassian_atlassian__getConfluencePage",
+      "mcp__plugin_atlassian_atlassian__getJiraIssue",
+      "mcp__plugin_atlassian_atlassian__getJiraProjectIssueTypesMetadata",
+      "mcp__plugin_atlassian_atlassian__search",
+      "mcp__plugin_atlassian_atlassian__searchAtlassian",
+      "mcp__plugin_atlassian_atlassian__searchJiraIssuesUsingJql"
     ],
     "defaultMode": "default"
   },
-  "model": "haiku",
+  "model": "sonnet-4-5-20250929[1m]",
   "hooks": {
     "SessionStart": [
       {
