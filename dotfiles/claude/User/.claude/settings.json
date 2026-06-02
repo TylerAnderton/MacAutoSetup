@@ -54,6 +54,7 @@
       "Bash(python -m py_compile *)",
       "Bash(python3 -c *)",
       "Bash(python3 -m json.tool *)",
+      "Bash(python3 -m pip show *)",
       "Bash(sed *)",
       "Bash(source .venv/bin/activate)",
       "Bash(uv --version)",
