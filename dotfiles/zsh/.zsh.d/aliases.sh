@@ -19,3 +19,5 @@ alias te='nvim ~/DB/todo.txt' # let's me just take a look at the todo file
 # AWS Environment Update
 alias awsenv='aws_update_env'
 
+# Python
+alias python="python3"
