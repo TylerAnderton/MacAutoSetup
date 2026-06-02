@@ -1,6 +1,6 @@
 {
   "env": {
-    "ANTHROPIC_MODEL": "haiku",
+    "ANTHROPIC_MODEL": "sonnet",
     "CLAUDE_CODE_ATTRIBUTION_HEADER": "0",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
     "EDITOR": "nvim"
@@ -72,7 +72,7 @@
     ],
     "defaultMode": "default"
   },
-  "model": "haiku",
+  "model": "sonnet",
   "hooks": {
     "SessionStart": [
       {
@@ -149,5 +149,5 @@
       }
     }
   },
-  "effortLevel": "low"
+  "effortLevel": "medium"
 }
