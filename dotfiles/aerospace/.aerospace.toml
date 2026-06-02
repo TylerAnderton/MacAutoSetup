@@ -14,7 +14,7 @@ after-startup-command = [
   # ChatGPT → C
   # 'exec-and-forget open -g -a "ChatGPT"',
 
-  # Claude abandoned
+  # Don't need to open Claude automatically
   # Claude → C
   # 'exec-and-forget open -g -a "Claude"',
 
@@ -105,10 +105,9 @@ run = 'move-node-to-workspace B'
 # if.app-id = 'com.openai.chat'
 # run = 'move-node-to-workspace C'
 
-# Claude Desktop abandoned
-# [[on-window-detected]]
-# if.app-id = 'com.anthropic.claudefordesktop'
-# run = 'move-node-to-workspace C'
+[[on-window-detected]]
+if.app-id = 'com.anthropic.claudefordesktop'
+run = 'move-node-to-workspace C'
 
 [[on-window-detected]]
 # if.app-id = 'com.google.GeminiMacOS'
