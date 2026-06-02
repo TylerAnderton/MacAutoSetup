@@ -109,6 +109,14 @@ return {
       },
     },
     autocmds = {
+      terminal_focus = {
+        {
+          event = "FocusGained",
+          callback = function()
+            if vim.bo.buftype == "terminal" then vim.cmd "startinsert" end
+          end,
+        },
+      },
       -- Claude Code key mappings
       -- Set here explicitly, as Astronvim isn't getting them from claudecode.lua
       -- Need to set an autocmd since Astrocore doesn't track mappings
