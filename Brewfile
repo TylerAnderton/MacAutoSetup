@@ -52,16 +52,20 @@ cask "ghostty"
 # cask "aerospace"
 cask "caffeine"
 cask "discord"
-# cask "chatgpt" 
-cask "google-gemini"
-cask "claude-code"
 cask "shottr"
 cask "caffeine" 
 cask "1password"
 # cask "zoom" - I don't want to install this by default
 
+# AI
+brew "ollama"
+# cask "chatgpt" 
+# cask "google-gemini" # desktop app limited. prefer browser
+cask "claude" # desktop app
+cask "claude-code"
 cask "cursor"
 # cask "windsurf"
+
 cask "todoist-app"
 cask "slack"
 cask "whatsapp"
