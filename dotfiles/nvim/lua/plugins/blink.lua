@@ -1,7 +1,7 @@
 if true then return {} end -- Disable this file
 
 return {
-  "Saghen/blink.cmp",
+  "saghen/blink.cmp",
   opts_extend = { "sources.default" },
   opts = {
     keymap = {

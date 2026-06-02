@@ -1,3 +1,5 @@
+if true then return {} end
+
 return {
   {
     "ibhagwan/fzf-lua",
@@ -31,7 +33,10 @@ return {
       { "<leader>cgf", "<cmd>ClaudeFzfGitFiles<cr>", desc = "Claude: Add Git files" },
       { "<leader>cd", "<cmd>ClaudeFzfDirectory<cr>", desc = "Claude: Add directory files" },
     },
-    build = false,
+    build = function(plugin)
+      -- plugin ships duplicate tags in zh docs; remove before helptag generation
+      os.remove(plugin.dir .. "/doc/claude-fzf-zh.txt")
+    end,
   },
   {
     'pittcat/claude-fzf-history.nvim',
