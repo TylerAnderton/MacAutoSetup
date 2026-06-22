@@ -1,0 +1,509 @@
+[
+    // Mac-style navigation keybindings -- only available in Neovim insert mode
+    {
+        "key": "alt+left",
+        "command": "cursorWordAccessibilityLeft",
+        "when": "accessibilityModeEnabled && isLinux && textInputFocus && focusedView == 'workbench.panel.output'"
+    },
+    {
+        "key": "ctrl+left",
+        "command": "-cursorWordAccessibilityLeft",
+        "when": "accessibilityModeEnabled && isLinux && textInputFocus && focusedView == 'workbench.panel.output'"
+    },
+    {
+        "key": "shift+alt+left",
+        "command": "cursorWordAccessibilityLeftSelect",
+        "when": "accessibilityModeEnabled && isLinux && textInputFocus && focusedView == 'workbench.panel.output'"
+    },
+    {
+        "key": "ctrl+shift+left",
+        "command": "-cursorWordAccessibilityLeftSelect",
+        "when": "accessibilityModeEnabled && isLinux && textInputFocus && focusedView == 'workbench.panel.output'"
+    },
+    {
+        "key": "alt+right",
+        "command": "cursorWordAccessibilityRight",
+        "when": "accessibilityModeEnabled && isLinux && textInputFocus && focusedView == 'workbench.panel.output'"
+    },
+    {
+        "key": "ctrl+right",
+        "command": "-cursorWordAccessibilityRight",
+        "when": "accessibilityModeEnabled && isLinux && textInputFocus && focusedView == 'workbench.panel.output'"
+    },
+    {
+        "key": "shift+alt+right",
+        "command": "cursorWordAccessibilityRightSelect",
+        "when": "accessibilityModeEnabled && isLinux && textInputFocus && focusedView == 'workbench.panel.output'"
+    },
+    {
+        "key": "ctrl+shift+right",
+        "command": "-cursorWordAccessibilityRightSelect",
+        "when": "accessibilityModeEnabled && isLinux && textInputFocus && focusedView == 'workbench.panel.output'"
+    },
+    {
+        "key": "alt+right",
+        "command": "cursorWordEndRight",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "ctrl+right",
+        "command": "-cursorWordEndRight",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "shift+alt+right",
+        "command": "cursorWordEndRightSelect",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "ctrl+shift+right",
+        "command": "-cursorWordEndRightSelect",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "alt+left",
+        "command": "cursorWordLeft",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "ctrl+left",
+        "command": "-cursorWordLeft",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "shift+alt+left",
+        "command": "cursorWordLeftSelect",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "ctrl+shift+left",
+        "command": "-cursorWordLeftSelect",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "ctrl+right",
+        "command": "cursorEnd",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "end",
+        "command": "-cursorEnd",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "ctrl+shift+right",
+        "command": "cursorEndSelect",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "shift+end",
+        "command": "-cursorEndSelect",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "ctrl+left",
+        "command": "cursorHome",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "home",
+        "command": "-cursorHome",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "ctrl+shift+left",
+        "command": "cursorHomeSelect",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "shift+home",
+        "command": "-cursorHomeSelect",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "ctrl+down",
+        "command": "cursorBottom",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "ctrl+end",
+        "command": "-cursorBottom",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "ctrl+up",
+        "command": "cursorTop",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "ctrl+home",
+        "command": "-cursorTop",
+        "when": "textInputFocus && isLinux"
+    },
+    {
+        "key": "ctrl+right",
+        "command": "-editor.action.inlineSuggest.acceptNextWord",
+        "when": "inlineSuggestionVisible && isLinux && !editorReadonly"
+    },
+    {
+        "key": "alt+backspace",
+        "command": "deleteWordLeft",
+        "when": "textInputFocus && isLinux && !editorReadonly"
+    },
+    {
+        "key": "ctrl+backspace",
+        "command": "-deleteWordLeft",
+        "when": "textInputFocus && isLinux && !editorReadonly"
+    },
+    {
+        "key": "alt+delete",
+        "command": "deleteWordRight",
+        "when": "textInputFocus && isLinux && !editorReadonly"
+    },
+    {
+        "key": "ctrl+delete",
+        "command": "-deleteWordRight",
+        "when": "textInputFocus && isLinux && !editorReadonly"
+    },
+    {
+        "key": "ctrl+backspace",
+        "command": "deleteAllLeft",
+        "when": "isLinux"
+    },
+    {
+        "key": "ctrl+delete",
+        "command": "deleteAllRight",
+        "when": "isLinux"
+    },
+    
+    // Linux-style file lookup
+    {   
+        "key": "ctrl+p",
+        "command": "workbench.action.quickOpenNavigateNextInFilePicker",
+        "when": "inFilesPicker && inQuickOpen && isMac"
+    },
+    {
+        "key": "ctrl+p",
+        "command": "workbench.action.quickOpen",
+        "when": "isMac"
+    },
+    
+    // Tab switching
+    { // Enable global editor switching everywhere else (explorer, terminal, etc.)
+        "key": "ctrl+tab",
+        "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
+        "when": "!inEditorsPicker && !inQuickOpen && !inlineSuggestionVisible"
+    },
+    // { // Maintains default tab switching behavior when inline suggestions are not visible
+    //     "key": "ctrl+tab",
+    //     "command": "workbench.action.quickOpenNavigateNextInEditorPicker",
+    //     "when": "inEditorsPicker && inQuickOpen && !inlineSuggestionVisible"
+    // },
+    { // Disable editor switching while inline suggestions are visible in the editor
+        "key": "ctrl+tab",
+        "command": "-workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup", // Opens Editor Picker
+        // "when": "editorTextFocus && inlineSuggestionVisible"
+        "when": "((cppSuggestion && !editorReadonly) || (inlineSuggestionVisible && !editorReadonly)) && (!neovim.init || neovim.mode == 'insert')"
+    },
+    { // Disable editor switching while inline suggestions are visible in the editor
+        "key": "ctrl+tab",
+        "command": "-workbench.action.quickOpenNavigateNextInEditorPicker", // Navigates Editor Picker
+        // "when": "editorTextFocus && inlineSuggestionVisible"
+        "when": "((cppSuggestion && !editorReadonly) || (inlineSuggestionVisible && !editorReadonly)) && (!neovim.init || neovim.mode == 'insert')"
+    },
+    { // Use ctrl+tab for partial suggestion acceptance when inline suggestions are visible
+        "key": "ctrl+tab",
+        "command": "editor.action.inlineSuggest.acceptNextWord",
+        // "when": "editorTextFocus && inlineSuggestionVisible && !inEditorsPicker && !inQuickOpen && !editorReadonly"
+        "when": "((cppSuggestion && !editorReadonly) || (inlineSuggestionVisible && !editorReadonly)) && (!neovim.init || neovim.mode == 'insert')"
+    },
+
+    // Markdown keybindings
+    {
+        "key": "ctrl+u",
+        "command": "editor.action.insertSnippet",
+        "when": "editorTextFocus && editorLangId == 'markdown' && (!neovim.init || neovim.mode == 'insert')",
+        "args": {
+            "snippet": "<u>$TM_SELECTED_TEXT</u>"
+        }
+    },
+    
+    // Find keybindings
+    { "key": "ctrl+alt+f",                 "command": "actions.find",
+                                        "when": "editorFocus || editorIsOpen" },
+    { "key": "ctrl+alt+f",                 "command": "editor.action.extensioneditor.showfind",
+                                        "when": "!editorFocus && activeEditor == 'workbench.editor.extension'" },
+    { "key": "ctrl+alt+f",                 "command": "editor.action.webvieweditor.showFind",
+                                        "when": "webviewFindWidgetEnabled && !editorFocus && activeEditor == 'WebviewEditor'" },
+    { "key": "ctrl+alt+f",                 "command": "editor.action.webvieweditor.showFind",
+                                        "when": "webviewFindWidgetEnabled && !editorFocus && activeEditor == 'WebviewEditor'" },
+    { "key": "ctrl+alt+f",                 "command": "repl.action.filter",
+                                        "when": "inDebugRepl && textInputFocus" },
+    { "key": "ctrl+alt+f",                 "command": "settings.action.search",
+                                        "when": "inSettingsEditor" },
+    { "key": "ctrl+alt+f",                 "command": "commentsFocusFilter",
+                                        "when": "focusedView == 'workbench.panel.comments'" },
+    { "key": "ctrl+alt+f",                 "command": "keybindings.editor.searchKeybindings",
+                                        "when": "inKeybindings" },
+    { "key": "ctrl+alt+f",                 "command": "notebook.find",
+                                        "when": "notebookEditorFocused && !editorFocus && activeEditor == 'workbench.editor.interactive' || notebookEditorFocused && !editorFocus && activeEditor == 'workbench.editor.notebook'" },
+    { "key": "ctrl+alt+f",                 "command": "problems.action.focusFilter",
+                                        "when": "focusedView == 'workbench.panel.markers.view'" },
+    { "key": "ctrl+alt+f",                 "command": "workbench.action.terminal.focusFind",
+                                        "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported" },
+    
+
+    // Copilot keybindings
+// Opens Copilot chat same on linux & mac
+//     {   
+//         "key": "ctrl+alt+i", 
+//         "command": "workbench.action.chat.open" 
+//     },
+//     {   
+//         "key": "ctrl+alt+i", 
+//         "command": "workbench.panel.chat",
+//         "when": "workbench.panel.chat.view.copilot.active" 
+//     },
+// //// { "key": "ctrl+i",                "command": "editor.action.triggerSuggest",
+// ////                                      "when": "editorHasCompletionItemProvider && textInputFocus && !editorReadonly && !suggestWidgetVisible" },
+// { "key": "ctrl+i",                "command": "focusSuggestion",
+//                                      "when": "suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" },
+// { "key": "ctrl+i",                "command": "toggleSuggestionDetails",
+//                                      "when": "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus" },
+// { "key": "ctrl+i",                "command": "inlineChat.start",
+//                                      "when": "editorFocus && inlineChatHasEditsAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput || editorFocus && inlineChatHasProvider && inlineChatPossible && !editorReadonly && !editorSimpleInput" },
+// { "key": "ctrl+i",                "command": "notebook.cell.chat.start",
+//                                      "when": "config.notebook.experimental.cellChat && notebookChatAgentRegistered && notebookEditable && notebookEditorFocused && !inputFocus || config.notebook.experimental.generate && notebookChatAgentRegistered && notebookEditable && notebookEditorFocused && !inputFocus" },
+// { "key": "ctrl+i",                "command": "inlineChat.startWithCurrentLine",
+//                                      "when": "inlineChatHasProvider && inlineChatShowingHint && !editorReadonly && !inlineChatVisible" },
+// { "key": "ctrl+i",                "command": "workbench.action.terminal.chat.start",
+//                                      "when": "terminalChatAgentRegistered && terminalFocusInAny && terminalHasBeenCreated || terminalChatAgentRegistered && terminalFocusInAny && terminalProcessSupported" },
+// { "key": "ctrl+i",                "command": "workbench.action.terminal.suggestToggleDetails",
+//                                      "when": "simpleSuggestWidgetHasFocusedSuggestion && terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || simpleSuggestWidgetHasFocusedSuggestion && terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible" },
+//     // Ensure above bindings don't interfere with neovim
+// { "key": "ctrl+i",                "command": "vscode-neovim.send",
+//                                      "when": "editorTextFocus && neovim.ctrlKeysNormal.i && neovim.init && neovim.mode != 'insert' && editorLangId not in 'neovim.editorLangIdExclusions'",
+//                                      "args": "<C-i>" },
+
+    
+    // Codeium/Windsurf keybindings
+    { "key": "ctrl+alt+a",            "command": "codeium.openChatView"},
+    { "key": "ctrl+enter",             "command": "refactorPreview.apply",
+                                        "when": "refactorPreview.enabled && refactorPreview.hasCheckedChanges && focusedView == 'refactorPreview'" },
+    { "key": "cmd+enter",               "command": "refactorPreview.apply",
+                                        "when": "refactorPreview.enabled && refactorPreview.hasCheckedChanges && focusedView == 'refactorPreview'" },
+    { "key": "ctrl+enter",             "command": "notebook.cell.chat.acceptChanges",
+                                        "when": "inlineChatFocused && notebookCellChatFocused && !notebookCellEditorFocused" },
+    { "key": "ctrl+enter",             "command": "notebook.cell.chat.acceptChanges",
+                                        "when": "notebookEditorFocused && !inputFocus && !notebookCellEditorFocused && notebookChatOuterFocusPosition == 'below'" },
+    { "key": "ctrl+enter",             "command": "chatEditing.acceptAllFiles",
+                                        "when": "hasUndecidedChatEditingResource && inChatInput && !chatSessionRequestInProgress" },
+    { "key": "cmd+enter",               "command": "chatEditing.acceptAllFiles",
+                                        "when": "hasUndecidedChatEditingResource && inChatInput && !chatSessionRequestInProgress" },
+    { "key": "ctrl+enter",             "command": "chatEditor.action.accept",
+                                        "when": "chatEdits.hasEditorModifications && editorFocus && !chatEdits.isRequestInProgress" },
+    { "key": "ctrl+enter",             "command": "inlineChat.acceptChanges",
+                                        "when": "inlineChatHasProvider && inlineChatVisible" },
+    { "key": "ctrl+enter",             "command": "windsurf.terminalCommand.run",
+                                        "when": "terminalFocus && windsurf.canTriggerTerminalCommandAction" },
+    { "key": "ctrl+enter",             "command": "windsurf.command.accept",
+                                        "when": "editorTextFocus && windsurf.canAcceptOrRejectCommand && !editorHasSelection" },
+    { "key": "ctrl+enter",             "command": "windsurf.prioritized.cascadeAcceptAllInFile",
+                                        "when": "editorTextFocus && windsurf.canAcceptOrRejectAllCascadeEditsInFile" },
+    { "key": "cmd+enter",               "command": "windsurf.prioritized.cascadeAcceptAllInFile",
+                                        "when": "editorTextFocus && windsurf.canAcceptOrRejectAllCascadeEditsInFile" },
+
+    // Neovim scrolling keybindings
+    // Custom solution found from https://github.com/vscode-neovim/vscode-neovim/issues/983#issuecomment-1960709776
+    // Disable default VSCode keybindings for Ctrl+u and Ctrl+d in normal mode
+    {
+        "key": "ctrl+u",
+        "command": "-vscode-neovim.ctrl-u",
+        "when": "editorTextFocus && neovim.ctrlKeysNormal.u && neovim.init && neovim.mode != 'insert' && editorLangId not in 'neovim.editorLangIdExclusions'"
+    },
+    {
+        "key": "ctrl+d",
+        "command": "-vscode-neovim.ctrl-d",
+        "when": "editorTextFocus && neovim.ctrlKeysNormal.d && neovim.init && neovim.mode != 'insert' && editorLangId not in 'neovim.editorLangIdExclusions'"
+    },
+    // Enable Neovim custom keybindings for scrolling
+    {
+        "key": "ctrl+u",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {
+                    "command": "editorScroll",
+                    "args": {
+                        "to": "up",
+                        "by": "halfPage"
+                    }
+                },
+                {
+                    "command": "cursorMove",
+                    "args": { "to": "viewPortCenter" }
+                }
+            ]
+        },
+        "when": "neovim.init && neovim.mode != 'insert'" // Allows for markdown underline shortcut
+      },
+      {
+        "key": "ctrl+d",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {
+                    "command": "editorScroll",
+                    "args": {
+                        "to": "down",
+                        "by": "halfPage"
+                    }
+                },
+                {
+                    "command": "cursorMove",
+                    "args": { "to": "viewPortCenter" }
+                }
+            ]
+        }
+    },
+    // Full page scrolls
+    {
+        "key": "ctrl+b",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {
+                  "command": "editorScroll",
+                  "args": {
+                    "to": "up",
+                    "by": "page"
+                  }
+                },
+                {
+                  "command": "cursorMove",
+                  "args": {
+                    "to": "viewPortCenter"
+                  }
+                }
+            ]
+        }
+    },
+    {
+        "key": "ctrl+f",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {
+                  "command": "editorScroll",
+                  "args": {
+                    "to": "down",
+                    "by": "page"
+                  }
+                },
+                {
+                  "command": "cursorMove",
+                  "args": {
+                    "to": "viewPortCenter"
+                  }
+                }
+            ]
+        }
+    },
+
+    // Neovim Python Notebook keybindings
+    // Turn off default notebook navigation that interferes with file lookup
+    {
+      "key": "ctrl+n",
+      "command": "-list.focusDown",
+      "when": "listFocus && !inputFocus"
+    },
+    {
+      "key": "ctrl+p",
+      "command": "-list.focusUp",
+      "when": "listFocus && !inputFocus"
+    },
+    // Enable h & l to fold and unfold cells like arrow keys
+    {
+        "key": "h",
+        "command": "notebook.fold",
+        "when": "notebookEditorFocused && !inputFocus && activeEditor == 'workbench.editor.notebook'"
+    },
+    {
+        "key": "l",
+        "command": "notebook.unfold",
+        "when": "notebookEditorFocused && !inputFocus && activeEditor == 'workbench.editor.notebook'"
+    },
+    // Use o & O to insert new cells above and below
+    { "key": "shift+o",                     "command": "notebook.cell.insertCodeCellAboveAndFocusContainer",
+                                        "when": "notebookEditorFocused && !inputFocus && !notebookOutputInputFocused" },
+    { "key": "o",                     "command": "notebook.cell.insertCodeCellBelowAndFocusContainer",
+                                        "when": "notebookEditorFocused && !inputFocus && !notebookOutputInputFocused" },
+    
+    // Misc keybindings
+    // Find keybindings
+    { "key": "ctrl+alt+f",                 "command": "actions.find",
+                                        "when": "editorFocus || editorIsOpen" },
+    { "key": "ctrl+alt+f",                 "command": "editor.action.extensioneditor.showfind",
+                                        "when": "!editorFocus && activeEditor == 'workbench.editor.extension'" },
+    { "key": "ctrl+alt+f",                 "command": "editor.action.webvieweditor.showFind",
+                                        "when": "webviewFindWidgetEnabled && !editorFocus && activeEditor == 'WebviewEditor'" },
+    { "key": "ctrl+alt+f",                 "command": "editor.action.webvieweditor.showFind",
+                                        "when": "webviewFindWidgetEnabled && !editorFocus && activeEditor == 'WebviewEditor'" },
+    { "key": "ctrl+alt+f",                 "command": "repl.action.filter",
+                                        "when": "inDebugRepl && textInputFocus" },
+    { "key": "ctrl+alt+f",                 "command": "settings.action.search",
+                                        "when": "inSettingsEditor" },
+    { "key": "ctrl+alt+f",                 "command": "commentsFocusFilter",
+                                        "when": "focusedView == 'workbench.panel.comments'" },
+    { "key": "ctrl+alt+f",                 "command": "keybindings.editor.searchKeybindings",
+                                        "when": "inKeybindings" },
+    { "key": "ctrl+alt+f",                 "command": "notebook.find",
+                                        "when": "notebookEditorFocused && !editorFocus && activeEditor == 'workbench.editor.interactive' || notebookEditorFocused && !editorFocus && activeEditor == 'workbench.editor.notebook'" },
+    { "key": "ctrl+alt+f",                 "command": "problems.action.focusFilter",
+                                        "when": "focusedView == 'workbench.panel.markers.view'" },
+    { "key": "ctrl+alt+f",                 "command": "workbench.action.terminal.focusFind",
+                                        "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported" },
+                                     
+                                     
+    // File opening
+    {
+        "key": "ctrl+k ctrl+o",
+        "command": "-workbench.action.files.openFolder",
+        "when": "openFolderWorkspaceSupport"
+    },
+    {
+        "key": "ctrl+o",
+        "command": "-workbench.action.files.openFileFolder",
+        "when": "isMacNative && openFolderWorkspaceSupport"
+    },
+    {
+        "key": "ctrl+o",
+        "command": "workbench.action.files.openFolder"
+    },
+    {
+        "key": "ctrl+o",
+        "command": "workbench.action.files.openLocalFolder",
+        "when": "remoteFileDialogVisible"
+    },
+    {
+        "key": "ctrl+k ctrl+o",
+        "command": "-workbench.action.files.openLocalFolder",
+        "when": "remoteFileDialogVisible"
+    },
+    // Turns off overtype mode
+    { 
+        "key": "insert",
+        "command": "-editor.action.toggleovertypeinsertmode"
+    },
+    // Toggle sidebar
+    {
+        "key": "shift+ctrl+b",
+        "command": "workbench.action.toggleSidebarVisibility",
+    },
+    // Open dbt lineages
+    {
+        "key": "ctrl+cmd+l",
+        "command": "workbench.view.extension.lineage_view",
+        "when": "isMac"
+    }
+]

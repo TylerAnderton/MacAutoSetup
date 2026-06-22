@@ -1,0 +1,75 @@
+{
+    // Explorer settings
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmPasteNative": false,
+
+    // Git settings
+    "git.enableSmartCommit": true,
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.openRepositoryInParentFolders": "always",
+    "chat.editing.alwaysSaveWithGeneratedChanges": true,
+    "workbench.editor.limit.enabled": true,
+    "workbench.editor.limit.value": 10,
+    "workbench.editor.showTabs": "none",
+    "html.autoClosingTags": false, // VSCode keeps adding extra closing tags, causing errors
+    "editor.lineNumbers": "relative",
+    "keyboard.dispatch": "keyCode",
+    
+    // Formatting settings
+    
+    // Security settings
+    "security.workspace.trust.untrustedFiles": "open",
+
+    // Terminal settings
+    "terminal.integrated.inheritEnv": false, // Avoids environment variable conflicts
+
+    // Neovim settings
+    "vim.neovimPath": "/usr/bin/nvim",
+    "vscode-neovim.neovimInitVimPaths.linux": "~/.config/nvim/init.lua",
+    "vscode-neovim.neovimInitVimPaths.darwin": "~/.config/nvim/init.lua",
+    "vscode-neovim.commentGuestCode": true,
+    "files.autoSave": "afterDelay",
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "vscode-neovim.neovimExecutablePaths": "/usr/bin/nvim",
+    "vscode-neovim.enableNeovim": true,
+    "vscode-neovim.neovimCleanMessage": true,
+
+    // Misc settings
+    "settingsSync.keybindingsPerPlatform": false,
+    "workbench.startupEditor": "none",
+    "explorer.fileNesting.patterns": {
+        "*.ts": "${capture}.js",
+        "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+        "*.jsx": "${capture}.js",
+        "*.tsx": "${capture}.ts",
+        "tsconfig.json": "tsconfig.*.json",
+        "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb, bun.lock",
+        "*.sqlite": "${capture}.${extname}-*",
+        "*.db": "${capture}.${extname}-*",
+        "*.sqlite3": "${capture}.${extname}-*",
+        "*.db3": "${capture}.${extname}-*",
+        "*.sdb": "${capture}.${extname}-*",
+        "*.s3db": "${capture}.${extname}-*"
+    },
+    "notebook.lineNumbers": "on",
+    "python.analysis.generateWithTypeAnnotation": true,
+    "python.analysis.typeEvaluation.strictDictionaryInference": true,
+    "python.analysis.typeEvaluation.strictListInference": true,
+    "python.analysis.typeEvaluation.strictSetInference": true,
+    "python.interpreter.infoVisibility": "always",
+    "editor.detectIndentation": false,
+    "window.autoDetectColorScheme": true,
+    "search.useGlobalIgnoreFiles": false,
+    "search.useParentIgnoreFiles": false,
+    "cursor.composer.shouldAllowCustomModes": true,
+    "cursor.cpp.enablePartialAccepts": true,
+    "makefile.configureOnOpen": true,
+    "jupyter.kernels.trusted": [
+        "/Users/tyleranderton/Library/Jupyter/kernels/tractian-ai"
+    ],
+    "editor.minimap.renderCharacters": false,
+}
