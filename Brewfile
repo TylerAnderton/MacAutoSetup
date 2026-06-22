@@ -44,21 +44,21 @@ brew "gawk"
 
 # GUI Applications
 # cask "iterm2"
-cask "visual-studio-code"
+# cask "visual-studio-code"
 cask "google-chrome"
 cask "raycast"
 # cask "docker-desktop" # renamed from "docker"
 cask "ghostty"
-# cask "aerospace"
+cask "aerospace"
 cask "caffeine"
-cask "discord"
-cask "shottr"
+# cask "discord"
+# cask "shottr"
 cask "caffeine" 
 cask "1password"
 # cask "zoom" - I don't want to install this by default
 
 # AI
-brew "ollama"
+# brew "ollama"
 # cask "chatgpt" 
 # cask "google-gemini" # desktop app limited. prefer browser
 cask "claude" # desktop app
@@ -67,12 +67,12 @@ cask "cursor"
 # cask "windsurf"
 
 cask "todoist-app"
-cask "slack"
-cask "whatsapp"
+# cask "slack"
+# cask "whatsapp"
 cask "kindavim"
 cask "spotify"
 cask "focusrite-control-2"
-cask "protonvpn"
+# cask "protonvpn"
 
 # Mac apps
 cask "stats" # Memory, CPU, etc stats
