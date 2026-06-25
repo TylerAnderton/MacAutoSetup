@@ -55,7 +55,13 @@ cask "caffeine"
 # cask "shottr"
 cask "caffeine" 
 cask "1password"
+
+# Messaging
 # cask "zoom" - I don't want to install this by default
+cask "slack"
+# cask "whatsapp"
+cask microsoft-teams
+cask microsoft-outlook
 
 # AI
 # brew "ollama"
@@ -67,8 +73,6 @@ cask "cursor"
 # cask "windsurf"
 
 cask "todoist-app"
-# cask "slack"
-# cask "whatsapp"
 cask "kindavim"
 cask "spotify"
 cask "focusrite-control-2"
