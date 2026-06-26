@@ -1,0 +1,16 @@
+drafts/
+backups/
+cache/
+ide/
+plugins/
+projects/
+sessions/
+shell-snapshots/
+
+history.jsonl
+mcp-needs-auth-cache.json
+policy-limits.json
+
+.caveman-active
+.last-cleanup
+

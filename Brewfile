@@ -67,12 +67,14 @@ cask microsoft-outlook
 # brew "ollama"
 # cask "chatgpt" 
 # cask "google-gemini" # desktop app limited. prefer browser
-cask "claude" # desktop app
+# cask "claude" # desktop app
 cask "claude-code"
-cask "cursor"
+# cask "cursor"
 # cask "windsurf"
 
 cask "todoist-app"
+cask "slack"
+# cask "whatsapp"
 cask "kindavim"
 cask "spotify"
 cask "focusrite-control-2"

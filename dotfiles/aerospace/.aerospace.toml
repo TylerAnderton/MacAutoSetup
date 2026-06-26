@@ -21,11 +21,17 @@ after-startup-command = [
   # Google Gemini → C
   # Using Chrome app instead of Desktop to use Gems and Notebooks
   # 'exec-and-forget open -g -a "Gemini"',
-  'exec-and-forget open -g -a "Google Chrome" --args --app-id=caidcmannjgahlnbpmidmiecjcoiiigg',
+  'exec-and-forget open -g -a "Google Chrome" --args --app-id=gdfaincndogidkdcdkhapmbffkckdkhn',
 
   # Finder → F
   # Finder is special: this guarantees a window
   'exec-and-forget open -g -a "Finder" ~',
+
+  # Teams → M
+  # 'exec-and-forget open -g -a "Microsoft Teams"',
+
+  # Outlook → M
+  # 'exec-and-forget open -g -a "Microsoft Outlook"',
 
   # Notes → N
   # 'exec-and-forget open -g -a "Notes"',
@@ -111,7 +117,7 @@ run = 'move-node-to-workspace C'
 
 [[on-window-detected]]
 # if.app-id = 'com.google.GeminiMacOS'
-if.app-id = 'com.google.Chrome.app.caidcmannjgahlnbpmidmiecjcoiiigg' # Gemini web app
+if.app-id = 'com.google.Chrome.app.gdfaincndogidkdcdkhapmbffkckdkhn' # Gemini web app
 run = 'move-node-to-workspace C'
 
 [[on-window-detected]]

@@ -152,6 +152,6 @@
   "effortLevel": "medium",
   "theme": "auto",
   "editorMode": "vim",
-  "agentPushNotifEnabled": true,
-  "inputNeededNotifEnabled": true
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true
 }
