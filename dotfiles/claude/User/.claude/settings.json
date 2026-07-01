@@ -130,10 +130,11 @@
     "pyright-lsp@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": false,
     "security-guidance@claude-plugins-official": false,
-    "skill-creator@claude-plugins-official": false,
+    "skill-creator@claude-plugins-official": true,
     "slack@claude-plugins-official": false,
     "superpowers@claude-plugins-official": true,
-    "taches-cc-resources@taches-cc-resources": false
+    "taches-cc-resources@taches-cc-resources": false,
+    "plannotator@plannotator": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
@@ -146,6 +147,12 @@
       "source": {
         "source": "github",
         "repo": "glittercowboy/taches-cc-resources"
+      }
+    },
+    "plannotator": {
+      "source": {
+        "source": "github",
+        "repo": "backnotprop/plannotator"
       }
     }
   },
