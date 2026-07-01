@@ -40,7 +40,7 @@ after-startup-command = [
   'exec-and-forget open -g -a "Calendar"',
 
   # Jira → R
-  # 'exec-and-forget open -g -a "Google Chrome" --args --app-id=gecohhahibbgkajbpdehcckdhalbgbij',
+  'exec-and-forget open -g -a "Google Chrome" --args --app-id=gecohhahibbgkajbpdehcckdhalbgbij',
 
   # Todoist → R
   'exec-and-forget open -g -a "Todoist"',
@@ -155,9 +155,9 @@ run = 'move-node-to-workspace M'
 if.app-id = 'com.apple.Notes'
 run = 'move-node-to-workspace N'
 
-# [[on-window-detected]]
-# if.app-id = 'com.google.Chrome.app.gecohhahibbgkajbpdehcckdhalbgbij' # Jira
-# run = 'move-node-to-workspace R'
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome.app.cecndijcngipnhmgnmmnehclpncddnib' # Jira
+run = 'move-node-to-workspace R'
 
 [[on-window-detected]]
 if.app-id = 'com.todoist.mac.Todoist'
