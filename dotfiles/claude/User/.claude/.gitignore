@@ -6,6 +6,7 @@ plugins/
 projects/
 sessions/
 shell-snapshots/
+file-history/
 
 history.jsonl
 mcp-needs-auth-cache.json
