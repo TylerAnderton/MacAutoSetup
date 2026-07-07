@@ -31,8 +31,7 @@ Run this command directly — do not attempt re-conversion manually.
 2. Reports any untracked `.mdc` files (new files added to `.cursor/` since last init)
 3. For each tracked entry: re-reads source, re-applies conversion, overwrites destination only if content changed
 4. Updates sync map timestamp
-5. Rebuilds the Skills section of CLAUDE.md if any skill descriptions changed
-6. Prints report: updated / unchanged / broken sources / untracked
+5. Prints report: updated / unchanged / broken sources / untracked
 
 ## Notes
 

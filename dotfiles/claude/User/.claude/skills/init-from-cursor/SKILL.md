@@ -39,7 +39,6 @@ Run this command directly — do not attempt to perform the conversion manually.
 3. Symlinks `.cursor/agents/` entries → `.claude/agents/` (whole files and subdirs)
 4. Symlinks `.cursor/skills/` directories → `.claude/skills/` (entire dirs)
 5. Writes `.claude/cursor-sync-map.json` (tracks `.mdc` conversions for future updates)
-6. Generates `CLAUDE.md` at project root (or `.claude/CLAUDE.md` if one already exists)
 
 ## After running
 

@@ -141,50 +141,6 @@ def main():
     sync_map["generated"] = datetime.now(timezone.utc).isoformat()
     sync_map_path.write_text(json.dumps(sync_map, indent=2))
 
-    # ── Step 5: Rebuild CLAUDE.md skills section if anything changed ──────────
-    if updated:
-        claude_md_path = project_root / "CLAUDE.md"
-        if not claude_md_path.exists():
-            claude_md_path = claude_dir / "CLAUDE.md"
-
-        if claude_md_path.exists():
-            content = claude_md_path.read_text()
-            lines = content.splitlines()
-            # Rebuild Skills section only
-            new_lines = []
-            in_skills = False
-            for line in lines:
-                if line.strip() == "## Skills":
-                    in_skills = True
-                    new_lines.append(line)
-                    # Rebuild skill bullets
-                    for entry in entries:
-                        if entry["type"] == "skill":
-                            dest = project_root / entry["destination"]
-                            name = Path(entry["source"]).stem
-                            desc = ""
-                            if dest.exists():
-                                try:
-                                    m, _ = parse_frontmatter(dest.read_text())
-                                    desc = m.get("description", "")
-                                except Exception:
-                                    pass
-                            new_lines.append(f"- **/{name}** — {desc}" if desc else f"- **/{name}**")
-                    continue
-                if in_skills:
-                    if line.startswith("## ") or line.startswith("# "):
-                        in_skills = False
-                        new_lines.append(line)
-                    elif line.startswith("- "):
-                        continue  # skip old skill bullets
-                    else:
-                        if not line.strip():
-                            in_skills = False
-                        new_lines.append(line)
-                else:
-                    new_lines.append(line)
-            claude_md_path.write_text("\n".join(new_lines))
-
     # ── Report ────────────────────────────────────────────────────────────────
     print("/update-from-cursor complete")
     print("─" * 50)

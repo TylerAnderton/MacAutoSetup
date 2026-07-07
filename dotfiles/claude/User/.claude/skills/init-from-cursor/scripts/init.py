@@ -130,13 +130,7 @@ def main():
     agents_linked = []
     skill_dirs_linked = []
 
-    # ── Step 1: Read .cursor/rules (plain routing file) ───────────────────────
-    cursor_rules_file = cursor_dir / "rules"
-    rules_file_content = ""
-    if cursor_rules_file.is_file():
-        rules_file_content = cursor_rules_file.read_text()
-
-    # ── Step 2: Convert .mdc files ────────────────────────────────────────────
+    # ── Step 1: Convert .mdc files ────────────────────────────────────────────
     mdc_files = find_mdc_files(cursor_dir)
     for stem, src_path in mdc_files.items():
         text = src_path.read_text()
@@ -201,59 +195,6 @@ def main():
     claude_dir.mkdir(parents=True, exist_ok=True)
     sync_map_path.write_text(json.dumps(sync_map, indent=2))
 
-    # ── Step 6: Generate CLAUDE.md ────────────────────────────────────────────
-    claude_md_path = project_root / "CLAUDE.md"
-    if claude_md_path.exists():
-        claude_md_path = claude_dir / "CLAUDE.md"
-
-    # Read descriptions from cursor skill SKILL.md files
-    cursor_skill_descriptions = {}
-    if cursor_skills_dir.exists():
-        for entry in sorted(cursor_skills_dir.iterdir()):
-            if entry.is_dir():
-                skill_md = entry / "SKILL.md"
-                if skill_md.exists():
-                    try:
-                        meta, _ = parse_frontmatter(skill_md.read_text())
-                        cursor_skill_descriptions[entry.name] = meta.get("description", "")
-                    except Exception:
-                        cursor_skill_descriptions[entry.name] = ""
-
-    lines = ["# Project AI Configuration", ""]
-
-    if rules_file_content:
-        lines += ["## Routing", "", rules_file_content.strip(), ""]
-
-    if rules_created or scoped_rules_created:
-        lines += ["## Rules", ""]
-        for name, _ in rules_created:
-            lines.append(f"- **{name}** — always-active rule")
-        for name, _ in scoped_rules_created:
-            lines.append(f"- **{name}** — scoped rule")
-        lines.append("")
-
-    if agents_linked:
-        lines += ["## Agents", ""]
-        for name in agents_linked:
-            lines.append(f"- **{name}**")
-        lines.append("")
-
-    if skills_created or skill_dirs_linked:
-        lines += ["## Skills", ""]
-        for name, skill_out in skills_created:
-            try:
-                meta, _ = parse_frontmatter(skill_out.read_text())
-                desc = meta.get("description", "")
-            except Exception:
-                desc = ""
-            lines.append(f"- **/{name}** — {desc}" if desc else f"- **/{name}**")
-        for name in skill_dirs_linked:
-            desc = cursor_skill_descriptions.get(name, "")
-            lines.append(f"- **/{name}** — {desc}" if desc else f"- **/{name}**")
-        lines.append("")
-
-    claude_md_path.write_text("\n".join(lines))
-
     # ── Report ────────────────────────────────────────────────────────────────
     print("/init-from-cursor complete")
     print("─" * 50)
@@ -273,7 +214,6 @@ def main():
     for name in skill_dirs_linked:
         print(f"  .claude/skills/{name}")
     print(f"Sync map:              .claude/cursor-sync-map.json")
-    print(f"CLAUDE.md:             {claude_md_path.relative_to(project_root)}")
     print("─" * 50)
     print("To re-sync after Cursor changes: /update-from-cursor")
 
