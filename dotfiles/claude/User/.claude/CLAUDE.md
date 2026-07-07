@@ -63,3 +63,18 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 ---
 
 **These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
+
+## 5. Code Review Workflow
+
+**Review before every commit. No exceptions.**
+
+After completing a coding round and before running `git commit`:
+
+1. Invoke the code review interface (`/plannotator-review` in Claude Code).
+2. Wait for the review results to return.
+3. If feedback or annotations are present, address them in the current conversation, then re-invoke review.
+4. Only proceed to `git commit` once review returns no unresolved feedback (LGTM / approved).
+
+Do not wait for the user to request review — it is a mandatory automatic step in the workflow, not an optional one. Opening the review interface immediately after coding is the expected behavior.
+
+After review approval, run `touch /tmp/.plannotator-reviewed` before committing to signal review completion.
