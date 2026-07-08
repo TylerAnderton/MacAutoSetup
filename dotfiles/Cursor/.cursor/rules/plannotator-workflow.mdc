@@ -1,0 +1,23 @@
+---
+description: Plannotator plan review and code review triggers for Cursor
+alwaysApply: true
+---
+
+# Plannotator Workflow (Cursor)
+
+`plannotator-annotate` and `plannotator-review` skills own CLI invocation and response handling. This rule covers only what Cursor lacks vs Claude Code.
+
+## Plan Mode
+
+After Cursor writes a plan to its default path under `~/.cursor/plans/`, before implementation:
+
+1. Invoke `plannotator-annotate` on that plan file with `--gate --json`.
+2. Do not implement until the skill reports approval.
+
+Use the plan file Cursor created — do not move plans to a different directory.
+
+## Code Review
+
+After each coding round, invoke `plannotator-review` before `git commit`.
+
+Commit gating and `/tmp/.plannotator-reviewed` flag lifecycle are enforced by `~/.cursor/hooks.json`, not this rule.

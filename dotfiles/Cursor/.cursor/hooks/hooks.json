@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeShellExecution": [
+      {
+        "command": "./hooks/plannotator-pre-commit.sh",
+        "matcher": "git commit"
+      }
+    ],
+    "afterShellExecution": [
+      {
+        "command": "./hooks/plannotator-post-review.sh",
+        "matcher": "plannotator review"
+      }
+    ]
+  }
+}
