@@ -108,7 +108,7 @@
         ]
       },
       {
-        "matcher": "Bash(plannotator:*)",
+        "matcher": "Bash(plannotator review*)",
         "hooks": [
           {
             "type": "command",
@@ -169,5 +169,6 @@
   "theme": "auto",
   "editorMode": "vim",
   "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "model": "sonnet"
 }
