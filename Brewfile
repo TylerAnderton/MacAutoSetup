@@ -61,8 +61,8 @@ cask "1password"
 # cask "zoom" - I don't want to install this by default
 cask "slack"
 # cask "whatsapp"
-cask microsoft-teams
-cask microsoft-outlook
+cask "microsoft-teams"
+cask "microsoft-outlook"
 
 # AI
 # brew "ollama"
