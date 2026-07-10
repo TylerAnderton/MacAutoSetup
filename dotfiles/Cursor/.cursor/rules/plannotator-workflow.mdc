@@ -18,6 +18,8 @@ Use the plan file Cursor created — do not move plans to a different directory.
 
 ## Code Review
 
-Follow the Code Review Workflow procedure in `AGENTS.md` (repo root).
+Follow the Code Review Workflow procedure in `AGENTS.md` (repo root). The full procedure is defined there; this rule supplements it with Cursor-specific invocation details.
 
-Commit gating and `/tmp/.plannotator-reviewed` flag lifecycle are enforced by `~/.cursor/hooks.json`, not this rule.
+To invoke the Plannotator code review interface, run `plannotator review` in the terminal.
+
+After review returns no feedback (approved), run `touch /tmp/.plannotator-reviewed` to unlock the commit gate. Then `git add` remaining changes and `git commit`.

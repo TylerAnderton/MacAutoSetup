@@ -68,14 +68,17 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 **Review before every commit. No exceptions.**
 
-Do not wait for the user to request review — it is a mandatory automatic step in the workflow, not an optional one. Never `git commit` before approval: Plannotator compares against the last commit, so committing early hides changes from review.
+Never `git commit` before approval: Plannotator compares against the last commit, so committing early hides changes from review.
+
+**This is a mandatory procedure. Follow it exactly every time, with no deviations.**
 
 1. Implement code changes.
-2. Invoke the Plannotator code review interface (`/plannotator-review` in Claude Code).
-3. Wait for review results.
-4. If feedback is present:
-   a. Run `git add` on all current changes (stages the already-reviewed work).
-   b. Address the feedback (new unstaged changes are now isolated from previously reviewed work).
-   c. Re-invoke the code review interface.
-5. Repeat step 4 until review returns no unresolved feedback (LGTM / approved).
-6. Run `git commit`.
+2. Invoke the Plannotator code review interface.
+  - **In Claude Code:** Invoke `/plannotator-review`.
+  - **In Cursor:** Run `plannotator review` in the terminal.
+3. If feedback is present:
+   a. Run `git add` on all current changes (stages the already-reviewed work). Only do this *before* making new changes to address the feedback.
+   b. Address the feedback. Leave these new changes *unstaged* to be isolated from previously reviewed work.
+   c. Re-invoke code review — only the new unstaged changes are shown.
+4. Repeat step 3 until review returns no feedback (approved).
+5. Run `touch /tmp/.plannotator-reviewed`, then `git add` remaining changes, then `git commit`.

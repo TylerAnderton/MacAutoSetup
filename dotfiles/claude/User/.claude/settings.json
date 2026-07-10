@@ -106,16 +106,6 @@
             "statusMessage": "Formatting with ruff..."
           }
         ]
-      },
-      {
-        "matcher": "Bash(plannotator review*)",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "touch /tmp/.plannotator-reviewed",
-            "statusMessage": "Review marker set — commit unlocked after approval."
-          }
-        ]
       }
     ]
   },
