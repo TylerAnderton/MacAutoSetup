@@ -18,6 +18,6 @@ Use the plan file Cursor created — do not move plans to a different directory.
 
 ## Code Review
 
-Follow the Code Review Workflow procedure in `~/.claude/CLAUDE.md`.
+Follow the Code Review Workflow procedure in `AGENTS.md` (repo root).
 
 Commit gating and `/tmp/.plannotator-reviewed` flag lifecycle are enforced by `~/.cursor/hooks.json`, not this rule.
