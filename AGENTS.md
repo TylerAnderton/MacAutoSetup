@@ -1,1 +1,0 @@
-/Users/tyleranderton/Repositories/MacAutoSetup/dotfiles/claude/User/.claude/CLAUDE.md
