@@ -8,6 +8,7 @@ sessions/
 shell-snapshots/
 file-history/
 paste-cache/
+image-cache/
 plans/
 tasks/
 
