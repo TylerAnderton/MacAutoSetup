@@ -35,6 +35,7 @@ after-startup-command = [
 
   # Notes → N
   # 'exec-and-forget open -g -a "Notes"',
+  # 'exec-and-forget open -g -a "Obsidian"',
 
   # Calendar → R
   'exec-and-forget open -g -a "Calendar"',
@@ -153,6 +154,10 @@ run = 'move-node-to-workspace M'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.Notes'
+run = 'move-node-to-workspace N'
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
 run = 'move-node-to-workspace N'
 
 [[on-window-detected]]
