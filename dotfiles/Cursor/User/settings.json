@@ -72,4 +72,5 @@
         "/Users/tyleranderton/Library/Jupyter/kernels/tractian-ai"
     ],
     "editor.minimap.renderCharacters": false,
+    "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
 }
