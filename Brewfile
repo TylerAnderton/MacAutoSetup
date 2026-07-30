@@ -56,6 +56,7 @@ cask "caffeine"
 # cask "shottr"
 cask "caffeine" 
 cask "1password"
+cask "obsidian"
 
 # Messaging
 # cask "zoom" - I don't want to install this by default
@@ -70,7 +71,7 @@ cask "microsoft-outlook"
 # cask "google-gemini" # desktop app limited. prefer browser
 # cask "claude" # desktop app
 cask "claude-code"
-# cask "cursor"
+cask "cursor"
 # cask "windsurf"
 
 cask "todoist-app"
@@ -78,7 +79,7 @@ cask "slack"
 # cask "whatsapp"
 cask "kindavim"
 cask "spotify"
-cask "focusrite-control-2"
+# cask "focusrite-control-2"
 # cask "protonvpn"
 
 # Mac apps
