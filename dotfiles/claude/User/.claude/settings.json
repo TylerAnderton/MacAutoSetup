@@ -152,7 +152,8 @@
       "source": {
         "source": "github",
         "repo": "backnotprop/plannotator"
-      }
+      },
+      "autoUpdate": true
     }
   },
   "effortLevel": "medium",
