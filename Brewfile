@@ -14,6 +14,7 @@ brew "lazysql"
 brew "jq"
 brew "yq"
 brew "gh"
+brew "glab"
 brew "delta"
 brew "tmux"
 brew "stow"
@@ -68,7 +69,7 @@ cask "microsoft-outlook"
 # AI
 # brew "ollama"
 # cask "chatgpt" 
-# cask "google-gemini" # desktop app limited. prefer browser
+cask "google-gemini"
 # cask "claude" # desktop app
 cask "claude-code"
 cask "cursor"
