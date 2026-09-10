@@ -73,4 +73,6 @@
     ],
     "editor.minimap.renderCharacters": false,
     "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
+    "python.terminal.useEnvFile": true,
+    "cursor.composer.queueMessageDefaultBehavior": "steer",
 }
