@@ -82,3 +82,12 @@ Never `git commit` before approval: Plannotator compares against the last commit
    c. Re-invoke code review — only the new unstaged changes are shown.
 4. Repeat step 3 until review returns no feedback (approved).
 5. Run `touch /tmp/.plannotator-reviewed`, then `git add` remaining changes, then `git commit`.
+
+## 6. Planning & TDD Workflow
+
+**Automatic for non-trivial coding tasks. Skip for trivial one-off fixes — use judgment, per the tradeoff above.**
+
+- Before planning: use the `plan-with-review` skill.
+- Before and during implementation: use the `tdd-with-review` skill.
+
+Both are mandatory, not discretionary — don't wait for a prompt that happens to match; invoke them as part of starting the task.

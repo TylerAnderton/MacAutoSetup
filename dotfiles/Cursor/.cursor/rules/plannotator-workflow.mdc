@@ -1,11 +1,20 @@
 ---
-description: Plannotator plan review and code review triggers for Cursor
+description: Plannotator plan review, TDD review, and code review triggers for Cursor
 alwaysApply: true
 ---
 
 # Plannotator Workflow (Cursor)
 
-`plannotator-annotate` and `plannotator-review` skills own CLI invocation and response handling. This rule covers only what Cursor lacks vs Claude Code.
+`plannotator-annotate` and `plannotator-review` skills own CLI invocation and response handling.
+
+## Before Planning
+
+For any non-trivial coding task:
+
+1. Clarify the task's requirements with the user — ask whatever is actually unclear, not just the fixed list below. In addition, always ask:
+   - Whether to delegate tasks to subagents.
+   - The Obsidian vault path and folder to copy the approved plan into.
+2. Write the plan as spec/requirements only — no code, no solutions.
 
 ## Plan Mode
 
@@ -13,13 +22,34 @@ After Cursor writes a plan to its default path under `~/.cursor/plans/`, before 
 
 1. Invoke `plannotator-annotate` on that plan file with `--gate --json`.
 2. Do not implement until the skill reports approval.
+3. Once approved, copy the plan file to the Obsidian vault path and folder collected above:
+   ```bash
+   mkdir -p "<vault-path>/<folder>" && cp "<plan-file>" "<vault-path>/<folder>/"
+   ```
 
 Use the plan file Cursor created — do not move plans to a different directory.
 
+## Test-Driven Implementation
+
+When implementing the approved plan:
+
+1. **RED.** Write failing tests — one behavior per test, real code not mocks, no trivial pass-through tests, cover edge cases. Run them and confirm they fail for the right reason.
+2. **Review the tests in Plannotator before writing any implementation:**
+   ```bash
+   plannotator annotate --gate --json <test-file(s)>
+   ```
+   Iterate until approved.
+3. **Implement** the minimal code to pass, per the subagent-delegation preference collected above.
+4. **GREEN.** Run the tests. If they fail, fix the implementation — never edit the tests to force a pass.
+5. **Code review** — see below, before committing.
+
 ## Code Review
 
-Follow the Code Review Workflow procedure in `AGENTS.md` (repo root). The full procedure is defined there; this rule supplements it with Cursor-specific invocation details.
-
-To invoke the Plannotator code review interface, run `plannotator review` in the terminal.
-
-After review returns no feedback (approved), run `touch /tmp/.plannotator-reviewed` to unlock the commit gate. Then `git add` remaining changes and `git commit`.
+1. Implement code changes.
+2. Run `plannotator review` in the terminal.
+3. If feedback is present:
+   a. `git add` all current changes (stages the already-reviewed work) — only before making new changes to address the feedback.
+   b. Address the feedback. Leave these new changes unstaged.
+   c. Re-run `plannotator review` — only the new unstaged changes are shown.
+4. Repeat step 3 until review returns no feedback (approved).
+5. Run `touch /tmp/.plannotator-reviewed` to unlock the commit gate. Then `git add` remaining changes and `git commit`.
