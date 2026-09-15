@@ -1,0 +1,12 @@
+{
+  "strictLineBreaks": false,
+  "showLineNumber": true,
+  "vimMode": true,
+  "showUnsupportedFiles": true,
+  "promptDelete": false,
+  "newFileLocation": "current",
+  "attachmentFolderPath": "./Attachments",
+  "alwaysUpdateLinks": true,
+  "readableLineLength": false,
+  "focusNewTab": false
+}
