@@ -19,9 +19,8 @@ after-startup-command = [
   # 'exec-and-forget open -g -a "Claude"',
 
   # Google Gemini → C
-  # Using Chrome app instead of Desktop to use Gems and Notebooks
-  # 'exec-and-forget open -g -a "Gemini"',
-  'exec-and-forget open -g -a "Google Chrome" --args --app-id=gdfaincndogidkdcdkhapmbffkckdkhn',
+  'exec-and-forget open -g -a "Gemini"',
+  # 'exec-and-forget open -g -a "Google Chrome" --args --app-id=gdfaincndogidkdcdkhapmbffkckdkhn',
 
   # Finder → F
   # Finder is special: this guarantees a window
@@ -117,8 +116,8 @@ if.app-id = 'com.anthropic.claudefordesktop'
 run = 'move-node-to-workspace C'
 
 [[on-window-detected]]
-# if.app-id = 'com.google.GeminiMacOS'
-if.app-id = 'com.google.Chrome.app.gdfaincndogidkdcdkhapmbffkckdkhn' # Gemini web app
+if.app-id = 'com.google.GeminiMacOS'
+# if.app-id = 'com.google.Chrome.app.gdfaincndogidkdcdkhapmbffkckdkhn' # Gemini Chrome app
 run = 'move-node-to-workspace C'
 
 [[on-window-detected]]
