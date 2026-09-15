@@ -20,7 +20,8 @@ after-startup-command = [
 
   # Google Gemini → C
   'exec-and-forget open -g -a "Gemini"',
-  # 'exec-and-forget open -g -a "Google Chrome" --args --app-id=gdfaincndogidkdcdkhapmbffkckdkhn',
+  # Using Chrome app on work machine, as Gemini application is restricted
+  'exec-and-forget open -g -a "Google Chrome" --args --app-id=gdfaincndogidkdcdkhapmbffkckdkhn',
 
   # Finder → F
   # Finder is special: this guarantees a window
@@ -117,7 +118,11 @@ run = 'move-node-to-workspace C'
 
 [[on-window-detected]]
 if.app-id = 'com.google.GeminiMacOS'
-# if.app-id = 'com.google.Chrome.app.gdfaincndogidkdcdkhapmbffkckdkhn' # Gemini Chrome app
+run = 'move-node-to-workspace C'
+
+# Using Chrome app on work machine, as Gemini application is restricted
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome.app.gdfaincndogidkdcdkhapmbffkckdkhn' # Gemini Chrome app
 run = 'move-node-to-workspace C'
 
 [[on-window-detected]]
