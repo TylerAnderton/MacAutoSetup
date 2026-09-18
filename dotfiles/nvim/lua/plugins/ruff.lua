@@ -5,6 +5,10 @@ return {
       cmd = { 'ruff', 'server' },
       filetypes = { 'python' },
       root_markers = { 'pyproject.toml', 'ruff.toml', '.ruff.toml', '.git' },
+      -- Match Pyright's position encoding to avoid mixed-encoding buffers
+      capabilities = vim.tbl_deep_extend('force', vim.lsp.protocol.make_client_capabilities(), {
+        general = { positionEncodings = { 'utf-16' } },
+      }),
       init_options = {
         settings = {
           logLevel = "info",
