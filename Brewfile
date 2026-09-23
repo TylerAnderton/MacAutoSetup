@@ -19,12 +19,12 @@ brew "delta"
 brew "tmux"
 brew "stow"
 brew "neovim"
-brew "bazelisk" # monorepo management
+# brew "bazelisk" # monorepo management
 cask "1password-cli"
 brew "huggingface-cli"
 # brew "kubectl"       # Kubernetes CLI
 # brew "tailscale"     # Secure mesh VPN for homelab and remote access
-brew "withgraphite/tap/graphite"
+# brew "withgraphite/tap/graphite"
 
 # Languages n stuff
 brew "python"
@@ -70,9 +70,9 @@ cask "microsoft-outlook"
 # brew "ollama"
 # cask "chatgpt" 
 cask "google-gemini"
-# cask "claude" # desktop app
+# cask "claude" # desktop app; pre-installed on work machine
 cask "claude-code"
-cask "cursor"
+# cask "cursor" # pre-installed on work machine
 # cask "windsurf"
 
 cask "todoist-app"

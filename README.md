@@ -11,6 +11,8 @@ A lean, modern development environment for macOS that brings the Linux tiling wi
 - 🧘 Minimal Vim config — if you want to keep it light
 - 🖋️ GNU Stow — simple, modular dotfile management
 - 🧰 Essential GNU utilities — sed, coreutils, gawk, etc.
+- 🤖 Claude Code & Cursor — AI coding assistants, with shared Plannotator review workflow skills
+- 📓 Obsidian — vault config, plugins, and vim keybindings
 
 
 ## 🎯 Philosophy
@@ -59,15 +61,15 @@ as well as try managing your own config for a bit. You will learn things. Also r
 ### ✅ If you have Git
 
 ```sh
-git clone https://github.com/NLaundry/MacAutoSetup.git ~/Projects/MacAutoSetup
-cd ~/Projects/MacAutoSetup
+git clone https://github.com/TylerAnderton/MacAutoSetup.git ~/Repositories/MacAutoSetup
+cd ~/Repositories/MacAutoSetup
 ./bootstrap.sh
 ```
 
 ### 🌀 If you only have curl (fresh macOS install)
 
 ```
-bash <(curl -fsSL https://raw.githubusercontent.com/NLaundry/MacAutoSetup/main/bootstrap-nogit.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/TylerAnderton/MacAutoSetup/main/bootstrap-nogit.sh)
 ```
 
 This will:
@@ -79,54 +81,69 @@ This will:
 
 ## 📦 What Gets Installed
 
-The Brewfile covers all the essentials:
+The Brewfile covers all the essentials. Some entries (e.g. `docker-desktop`, `tailscale`, `kubectl`, `bazelisk`, `graphite`, `cursor`) are commented out — uncomment as needed for your machine.
 
 ### 🧰 CLI Tools
 
-git, fzf, ripgrep, bat, htop, lazygit, lazysql, awscli, jq, gh, tmux, stow, neovim, kubectl, tailscale, coreutils, gnu-sed, findutils, gawk
+git, fzf, fd, ripgrep, bat, htop, lazygit, lazysql, jq, yq, gh, glab, delta, tmux, stow, neovim, huggingface-cli, 1password-cli, coreutils, gnu-sed, findutils, gawk
+
+### 🧪 Dev Environment
+
+python, pipx, miniconda, pyenv, poetry, pyright, ruff, uv, node, nvm
 
 ### 💻 GUI Apps
 
-raycast, aerospace, ghostty, iterm2, visual-studio-code, docker, caffeine
+raycast, aerospace, ghostty, google-chrome, caffeine, 1password, obsidian, claude-code, stats, ice, ukelele
+
+### 💬 Messaging & AI
+
+slack, microsoft-teams, microsoft-outlook, google-gemini, todoist, spotify, kindavim
 
 ### 🖥️ Fonts
 
 JetBrains Mono Nerd Font (for beautiful glyphs and coding ligatures)
 
-### 🧪 Dev Environment
-
-python, pipx, node, nvm
-
 
 ## 📁 Dotfiles & Config
 
-Dotfiles are managed using GNU Stow.
+Dotfiles are managed using GNU Stow, with a handful of tools symlinked by hand where their config doesn't live at a simple `$HOME`-relative path.
 
 Directory structure:
 
 ```
 dotfiles/
-├── zsh/
-├── nvim/        # Minimal Neovim config
+├── zsh/         # Zsh config + .zsh.d/
 ├── vim/         # Classic Vim config (optional)
+├── nvim/        # AstroNvim-based Neovim config
 ├── aerospace/   # Tiling window manager config
-├── iterm2/
-├── ghostty/
-└── …
+├── ghostty/     # Terminal emulator config
+├── claude/      # Claude Code global config (User/.claude) + skills
+├── agents/      # Shared Claude Code / Cursor skills (plan-with-review, tdd-with-review)
+├── Cursor/      # Cursor editor settings, keybindings, hooks, and rules
+└── obsidian/    # Obsidian vault settings, plugins, and vimrc
 ```
 
-Each folder maps to $HOME. For example:
+`bootstrap.sh` links all of it automatically — no manual symlinking required:
 
-```
-stow –target=$HOME zsh nvim ghostty
-```
+- `zsh`, `vim`, and `aerospace` map cleanly onto `$HOME`, so those are linked with GNU Stow:
 
-creates symlinks for config files in your home directory.
+  ```sh
+  stow --target="$HOME" --dir=./dotfiles zsh vim aerospace
+  ```
+
+- Everything else expects its config at a path that doesn't mirror this repo's layout (or only needs specific files linked, not a whole directory), so `bootstrap.sh` links those directly with `ln -s`, backing up anything already at the destination as `<path>.bak`:
+
+  - Neovim (`~/.config/nvim`) — AstroNvim expects the whole config directory there
+  - Claude Code global config (`~/.claude`)
+  - Ghostty (`~/.config/ghostty/config`)
+  - Cursor hooks, rules, settings, and keybindings (`~/.cursor/...` and `~/Library/Application Support/Cursor/User/...`)
+  - Obsidian vault settings (`~/Documents/Obsidian Vault/.obsidian*`) — adjust the vault path in `bootstrap.sh` if your vault lives elsewhere
+
+The Claude Code skills under `dotfiles/agents/skills/` (`plan-with-review`, `tdd-with-review`) are already linked into `dotfiles/claude/User/.claude/skills/` via relative symlinks committed to git, so they travel with the repo and don't need any extra setup once `~/.claude` above is linked.
 
 ## ✅ Result
 
 - Feels like Arch or Debian with i3, but polished for Mac
-- Astronvim or minimal Vim: pick your workflow
 - Tiling window control and keybindings
 - Clean terminal with Nerd Font and modern CLI tools
-- Shell and dev tools ready for Python, Node, AWS, and Kubernetes
+- Shell and dev tools ready for Python, Node, and AI-assisted coding with Claude Code and Cursor

@@ -40,7 +40,35 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Use GNU Stow to symlink dotfiles
 echo "Setting up dotfiles with GNU Stow..."
-stow --target="$HOME" --dir=./dotfiles zsh vim nvim aerospace
+stow --target="$HOME" --dir=./dotfiles zsh vim aerospace
+
+# Symlink configs that don't map cleanly onto $HOME via Stow
+echo "Linking additional configs..."
+REPO_DIR="$(pwd)"
+
+link() {
+  local src="$1" dest="$2"
+  mkdir -p "$(dirname "$dest")"
+  if [[ -L "$dest" ]]; then
+    [[ "$(readlink "$dest")" == "$src" ]] && return
+    rm "$dest"
+  elif [[ -e "$dest" ]]; then
+    echo "Backing up existing $dest to $dest.bak"
+    mv "$dest" "$dest.bak"
+  fi
+  ln -s "$src" "$dest"
+}
+
+link "$REPO_DIR/dotfiles/nvim" "$HOME/.config/nvim"
+link "$REPO_DIR/dotfiles/claude/User/.claude" "$HOME/.claude"
+link "$REPO_DIR/dotfiles/ghostty/config" "$HOME/.config/ghostty/config"
+link "$REPO_DIR/dotfiles/Cursor/.cursor/hooks" "$HOME/.cursor/hooks"
+link "$REPO_DIR/dotfiles/Cursor/.cursor/hooks.json" "$HOME/.cursor/hooks.json"
+link "$REPO_DIR/dotfiles/Cursor/.cursor/rules" "$HOME/.cursor/rules"
+link "$REPO_DIR/dotfiles/Cursor/User/settings.json" "$HOME/Library/Application Support/Cursor/User/settings.json"
+link "$REPO_DIR/dotfiles/Cursor/User/keybindings.json" "$HOME/Library/Application Support/Cursor/User/keybindings.json"
+link "$REPO_DIR/dotfiles/obsidian/.obsidian" "$HOME/Documents/Obsidian Vault/.obsidian"
+link "$REPO_DIR/dotfiles/obsidian/.obsidian.vimrc" "$HOME/Documents/Obsidian Vault/.obsidian.vimrc"
 
 # Optionally restart the shell
 exec zsh -l
