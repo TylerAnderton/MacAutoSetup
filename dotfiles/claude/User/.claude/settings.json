@@ -70,7 +70,8 @@
       "WebFetch(domain:graphite.com)",
       "WebFetch(domain:graphite.dev)"
     ],
-    "defaultMode": "default"
+    "defaultMode": "default",
+    "additionalDirectories": ["/Users/tanderton/Documents/Obsidian Vault/"]
   },
   "model": "sonnet",
   "hooks": {
