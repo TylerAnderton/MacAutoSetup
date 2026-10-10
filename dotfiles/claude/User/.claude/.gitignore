@@ -11,10 +11,12 @@ paste-cache/
 image-cache/
 plans/
 tasks/
+state/
+skills/synced/
 
 history.jsonl
 mcp-needs-auth-cache.json
-policy-limits.json
+policy-limits.json*
 
 .caveman-active
 .last-cleanup

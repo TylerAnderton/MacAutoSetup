@@ -72,6 +72,7 @@
     ],
     "defaultMode": "default"
   },
+  "model": "sonnet",
   "hooks": {
     "SessionStart": [
       {
@@ -160,6 +161,5 @@
   "theme": "auto",
   "editorMode": "vim",
   "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true,
-  "model": "sonnet"
+  "agentPushNotifEnabled": true
 }
