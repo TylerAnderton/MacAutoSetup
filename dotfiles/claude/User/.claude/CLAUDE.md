@@ -64,30 +64,8 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 **These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
 
-## 5. Code Review Workflow
+## Workflow
 
-**Review before every commit. No exceptions.**
+**Mandatory for non-trivial coding tasks. Skip for trivial one-off fixes — use judgment, per the tradeoff above.** Follow the plan, TDD, and review workflow below exactly; do not wait for a prompt that happens to match.
 
-Never `git commit` before approval: Plannotator compares against the last commit, so committing early hides changes from review.
-
-**This is a mandatory procedure. Follow it exactly every time, with no deviations.**
-
-1. Implement code changes.
-2. Invoke the Plannotator code review interface.
-  - **In Claude Code:** Invoke `/plannotator-review`.
-  - **In Cursor:** Run `plannotator review` in the terminal.
-3. If feedback is present:
-   a. Run `git add` on all current changes (stages the already-reviewed work). Only do this *before* making new changes to address the feedback.
-   b. Address the feedback. Leave these new changes *unstaged* to be isolated from previously reviewed work.
-   c. Re-invoke code review — only the new unstaged changes are shown.
-4. Repeat step 3 until review returns no feedback (approved).
-5. Run `touch /tmp/.plannotator-reviewed`, then `git add` remaining changes, then `git commit`.
-
-## 6. Planning & TDD Workflow
-
-**Automatic for non-trivial coding tasks. Skip for trivial one-off fixes — use judgment, per the tradeoff above.**
-
-- Before planning: use the `plan-with-review` skill.
-- Before and during implementation: use the `tdd-with-review` skill.
-
-Both are mandatory, not discretionary — don't wait for a prompt that happens to match; invoke them as part of starting the task.
+@WORKFLOW.md

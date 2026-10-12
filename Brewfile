@@ -1,6 +1,5 @@
 tap "nikitabobko/tap" # Aerospace
-tap "jorgerojas26/lazysql" 
-tap "withgraphite/tap"
+tap "jorgerojas26/lazysql"
 
 # CLI Tools
 brew "git"
@@ -24,7 +23,6 @@ cask "1password-cli"
 brew "huggingface-cli"
 # brew "kubectl"       # Kubernetes CLI
 # brew "tailscale"     # Secure mesh VPN for homelab and remote access
-# brew "withgraphite/tap/graphite"
 
 # Languages n stuff
 brew "python"
@@ -34,7 +32,6 @@ brew "pyenv" # python version manager
 brew "poetry" # python dependency manager
 brew "pyright"
 brew "ruff"
-brew "uv" # python package & environment manager
 brew "node" # npm necessary for Astronvim LSPs
 brew "nvm"
 

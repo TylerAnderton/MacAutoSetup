@@ -62,8 +62,6 @@ link() {
 link "$REPO_DIR/dotfiles/nvim" "$HOME/.config/nvim"
 link "$REPO_DIR/dotfiles/claude/User/.claude" "$HOME/.claude"
 link "$REPO_DIR/dotfiles/ghostty/config" "$HOME/.config/ghostty/config"
-link "$REPO_DIR/dotfiles/Cursor/.cursor/hooks" "$HOME/.cursor/hooks"
-link "$REPO_DIR/dotfiles/Cursor/.cursor/hooks.json" "$HOME/.cursor/hooks.json"
 link "$REPO_DIR/dotfiles/Cursor/.cursor/rules" "$HOME/.cursor/rules"
 link "$REPO_DIR/dotfiles/Cursor/User/settings.json" "$HOME/Library/Application Support/Cursor/User/settings.json"
 link "$REPO_DIR/dotfiles/Cursor/User/keybindings.json" "$HOME/Library/Application Support/Cursor/User/keybindings.json"

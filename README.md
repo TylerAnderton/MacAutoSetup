@@ -81,7 +81,7 @@ This will:
 
 ## 📦 What Gets Installed
 
-The Brewfile covers all the essentials. Some entries (e.g. `docker-desktop`, `tailscale`, `kubectl`, `bazelisk`, `graphite`, `cursor`) are commented out — uncomment as needed for your machine.
+The Brewfile covers all the essentials. Some entries (e.g. `docker-desktop`, `tailscale`, `kubectl`, `bazelisk`, `cursor`) are commented out — uncomment as needed for your machine.
 
 ### 🧰 CLI Tools
 
@@ -89,7 +89,7 @@ git, fzf, fd, ripgrep, bat, htop, lazygit, lazysql, jq, yq, gh, glab, delta, tmu
 
 ### 🧪 Dev Environment
 
-python, pipx, miniconda, pyenv, poetry, pyright, ruff, uv, node, nvm
+python, pipx, miniconda, pyenv, poetry, pyright, ruff, node, nvm
 
 ### 💻 GUI Apps
 
@@ -117,9 +117,8 @@ dotfiles/
 ├── nvim/        # AstroNvim-based Neovim config
 ├── aerospace/   # Tiling window manager config
 ├── ghostty/     # Terminal emulator config
-├── claude/      # Claude Code global config (User/.claude) + skills
-├── agents/      # Shared Claude Code / Cursor skills (plan-with-review, tdd-with-review)
-├── Cursor/      # Cursor editor settings, keybindings, hooks, and rules
+├── claude/      # Claude Code global config (User/.claude): settings, workflow, skills (shared with Cursor)
+├── Cursor/      # Cursor editor settings, keybindings, and rules
 └── obsidian/    # Obsidian vault settings, plugins, and vimrc
 ```
 
@@ -136,10 +135,12 @@ dotfiles/
   - Neovim (`~/.config/nvim`) — AstroNvim expects the whole config directory there
   - Claude Code global config (`~/.claude`)
   - Ghostty (`~/.config/ghostty/config`)
-  - Cursor hooks, rules, settings, and keybindings (`~/.cursor/...` and `~/Library/Application Support/Cursor/User/...`)
+  - Cursor rules, settings, and keybindings (`~/.cursor/...` and `~/Library/Application Support/Cursor/User/...`)
   - Obsidian vault settings (`~/Documents/Obsidian Vault/.obsidian*`) — adjust the vault path in `bootstrap.sh` if your vault lives elsewhere
 
-The Claude Code skills under `dotfiles/agents/skills/` (`plan-with-review`, `tdd-with-review`) are already linked into `dotfiles/claude/User/.claude/skills/` via relative symlinks committed to git, so they travel with the repo and don't need any extra setup once `~/.claude` above is linked.
+The custom skills (`plan-with-review`, `tdd-with-review`, `jira-tickets`) live as real files in `dotfiles/claude/User/.claude/skills/`. Claude Code and Cursor both read `~/.claude/skills`, so once `~/.claude` is linked, `git pull` is the whole update process: no scripts, no per-skill links. Do not also link them into `~/.agents/skills`, or Cursor lists them twice.
+
+The Claude Code and Cursor workflow (plan, TDD, and review with Plannotator) is documented in [`docs/`](docs/README.md).
 
 ## ✅ Result
 
