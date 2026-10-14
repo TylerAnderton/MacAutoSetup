@@ -19,29 +19,29 @@ after-startup-command = [
   # 'exec-and-forget open -g -a "Claude"',
 
   # Google Gemini → C
-  'exec-and-forget open -g -a "Gemini"',
+  # 'exec-and-forget open -g -a "Gemini"',
   # Using Chrome app on work machine, as Gemini application is restricted
-  'exec-and-forget open -g -a "Google Chrome" --args --app-id=gdfaincndogidkdcdkhapmbffkckdkhn',
+  # 'exec-and-forget open -g -a "Google Chrome" --args --app-id=gdfaincndogidkdcdkhapmbffkckdkhn',
 
   # Finder → F
   # Finder is special: this guarantees a window
   'exec-and-forget open -g -a "Finder" ~',
 
   # Teams → M
-  # 'exec-and-forget open -g -a "Microsoft Teams"',
+  'exec-and-forget open -g -a "Microsoft Teams"',
 
   # Outlook → M
-  # 'exec-and-forget open -g -a "Microsoft Outlook"',
+  'exec-and-forget open -g -a "Microsoft Outlook"',
 
   # Notes → N
   # 'exec-and-forget open -g -a "Notes"',
-  # 'exec-and-forget open -g -a "Obsidian"',
+  'exec-and-forget open -g -a "Obsidian"',
 
   # Calendar → R
   'exec-and-forget open -g -a "Calendar"',
 
   # Jira → R
-  'exec-and-forget open -g -a "Google Chrome" --args --app-id=gecohhahibbgkajbpdehcckdhalbgbij',
+  # 'exec-and-forget open -g -a "Google Chrome" --args --app-id=gecohhahibbgkajbpdehcckdhalbgbij',
 
   # Todoist → R
   'exec-and-forget open -g -a "Todoist"',

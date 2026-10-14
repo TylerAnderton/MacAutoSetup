@@ -19,7 +19,7 @@ brew "tmux"
 brew "stow"
 brew "neovim"
 # brew "bazelisk" # monorepo management
-cask "1password-cli"
+# cask "1password-cli" # requires admin privileges
 brew "huggingface-cli"
 # brew "kubectl"       # Kubernetes CLI
 # brew "tailscale"     # Secure mesh VPN for homelab and remote access
@@ -27,7 +27,7 @@ brew "huggingface-cli"
 # Languages n stuff
 brew "python"
 brew "pipx"
-cask "miniconda"
+# cask "miniconda" # requires admin privileges
 brew "pyenv" # python version manager
 brew "poetry" # python dependency manager
 brew "pyright"
@@ -77,7 +77,6 @@ cask "slack"
 # cask "whatsapp"
 cask "kindavim"
 cask "spotify"
-# cask "focusrite-control-2"
 # cask "protonvpn"
 
 # Mac apps
