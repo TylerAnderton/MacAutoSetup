@@ -20,8 +20,8 @@ Plan, review, pause, RED, review, GREEN, review, commit. It is one linear flow, 
 | Pause | The plan is copied to Obsidian, then the agent stops and asks you to compact and switch models |
 | RED | Failing tests, reviewed with `--diff-type unstaged`, then staged |
 | Implement | Minimal code, then the project's whole test suite to GREEN, then `pyright` on the changed files |
-| Docs | If the project has `docs/` and the change is non-trivial, docs are updated in the same change, then opened in Plannotator annotate for review before the code review |
 | Code review | `--diff-type unstaged`; reviewed work is staged between rounds |
+| Docs | After the code review is approved: if the project has `docs/` and the change is non-trivial, docs are updated in the same change, then opened in Plannotator annotate for review |
 | Commit | Automatic after final approval, Conventional Commits, no push |
 
 Python steps (pytest, pyright) run only when the project has a `pyproject.toml`. Formatting and linting, such as ruff, are project-level rules that live in each project, because those tools are not installed everywhere.
@@ -39,7 +39,7 @@ After plan approval the agent stops on purpose. Planning is worth a high-power m
 - Claude Code: `/plannotator-review --diff-type unstaged`
 - Cursor: `plannotator review --diff-type unstaged`
 
-New files only appear in an unstaged diff after `git add -N <file>`. For a worktree outside the session directory, the worktree path is passed as the review target. A review that times out or is stopped in the background is not an approval.
+New files only appear in an unstaged diff after `git add -N <file>`, which is used only for untracked paths that are not in the index yet. Staged work has already been reviewed: agents never unstage, `git reset`, or `git restore --staged` a path that is already in the index unless you ask. For a worktree outside the session directory, the worktree path is passed as the review target. A review that times out or is stopped in the background is not an approval.
 
 ## Jira tickets
 

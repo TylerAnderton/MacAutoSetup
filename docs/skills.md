@@ -7,7 +7,7 @@ All three are real directories under `dotfiles/claude/User/.claude/skills/`. Cla
 | Skill | Use it for | Files |
 |---|---|---|
 | `plan-with-review` | Intake questions, branch and worktree setup, spec-only plan, Obsidian copy, the pause for compact and model switch | `SKILL.md`, `references/worktree.md` |
-| `tdd-with-review` | RED tests, review, implementation, pytest, pyright, docs and their review, final review, commit | `SKILL.md`, `references/tdd-discipline.md`, `references/writing-good-tests.md`, `references/LICENSE-superpowers.md` |
+| `tdd-with-review` | RED tests, review, implementation, pytest, pyright, code review, docs and their review, commit | `SKILL.md`, `references/tdd-discipline.md`, `references/writing-good-tests.md`, `references/LICENSE-superpowers.md` |
 | `jira-tickets` | Interviewing, drafting, reviewing, and writing Jira tickets | `SKILL.md` |
 
 The two TDD references are adapted from the `test-driven-development` skill of the superpowers plugin (MIT; the license notice is kept in `references/LICENSE-superpowers.md`). They are copies modified for this workflow, so the custom skills do not depend on the plugin, and it can be uninstalled.

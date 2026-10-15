@@ -1,6 +1,6 @@
 ---
 name: tdd-with-review
-description: Use when implementing an approved plan, feature, or bugfix. Writes failing tests first and gets them reviewed in Plannotator before any implementation exists, then implements to green with pytest and pyright, updates and reviews docs, and gets the final code review before an automatic commit.
+description: Use when implementing an approved plan, feature, or bugfix. Writes failing tests first and gets them reviewed in Plannotator before any implementation exists, then implements to green with pytest and pyright, gets the code review, then updates and reviews docs before an automatic commit.
 allowed-tools: Bash(plannotator:*)
 ---
 
@@ -20,11 +20,11 @@ The phase order and hard rules live in `WORKFLOW.md`. This skill is the detail f
 
 5. **Type check.** Only after GREEN, run `pyright` on the changed files. Fix errors your change introduced. Report pre-existing errors without fixing them.
 
-6. **Docs.** If the project has a `docs/` directory and the change is non-trivial, update the docs per that project's conventions. Then open the changed docs in Plannotator annotate (commands below) and address the feedback before the code review.
+6. **Code review.** Run the unstaged code review. Fix any feedback, leaving the fixes unstaged, and re-review until it returns clean. `git add` the approved work after each approved round.
 
-7. **Code review.** Run the unstaged code review. Fix any feedback, leaving the fixes unstaged, and re-review until it returns clean. `git add` the approved work after each approved round.
+7. **Docs.** Only after the code review is approved: if the project has a `docs/` directory and the change is non-trivial, update the docs per that project's conventions. Then open the changed docs in Plannotator annotate (commands below), address the feedback, and `git add` the approved docs.
 
-8. **Commit** automatically once the final review is clean: Conventional Commits message, with the attribution trailer the environment specifies. Do not push.
+8. **Commit** automatically once the docs review is clean: Conventional Commits message, with the attribution trailer the environment specifies. Do not push.
 
 ## Review commands
 
@@ -33,7 +33,7 @@ Code and tests are always reviewed as unstaged changes, never with the annotate 
 - **Claude Code:** `/plannotator-review --diff-type unstaged`. The skill passes its arguments straight to `plannotator review`.
 - **Cursor:** `plannotator review --diff-type unstaged`
 
-When the work is in a worktree outside the session directory, pass the worktree path as the target. New files do not appear in an unstaged diff until marked with `git add -N <file>`.
+When the work is in a worktree outside the session directory, pass the worktree path as the target. New files do not appear in an unstaged diff until marked with `git add -N <file>`. Use `git add -N` only on untracked paths that are not in the index yet. Never unstage, `git reset`, or `git restore --staged` a path that is already in the index unless the user asks: staged work has already been reviewed, so do not unstage a diff to fit it into a review.
 
 Docs are reviewed as documents, not diffs:
 

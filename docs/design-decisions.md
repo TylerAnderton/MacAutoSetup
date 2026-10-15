@@ -32,7 +32,7 @@ Planning benefits from a high-power model and implementation does not. A skill o
 
 ## Unstaged review with staging between rounds
 
-Code review always uses `plannotator review --diff-type unstaged`. After each approved review the work is staged, and review fixes stay unstaged, so every round shows only what is new. Tests are reviewed the same way instead of with `plannotator annotate`, which treats them as a document rather than a diff. Nothing is committed until the final review is approved, because committing early would hide changes from review.
+Code review always uses `plannotator review --diff-type unstaged`. After each approved review the work is staged, and review fixes stay unstaged, so every round shows only what is new. Tests are reviewed the same way instead of with `plannotator annotate`, which treats them as a document rather than a diff. Nothing is committed until the final review is approved, because committing early would hide changes from review. Staged means already reviewed, so agents never unstage a path that is already in the index (no `git reset`, `git restore --staged`, or `git add -N` on it) to fit it into a review; `git add -N` is only for untracked paths.
 
 ## Plans are one linear flow with no code
 
@@ -44,7 +44,7 @@ A worktree sits next to the main checkout as `<main-checkout-dir>-<identifier>` 
 
 ## Pyright, docs, and what is left to the project
 
-Pyright runs only after tests are GREEN because type errors in code that does not yet behave correctly are noise. Docs are updated in the same change as non-trivial code and reviewed as documents in Plannotator annotate, so the review sees them and `docs/` never lags the code.
+Pyright runs only after tests are GREEN because type errors in code that does not yet behave correctly are noise. Docs are updated in the same change as non-trivial code and reviewed as documents in Plannotator annotate, so `docs/` never lags the code. They are written after the GREEN code review is approved so they describe the code as it was finally reviewed, not a version that review feedback may still change.
 
 Formatting and linting (ruff) are deliberately not in the user-level workflow. Ruff is not installed in every environment, so it is a project-level rule that each project configures. The user-level Claude hook that runs ruff after a Python edit only runs when ruff is on the path, and does nothing otherwise.
 

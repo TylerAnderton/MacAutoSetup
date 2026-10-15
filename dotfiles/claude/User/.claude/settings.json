@@ -17,7 +17,7 @@
       "Bash(claude plugin:*)",
       "Bash(claude plugins:*)",
       "Bash(cp *)",
-      "Bash(curl -s* *localhost:*)",
+      "Bash(curl -s *localhost*)",
       "Bash(do echo:*)",
       "Bash(do mkdir:*)",
       "Bash(done)",
