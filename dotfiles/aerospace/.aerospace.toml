@@ -127,10 +127,11 @@ run = 'move-node-to-workspace C'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
-run = [
-    'layout floating', # Attempt to resolve bug with opening new tabs
-    'move-node-to-workspace F'
-]
+# run = [
+#     'layout floating', # Attempt to resolve bug with opening new tabs
+#     'move-node-to-workspace F'
+# ]
+run = 'move-node-to-workspace F'
 
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
