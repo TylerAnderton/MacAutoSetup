@@ -71,6 +71,7 @@ cask "google-gemini"
 cask "claude-code"
 # cask "cursor" # pre-installed on work machine
 # cask "windsurf"
+cask "wispr-flow" # AI-powered dictation
 
 cask "todoist-app"
 cask "slack"

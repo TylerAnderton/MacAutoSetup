@@ -79,4 +79,6 @@
     "cursor.composer.conversationDensity": "compact-ungrouped",
     "cursor.chatMaxWidth": 1120,
     "cursor.composer.codeBlockWordWrap": true,
+    "editor.accessibilitySupport": "on",
+    "accessibility.signalOptions.volume": 0,
 }
