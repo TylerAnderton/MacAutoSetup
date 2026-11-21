@@ -76,7 +76,6 @@ cask "wispr-flow" # AI-powered dictation
 cask "todoist-app"
 cask "slack"
 # cask "whatsapp"
-cask "kindavim"
 cask "spotify"
 # cask "protonvpn"
 
