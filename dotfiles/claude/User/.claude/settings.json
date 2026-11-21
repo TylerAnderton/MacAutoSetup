@@ -127,5 +127,7 @@
   "theme": "auto",
   "editorMode": "vim",
   "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "model": "sonnet",
+  "outputStyle": "Proactive"
 }
