@@ -97,7 +97,7 @@ raycast, aerospace, ghostty, google-chrome, caffeine, 1password, obsidian, claud
 
 ### 💬 Messaging & AI
 
-slack, microsoft-teams, microsoft-outlook, google-gemini, todoist, spotify, kindavim
+slack, microsoft-teams, microsoft-outlook, google-gemini, todoist, spotify
 
 ### 🖥️ Fonts
 
