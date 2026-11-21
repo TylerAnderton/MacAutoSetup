@@ -81,45 +81,66 @@ This will:
 
 ## 📦 What Gets Installed
 
-The Brewfile covers all the essentials. Some entries (e.g. `docker-desktop`, `tailscale`, `kubectl`, `bazelisk`, `cursor`) are commented out — uncomment as needed for your machine.
+The Brewfile covers all the essentials. Entries that are commented out are opt-in: uncomment them as needed for your machine, then re-run `brew bundle --file=./Brewfile`. Examples include `docker-desktop`, `tailscale`, `kubectl`, `bazelisk`, `cursor`, `miniconda` and `1password-cli` (the last two need admin rights), plus `iterm2`, `visual-studio-code`, `discord`, `shottr`, `protonvpn`, `zoom`, `whatsapp`, `ollama`, `chatgpt` and `windsurf`.
 
 ### 🧰 CLI Tools
 
-git, fzf, fd, ripgrep, bat, htop, lazygit, lazysql, jq, yq, gh, glab, delta, tmux, stow, neovim, huggingface-cli, 1password-cli, coreutils, gnu-sed, findutils, gawk
+git, fzf, fd, ripgrep, bat, htop, lazygit, lazysql, jq, yq, gh, glab, delta, tmux, stow, neovim, huggingface-cli, coreutils, gnu-sed, findutils, gawk
+
+Taps: `nikitabobko/tap` (AeroSpace) and `jorgerojas26/lazysql`
 
 ### 🧪 Dev Environment
 
-python, pipx, miniconda, pyenv, poetry, pyright, ruff, node, nvm
+python, pipx, pyenv, poetry, pyright, ruff, node, nvm
 
 ### 💻 GUI Apps
 
-raycast, aerospace, ghostty, google-chrome, caffeine, 1password, obsidian, claude-code, stats, ice, ukelele
+raycast, aerospace, ghostty, google-chrome, caffeine, 1password, obsidian, claude-code, stats, ice (`jordanbaird-ice`), ukelele
 
 ### 💬 Messaging & AI
 
-slack, microsoft-teams, microsoft-outlook, google-gemini, todoist, spotify
+slack, microsoft-teams, microsoft-outlook, google-gemini, todoist (`todoist-app`), spotify, wispr-flow
 
 ### 🖥️ Fonts
 
 JetBrains Mono Nerd Font (for beautiful glyphs and coding ligatures)
+
+### 🧩 Manual Steps
+
+- **Keyboard layout:** the Ukelele `US Accent Mod` layout lives in `Library/Keyboard Layouts/US Accent Mod.bundle`. Copy it to `~/Library/Keyboard Layouts/`, then add it under Input Sources in the Keyboard settings. Bootstrap does not do this for you.
+- **Obsidian vaults:** see [Dotfiles & Config](#-dotfiles--config) below.
 
 
 ## 📁 Dotfiles & Config
 
 Dotfiles are managed using GNU Stow, with a handful of tools symlinked by hand where their config doesn't live at a simple `$HOME`-relative path.
 
-Directory structure:
+Repo layout:
+
+```
+.
+├── bootstrap.sh         # Main setup: Homebrew, Brewfile, Zap, Stow, extra symlinks
+├── bootstrap-nogit.sh   # curl-only entry point for a fresh Mac: clones the repo, then runs bootstrap.sh
+├── Brewfile             # Homebrew taps, formulae, and casks
+├── Library/             # Files copied by hand, not linked (keyboard layout)
+├── dotfiles/            # Config that gets linked into $HOME (below)
+├── docs/                # Workflow docs; start at docs/README.md
+├── scripts/             # sync-cursor-rule.sh: regenerates the Cursor rule from WORKFLOW.md
+└── tests/               # check-workflow-config.sh: read-only validator for the Claude/Cursor config
+```
+
+Dotfiles directory structure:
 
 ```
 dotfiles/
 ├── zsh/         # Zsh config + .zsh.d/
-├── vim/         # Classic Vim config (optional)
+├── vim/         # Classic Vim config (.vimrc)
 ├── nvim/        # AstroNvim-based Neovim config
 ├── aerospace/   # Tiling window manager config
 ├── ghostty/     # Terminal emulator config
-├── claude/      # Claude Code global config (User/.claude): settings, workflow, skills (shared with Cursor)
+├── claude/      # Claude Code config: User/.claude (global, linked), tractian-ai/ (project-level, not linked), User/.claude/legacy (retired, not linked)
 ├── Cursor/      # Cursor editor settings, keybindings, and rules
-└── obsidian/    # Obsidian vault settings, plugins, and vimrc
+└── obsidian/    # One folder per vault (<vault>/.obsidian: settings, plugins, theme), plus a shared .obsidian.vimrc
 ```
 
 `bootstrap.sh` links all of it automatically — no manual symlinking required:
@@ -136,11 +157,13 @@ dotfiles/
   - Claude Code global config (`~/.claude`)
   - Ghostty (`~/.config/ghostty/config`)
   - Cursor rules, settings, and keybindings (`~/.cursor/...` and `~/Library/Application Support/Cursor/User/...`)
-  - Obsidian vault settings (`~/Documents/Obsidian Vault/.obsidian*`) — adjust the vault path in `bootstrap.sh` if your vault lives elsewhere
+  - Obsidian vaults: each vault gets its own settings folder plus the shared vimrc. `bootstrap.sh` links `dotfiles/obsidian/intelepeer-notes/.obsidian` into `~/Intelepeer Notes/` and `dotfiles/obsidian/personal-vault/.obsidian` into `~/Personal Vault/`, with `.obsidian.vimrc` linked into both. Edit the paths in `bootstrap.sh` if a vault lives elsewhere.
 
-The custom skills (`plan-with-review`, `tdd-with-review`, `jira-tickets`) live as real files in `dotfiles/claude/User/.claude/skills/`. Claude Code and Cursor both read `~/.claude/skills`, so once `~/.claude` is linked, `git pull` is the whole update process: no scripts, no per-skill links. Do not also link them into `~/.agents/skills`, or Cursor lists them twice.
+The custom skills (`plan-with-review`, `tdd-with-review`, `jira-tickets`) live as real files in `dotfiles/claude/User/.claude/skills/`, alongside the Plannotator skills. [`docs/skills.md`](docs/skills.md) lists every skill and which ones plugins manage. Claude Code and Cursor both read `~/.claude/skills`, so once `~/.claude` is linked, `git pull` is the whole update process: no scripts, no per-skill links. Do not also link them into `~/.agents/skills`, or Cursor lists them twice.
 
 The Claude Code and Cursor workflow (plan, TDD, and review with Plannotator) is documented in [`docs/`](docs/README.md).
+
+To check the Claude Code and Cursor config, run `bash tests/check-workflow-config.sh`. Add `--installed` from the main checkout to check the live links under `$HOME`. After editing `WORKFLOW.md`, run `scripts/sync-cursor-rule.sh --write` to regenerate the Cursor rule.
 
 ## ✅ Result
 
@@ -148,3 +171,7 @@ The Claude Code and Cursor workflow (plan, TDD, and review with Plannotator) is 
 - Tiling window control and keybindings
 - Clean terminal with Nerd Font and modern CLI tools
 - Shell and dev tools ready for Python, Node, and AI-assisted coding with Claude Code and Cursor
+
+## 🙏 Acknowledgements
+
+This repository is adapted from [NLaundry's MacAutoSetup](https://github.com/NLaundry/MacAutoSetup).

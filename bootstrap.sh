@@ -65,8 +65,10 @@ link "$REPO_DIR/dotfiles/ghostty/config" "$HOME/.config/ghostty/config"
 link "$REPO_DIR/dotfiles/Cursor/.cursor/rules" "$HOME/.cursor/rules"
 link "$REPO_DIR/dotfiles/Cursor/User/settings.json" "$HOME/Library/Application Support/Cursor/User/settings.json"
 link "$REPO_DIR/dotfiles/Cursor/User/keybindings.json" "$HOME/Library/Application Support/Cursor/User/keybindings.json"
-link "$REPO_DIR/dotfiles/obsidian/.obsidian" "$HOME/Documents/Obsidian Vault/.obsidian"
-link "$REPO_DIR/dotfiles/obsidian/.obsidian.vimrc" "$HOME/Documents/Obsidian Vault/.obsidian.vimrc"
+link "$REPO_DIR/dotfiles/obsidian/intelepeer-notes/.obsidian" "$HOME/Intelepeer Notes/.obsidian"
+link "$REPO_DIR/dotfiles/obsidian/.obsidian.vimrc" "$HOME/Intelepeer Notes/.obsidian.vimrc"
+link "$REPO_DIR/dotfiles/obsidian/personal-vault/.obsidian" "$HOME/Personal Vault/.obsidian"
+link "$REPO_DIR/dotfiles/obsidian/.obsidian.vimrc" "$HOME/Personal Vault/.obsidian.vimrc"
 
 # Optionally restart the shell
 exec zsh -l
