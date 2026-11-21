@@ -62,7 +62,7 @@
       "Read(//tmp/**)",
       "WebFetch(domain:github.com)"
     ],
-    "defaultMode": "default",
+    "defaultMode": "auto",
     "additionalDirectories": [
       "~/Documents/Obsidian Vault/",
       "~/Repositories"
